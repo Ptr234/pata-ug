@@ -500,38 +500,47 @@ export default function HomePage() {
         </ScrollReveal>
       </section>
 
-      {/* ═══ SECTION 5: HOW IT WORKS — Bold editorial layout ═══ */}
-      <section className="relative overflow-hidden bg-navy">
-        {/* Decorative orbs */}
-        <div aria-hidden="true" className="pointer-events-none absolute -left-40 top-1/4 h-96 w-96 rounded-full bg-teal/8 blur-3xl" />
-        <div aria-hidden="true" className="pointer-events-none absolute -right-40 bottom-1/4 h-96 w-96 rounded-full bg-orange/8 blur-3xl" />
+      {/* ═══ SECTION 5: HOW IT WORKS — Full-bleed R/NESS ═══ */}
+      <section className="relative overflow-hidden">
+        {/* Full-bleed background image */}
+        <Image src="/property_images/apartments/apartment_14.jpg" alt="Properties in Kampala" fill sizes="100vw" className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/95 via-navy/90 to-navy/95" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
 
         <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
           <ScrollReveal>
             <p className="section-label text-center text-gold">Simple process</p>
-            <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
-              How It Works
+            <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-7xl">
+              How It{" "}
+              <span className="text-gradient-gold">Works</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-center text-base leading-relaxed text-white/50">
-              Whether you&apos;re searching for a home or listing a property, we&apos;ve
-              made the process effortless.
+            <p className="mx-auto mt-5 max-w-lg text-center text-base leading-relaxed text-white/60">
+              We manage the entire process — from property search to deal
+              closure. Contacts shared only after a successful deal.
             </p>
           </ScrollReveal>
 
-          <div className="mt-16 grid gap-8 md:grid-cols-2 md:gap-6 lg:gap-8">
-            {/* ── For Tenants ── */}
+          {/* ── Two-column cards ── */}
+          <div className="mt-16 grid gap-5 lg:grid-cols-2">
+            {/* For Tenants */}
             <ScrollReveal variant="left">
-              <article className="group relative overflow-hidden rounded-3xl bg-white/[0.04] p-1 backdrop-blur-sm">
-                {/* Animated border glow on hover */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-teal/20 via-transparent to-teal/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div
+                className="group relative overflow-hidden rounded-3xl"
+                style={{ transition: `all 600ms ${T}` }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(10,147,150,0.15)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                {/* Card bg image */}
+                <Image src="/property_images/apartments/apartment_3.jpg" alt="Tenant properties" fill sizes="50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/85 to-navy/60" />
 
-                <div className="relative rounded-[1.25rem] bg-navy/80 p-8 backdrop-blur-sm md:p-10">
+                <div className="relative p-8 sm:p-10">
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-2 text-xs font-black uppercase tracking-[0.15em] text-white shadow-lg shadow-teal/25">
                       <Eye className="h-3.5 w-3.5" />
                       For Tenants
                     </span>
-                    <span className="font-display text-5xl font-bold text-teal/20">01</span>
+                    <span className="font-display text-6xl font-bold text-white/[0.06]">01</span>
                   </div>
 
                   <ol className="mt-10 space-y-0">
@@ -539,48 +548,50 @@ export default function HomePage() {
                       { icon: Search, title: "Browse", desc: "Search thousands of verified properties across Kampala with smart filters" },
                       { icon: ShoppingBag, title: "Subscribe", desc: "Buy a Day Pass (UGX 20k) or Annual Subscription for full access" },
                       { icon: MessageCircle, title: "Connect", desc: "We negotiate on your behalf and share landlord contacts once the deal closes" },
-                    ].map((step, i) => (
+                    ].map((s, i) => (
                       <li key={i} className="relative flex gap-5 pb-8 last:pb-0">
-                        {/* Connecting line */}
-                        {i < 2 && (
-                          <div className="absolute left-[22px] top-[52px] h-[calc(100%-52px)] w-[2px] bg-gradient-to-b from-teal/40 to-teal/10" />
-                        )}
-
-                        {/* Number circle */}
-                        <div className="relative z-10 flex h-[44px] w-[44px] flex-shrink-0 items-center justify-center">
+                        {i < 2 && <div className="absolute left-[23px] top-[56px] h-[calc(100%-56px)] w-[2px] bg-gradient-to-b from-teal/30 to-teal/5" />}
+                        <div className="relative z-10 flex h-[46px] w-[46px] shrink-0 items-center justify-center">
                           <div className="absolute inset-0 rounded-full bg-teal/10" />
-                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-teal shadow-lg shadow-teal/30">
-                            <step.icon className="h-4 w-4 text-white" />
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full text-white" style={{ background: "linear-gradient(135deg, #0A9396, #077B7E)", boxShadow: "0 4px 16px rgba(10,147,150,0.3)" }}>
+                            <s.icon size={18} />
                           </div>
                         </div>
-
-                        {/* Content */}
                         <div className="pt-1">
                           <div className="flex items-baseline gap-3">
-                            <span className="font-display text-2xl font-bold tracking-tight text-white">{step.title}</span>
-                            <span className="text-xs font-bold text-teal/50">0{i + 1}</span>
+                            <span className="font-display text-2xl font-bold tracking-tight text-white">{s.title}</span>
+                            <span className="text-[10px] font-bold text-teal/60">0{i + 1}</span>
                           </div>
-                          <p className="mt-1.5 text-sm leading-relaxed text-white/50">{step.desc}</p>
+                          <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/60">{s.desc}</p>
                         </div>
                       </li>
                     ))}
                   </ol>
                 </div>
-              </article>
+
+                {/* Bottom accent */}
+                <div className="absolute inset-x-0 bottom-0 h-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "linear-gradient(90deg, transparent, #0A9396, transparent)" }} />
+              </div>
             </ScrollReveal>
 
-            {/* ── For Landlords ── */}
+            {/* For Landlords */}
             <ScrollReveal variant="right">
-              <article className="group relative overflow-hidden rounded-3xl bg-white/[0.04] p-1 backdrop-blur-sm">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange/20 via-transparent to-orange/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div
+                className="group relative overflow-hidden rounded-3xl"
+                style={{ transition: `all 600ms ${T}` }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(212,98,42,0.15)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+              >
+                <Image src="/property_images/houses/house_5.jpg" alt="Landlord properties" fill sizes="50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/85 to-navy/60" />
 
-                <div className="relative rounded-[1.25rem] bg-navy/80 p-8 backdrop-blur-sm md:p-10">
+                <div className="relative p-8 sm:p-10">
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-2 rounded-full bg-orange px-5 py-2 text-xs font-black uppercase tracking-[0.15em] text-white shadow-lg shadow-orange/25">
                       <Building2 className="h-3.5 w-3.5" />
                       For Landlords
                     </span>
-                    <span className="font-display text-5xl font-bold text-orange/20">02</span>
+                    <span className="font-display text-6xl font-bold text-white/[0.06]">02</span>
                   </div>
 
                   <ol className="mt-10 space-y-0">
@@ -588,31 +599,29 @@ export default function HomePage() {
                       { icon: UserCheck, title: "Register", desc: "Sign up and verify your National ID to build trust with tenants" },
                       { icon: ImagePlus, title: "Post", desc: "List your property with photos, pricing, and details in minutes" },
                       { icon: Megaphone, title: "Receive", desc: "Tenant enquiries managed by pata.ug — contacts shared after deal closure" },
-                    ].map((step, i) => (
+                    ].map((s, i) => (
                       <li key={i} className="relative flex gap-5 pb-8 last:pb-0">
-                        {i < 2 && (
-                          <div className="absolute left-[22px] top-[52px] h-[calc(100%-52px)] w-[2px] bg-gradient-to-b from-orange/40 to-orange/10" />
-                        )}
-
-                        <div className="relative z-10 flex h-[44px] w-[44px] flex-shrink-0 items-center justify-center">
+                        {i < 2 && <div className="absolute left-[23px] top-[56px] h-[calc(100%-56px)] w-[2px] bg-gradient-to-b from-orange/30 to-orange/5" />}
+                        <div className="relative z-10 flex h-[46px] w-[46px] shrink-0 items-center justify-center">
                           <div className="absolute inset-0 rounded-full bg-orange/10" />
-                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-orange shadow-lg shadow-orange/30">
-                            <step.icon className="h-4 w-4 text-white" />
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full text-white" style={{ background: "linear-gradient(135deg, #D4622A, #B54E1C)", boxShadow: "0 4px 16px rgba(212,98,42,0.25)" }}>
+                            <s.icon size={18} />
                           </div>
                         </div>
-
                         <div className="pt-1">
                           <div className="flex items-baseline gap-3">
-                            <span className="font-display text-2xl font-bold tracking-tight text-white">{step.title}</span>
-                            <span className="text-xs font-bold text-orange/50">0{i + 1}</span>
+                            <span className="font-display text-2xl font-bold tracking-tight text-white">{s.title}</span>
+                            <span className="text-[10px] font-bold text-orange/60">0{i + 1}</span>
                           </div>
-                          <p className="mt-1.5 text-sm leading-relaxed text-white/50">{step.desc}</p>
+                          <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/60">{s.desc}</p>
                         </div>
                       </li>
                     ))}
                   </ol>
                 </div>
-              </article>
+
+                <div className="absolute inset-x-0 bottom-0 h-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "linear-gradient(90deg, transparent, #D4622A, transparent)" }} />
+              </div>
             </ScrollReveal>
           </div>
 
