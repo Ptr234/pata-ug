@@ -12,7 +12,6 @@ import {
   Dog,
   Sofa,
   Shield,
-  Phone,
   MessageCircle,
   Calendar,
   ChevronLeft,
@@ -188,10 +187,7 @@ export function PropertyDetailPage() {
     security,
     amenities,
     nearbyPlaces,
-    contactPhone,
-    whatsappPhone,
     landlordName,
-    agencyName,
     viewCount,
     createdAt,
   } = property;
@@ -1116,32 +1112,29 @@ export function PropertyDetailPage() {
                     )}
                   </div>
 
-                  {/* ---- Agent / Broker Info Card ---- */}
+                  {/* ---- Listed By Card (identity hidden until deal closed) ---- */}
                   <div className="card-surface p-5">
-                    <p className="text-[9px] font-black uppercase tracking-[0.15em] text-text-muted mb-3">Listed By</p>
+                    <p className="text-[9px] font-black uppercase tracking-[0.15em] text-text-muted mb-3">Listed Via</p>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-navy/5 text-lg font-display font-bold text-navy">
-                        {landlordName.charAt(0)}
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-lg font-display font-bold text-gold">
+                        P
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-navy">{landlordName}</p>
-                        {agencyName && (
-                          <p className="text-xs text-text-muted">{agencyName}</p>
-                        )}
+                        <p className="text-sm font-bold text-navy">pata.ug</p>
+                        <p className="text-xs text-text-muted">Verified & mediated listing</p>
                         {isVerified && (
                           <span className="mt-1 inline-flex items-center gap-1 text-[9px] font-bold text-green">
                             <Shield className="h-3 w-3" />
-                            Verified Agent
+                            Verified Landlord
                           </span>
                         )}
                       </div>
                     </div>
 
-                    {/* Contact details hidden — only revealed after deal is closed */}
                     <div className="mt-4 flex items-start gap-3 rounded-xl bg-gold/5 px-4 py-3">
                       <Lock className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                       <p className="text-xs leading-relaxed text-text-muted">
-                        Contact details are shared only after the deal is closed and confirmed by both parties.
+                        Landlord identity and contact details are shared only after the deal is closed and confirmed by both parties.
                       </p>
                     </div>
                   </div>

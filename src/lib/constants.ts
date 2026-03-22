@@ -94,7 +94,7 @@ export const CLIENT_PLANS = [
     features: [
       "Request any property directly",
       "pata.ug negotiates on your behalf",
-      "GPS coordinates + map",
+      "Full contact details on deal closure",
       "24-hour countdown access",
     ],
     cta: "Buy Day Pass",
@@ -107,7 +107,7 @@ export const CLIENT_PLANS = [
     features: [
       "Unlimited property requests",
       "Priority negotiation support",
-      "GPS coordinates + map",
+      "Full contact details on deal closure",
       "Best value - save UGX 40,000+",
     ],
     cta: "Subscribe Now",
