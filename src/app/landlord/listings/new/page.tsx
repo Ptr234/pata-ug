@@ -2,520 +2,306 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Upload,
-  MapPin,
-  ChevronRight,
-  ChevronLeft,
-  Check,
-  ImagePlus,
-  Phone,
-  Building2,
+  Upload, MapPin, ChevronRight, ChevronLeft, Check,
+  ImagePlus, Phone, Building2, ArrowLeft, Home, Bed, Bath, Calendar,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { CATEGORIES } from "@/lib/constants";
 
+const T = "cubic-bezier(0.16, 1, 0.3, 1)";
 const STEPS = [
-  { number: 1, label: "Category" },
-  { number: 2, label: "Details" },
-  { number: 3, label: "Photos" },
-  { number: 4, label: "Review & Pay" },
+  { number: 1, label: "Category", desc: "Choose property type" },
+  { number: 2, label: "Details", desc: "Add property info" },
+  { number: 3, label: "Photos", desc: "Upload images" },
+  { number: 4, label: "Pay", desc: "Review and submit" },
 ];
 
-const TRANSITION = "transition-all duration-[560ms] ease-[cubic-bezier(0.16,1,0.3,1)]";
-const SMOOTH = "all 500ms cubic-bezier(0.16, 1, 0.3, 1)";
-
 export default function NewListingPage() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
-  const [hoveredCat, setHoveredCat] = useState<string | null>(null);
-  const [uploadZoneHover, setUploadZoneHover] = useState(false);
-  const [hoveredPayBtn, setHoveredPayBtn] = useState<number | null>(null);
-  const [hoveredNavBtn, setHoveredNavBtn] = useState<string | null>(null);
+  const [step, setStep] = useState(1);
+  const [category, setCategory] = useState("");
 
   return (
-    <main className="min-h-screen bg-smoke">
-      {/* == DARK HERO HEADER ============================================= */}
-      <ScrollReveal>
-        <section className="relative overflow-hidden bg-navy">
-          {/* Grid pattern */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 opacity-[0.018]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-              backgroundSize: "72px 72px",
-            }}
-          />
-          {/* Orange radial glow */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full bg-orange/[0.06] blur-3xl"
-          />
+    <main className="min-h-screen">
+      {/* ═══ HERO — Full-bleed with property bg ═══ */}
+      <section className="relative overflow-hidden bg-navy">
+        <Image src="/property_images/houses/house_8.jpg" alt="List your property" fill sizes="100vw" className="object-cover opacity-15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/70" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(212,98,42,0.1),transparent_60%)]" />
 
-          <div className="relative mx-auto max-w-3xl px-4 pb-12 pt-16 sm:px-6 lg:px-8">
-            {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="mb-6 text-sm text-white/60">
-              <Link
-                href="/landlord"
-                className={`hover:text-gold ${TRANSITION}`}
-              >
-                Dashboard
-              </Link>
-              <span className="mx-2">/</span>
-              <span className="font-medium text-white/50">New Listing</span>
-            </nav>
-
-            {/* Section label */}
-            <p className="section-label mb-3 text-orange">Listing Wizard</p>
-
-            {/* Heading */}
-            <h1 className="font-display text-3xl uppercase tracking-tighter text-white sm:text-4xl">
-              List a New Property
-            </h1>
-
-            {/* Subtitle */}
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-white/70">
-              A 4-step wizard to get your property reviewed, published, and in
-              front of verified tenants across Kampala.
-            </p>
-          </div>
-        </section>
-      </ScrollReveal>
-
-      {/* == PROGRESS INDICATOR =========================================== */}
-      <section className="bg-smoke">
-        <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <ScrollReveal>
-            <div className="flex items-center justify-between">
-              {STEPS.map((step, i) => (
-                <div key={step.number} className="flex items-center">
-                  <div className="flex flex-col items-center">
-                    {/* Step circle */}
+            <Link href="/landlord" className="mb-8 inline-flex items-center gap-2 text-sm text-white/60" style={{ transition: `color 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.color = "#d4a853"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}>
+              <ArrowLeft className="h-4 w-4" /> Back to Dashboard
+            </Link>
+
+            <div className="grid items-center gap-10 lg:grid-cols-2">
+              <div>
+                <p className="section-label text-orange">Listing Wizard</p>
+                <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+                  List a New <span style={{ color: "#D4622A" }}>Property</span>
+                </h1>
+                <p className="mt-5 max-w-md text-base leading-relaxed text-white/60">
+                  Four steps to get your property reviewed, published, and in front of verified tenants across Kampala.
+                </p>
+              </div>
+
+              {/* Progress cards */}
+              <div className="hidden grid-cols-4 gap-3 lg:grid">
+                {STEPS.map((s, i) => (
+                  <div
+                    key={s.number}
+                    className="rounded-2xl p-4 text-center"
+                    style={{
+                      background: step > s.number ? "rgba(212,168,83,0.12)" : step === s.number ? "rgba(212,98,42,0.12)" : "rgba(255,255,255,0.04)",
+                      transition: `all 500ms ${T}`,
+                    }}
+                  >
                     <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold cursor-default ${
-                        currentStep > step.number
-                          ? "bg-gradient-to-br from-gold to-gold-dark text-white shadow-[0_0_18px_rgba(212,168,83,0.4)]"
-                          : currentStep === step.number
-                            ? "bg-orange text-white shadow-[0_0_18px_rgba(232,119,34,0.35)]"
-                            : "bg-white/[0.06] text-white/60"
-                      }`}
+                      className="mx-auto flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold"
                       style={{
-                        transition: SMOOTH,
-                        transform:
-                          hoveredStep === step.number
-                            ? "scale(1.1)"
-                            : "scale(1)",
+                        background: step > s.number ? "linear-gradient(135deg, #d4a853, #B8903D)" : step === s.number ? "#D4622A" : "rgba(255,255,255,0.08)",
+                        color: step >= s.number ? "#fff" : "rgba(255,255,255,0.5)",
+                        boxShadow: step > s.number ? "0 4px 16px rgba(212,168,83,0.3)" : step === s.number ? "0 4px 16px rgba(212,98,42,0.3)" : "none",
                       }}
-                      onMouseEnter={() => setHoveredStep(step.number)}
-                      onMouseLeave={() => setHoveredStep(null)}
                     >
-                      {currentStep > step.number ? (
-                        <Check className="h-5 w-5" />
-                      ) : (
-                        step.number
-                      )}
+                      {step > s.number ? <Check className="h-5 w-5" /> : s.number}
                     </div>
-                    {/* Step label */}
-                    <span
-                      className={`mt-2 text-xs font-medium ${TRANSITION} ${
-                        currentStep > step.number
-                          ? "text-gold"
-                          : currentStep === step.number
-                            ? "text-orange"
-                            : "text-navy/40"
-                      }`}
-                    >
-                      {step.label}
-                    </span>
+                    <p className="mt-2 text-[10px] font-bold uppercase tracking-wider" style={{ color: step > s.number ? "#d4a853" : step === s.number ? "#D4622A" : "rgba(255,255,255,0.5)" }}>{s.label}</p>
+                    <p className="mt-0.5 text-[9px] text-white/60">{s.desc}</p>
                   </div>
-                  {/* Connecting bar */}
-                  {i < STEPS.length - 1 && (
-                    <div
-                      className={`mx-2 h-0.5 w-8 rounded-full sm:w-14 lg:w-20 ${TRANSITION} ${
-                        currentStep > step.number
-                          ? "bg-gradient-to-r from-gold to-gold-dark"
-                          : "bg-navy/10"
-                      }`}
-                    />
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* == STEP CONTENT ================================================= */}
+      {/* Mobile progress bar */}
+      <div className="bg-navy lg:hidden" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-4 sm:px-6">
+          {STEPS.map((s, i) => (
+            <div key={s.number} className="flex flex-1 items-center gap-2">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold" style={{ background: step > s.number ? "linear-gradient(135deg, #d4a853, #B8903D)" : step === s.number ? "#D4622A" : "rgba(255,255,255,0.08)", color: step >= s.number ? "#fff" : "rgba(255,255,255,0.5)" }}>
+                {step > s.number ? <Check className="h-4 w-4" /> : s.number}
+              </div>
+              {i < STEPS.length - 1 && <div className="h-0.5 flex-1 rounded-full" style={{ background: step > s.number ? "linear-gradient(90deg, #d4a853, #B8903D)" : "rgba(255,255,255,0.08)" }} />}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══ STEP CONTENT — Split layout ═══ */}
       <section className="bg-smoke">
-        <div className="mx-auto max-w-3xl px-4 pb-4 sm:px-6 lg:px-8">
-          <ScrollReveal key={currentStep}>
-            <div className="rounded-3xl bg-navy p-6 sm:p-10">
-              {/* -- Step 1: Category ------------------------------------ */}
-              {currentStep === 1 && (
-                <div>
-                  <h2 className="font-display text-xl tracking-tighter text-white sm:text-2xl">
-                    Select a Category
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-5">
+            {/* Left: Step info + image (2/5) */}
+            <div className="hidden lg:col-span-2 lg:block">
+              <div className="sticky top-24">
+                <ScrollReveal variant="left">
+                  <p className="section-label text-orange">Step {step} of 4</p>
+                  <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy">
+                    {STEPS[step - 1].label}
                   </h2>
-                  <p className="mt-2 text-sm text-white/70">
-                    Choose the type of property you are listing. This determines
-                    which fields appear in the next step.
+                  <p className="mt-3 leading-relaxed text-text-muted">
+                    {step === 1 && "Choose from 12 property categories. This determines which fields appear in the next step."}
+                    {step === 2 && "Fill in your property details — title, rent, location, bedrooms, and a description."}
+                    {step === 3 && "Upload at least 3 high-quality photos. The first photo becomes your listing cover."}
+                    {step === 4 && "Review your listing and pay UGX 30,000 to submit for admin review."}
                   </p>
 
-                  <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                    {CATEGORIES.map((cat) => (
-                      <button
-                        key={cat.id}
-                        type="button"
-                        onClick={() => setSelectedCategory(cat.id)}
-                        className={`rounded-xl p-4 text-left ${
-                          selectedCategory === cat.id
-                            ? "border-2 border-orange bg-orange/10 shadow-[0_0_20px_rgba(232,119,34,0.15)]"
-                            : "border-2 border-transparent bg-white/[0.04]"
-                        }`}
-                        style={{
-                          transition: SMOOTH,
-                          transform:
-                            selectedCategory === cat.id
-                              ? "scale(1.02)"
-                              : hoveredCat === cat.id
-                                ? "scale(1.03) translateY(-2px)"
-                                : "scale(1) translateY(0)",
-                          boxShadow:
-                            hoveredCat === cat.id &&
-                            selectedCategory !== cat.id
-                              ? "0 8px 30px rgba(212, 168, 83, 0.12)"
-                              : undefined,
-                          backgroundColor:
-                            hoveredCat === cat.id &&
-                            selectedCategory !== cat.id
-                              ? "rgba(255, 255, 255, 0.08)"
-                              : undefined,
-                        }}
-                        onMouseEnter={() => setHoveredCat(cat.id)}
-                        onMouseLeave={() => setHoveredCat(null)}
-                      >
-                        <p
-                          className={`text-sm font-bold ${
-                            selectedCategory === cat.id
-                              ? "text-orange"
-                              : "text-white"
-                          }`}
-                        >
-                          {cat.label}
-                        </p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* -- Step 2: Details ------------------------------------- */}
-              {currentStep === 2 && (
-                <div className="space-y-6">
-                  <h2 className="font-display text-xl tracking-tighter text-white sm:text-2xl">
-                    Property Details
-                  </h2>
-
-                  {/* Listing Title */}
-                  <div>
-                    <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">
-                      Listing Title
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Modern 2-Bedroom Apartment in Bukoto"
-                      className={`w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white placeholder:text-white/25 outline-none focus:ring-2 focus:ring-gold/30 ${TRANSITION}`}
+                  <div className="img-zoom relative mt-8 aspect-[4/3] overflow-hidden rounded-3xl">
+                    <Image
+                      src={step === 1 ? "/property_images/houses/house_1.jpg" : step === 2 ? "/property_images/apartments/apartment_1.jpg" : step === 3 ? "/property_images/studios/studio_1.jpg" : "/property_images/commercial/commercial_1.jpg"}
+                      alt="Property listing step"
+                      fill
+                      sizes="40vw"
+                      className="object-cover"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
                   </div>
+                </ScrollReveal>
+              </div>
+            </div>
 
-                  {/* Rent + Location */}
-                  <div className="grid gap-5 sm:grid-cols-2">
+            {/* Right: Form content (3/5) */}
+            <div className="lg:col-span-3">
+              <ScrollReveal key={step}>
+                <div className="rounded-3xl bg-navy p-6 sm:p-10">
+                  {/* ── Step 1: Category ── */}
+                  {step === 1 && (
                     <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">
-                        Monthly Rent (UGX)
-                      </label>
-                      <input
-                        type="number"
-                        placeholder="1,500,000"
-                        className={`w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white placeholder:text-white/25 outline-none focus:ring-2 focus:ring-gold/30 ${TRANSITION}`}
-                      />
-                    </div>
-                    <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">
-                        Estate / Location
-                      </label>
-                      <div className="relative">
-                        <MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/25" />
-                        <input
-                          type="text"
-                          placeholder="e.g. Bukoto"
-                          className={`w-full rounded-xl bg-white/[0.06] py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-white/25 outline-none focus:ring-2 focus:ring-gold/30 ${TRANSITION}`}
-                        />
+                      <h2 className="font-display text-2xl font-bold tracking-tighter text-white">Select a Category</h2>
+                      <p className="mt-2 text-sm text-white/60">Choose the type of property you are listing.</p>
+                      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                        {CATEGORIES.map((cat) => (
+                          <button
+                            key={cat.id}
+                            type="button"
+                            onClick={() => setCategory(cat.id)}
+                            className="group rounded-xl p-5 text-left"
+                            style={{
+                              background: category === cat.id ? "rgba(212,98,42,0.12)" : "rgba(255,255,255,0.04)",
+                              border: category === cat.id ? "2px solid #D4622A" : "2px solid transparent",
+                              transform: category === cat.id ? "scale(1.02)" : "scale(1)",
+                              boxShadow: category === cat.id ? "0 8px 24px rgba(212,98,42,0.15)" : "none",
+                              transition: `all 500ms ${T}`,
+                            }}
+                            onMouseEnter={(e) => { if (category !== cat.id) { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.transform = "translateY(-2px)"; } }}
+                            onMouseLeave={(e) => { if (category !== cat.id) { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.transform = "scale(1)"; } }}
+                          >
+                            <p className={`text-sm font-bold ${category === cat.id ? "text-orange" : "text-white"}`}>{cat.label}</p>
+                          </button>
+                        ))}
                       </div>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Bedrooms / Bathrooms / Available */}
-                  <div className="grid gap-5 sm:grid-cols-3">
+                  {/* ── Step 2: Details ── */}
+                  {step === 2 && (
+                    <div className="space-y-6">
+                      <h2 className="font-display text-2xl font-bold tracking-tighter text-white">Property Details</h2>
+
+                      <div>
+                        <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Listing Title</label>
+                        <input type="text" placeholder="e.g. Modern 2-Bedroom Apartment in Bukoto" className="w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                      </div>
+
+                      <div className="grid gap-5 sm:grid-cols-2">
+                        <div>
+                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Monthly Rent (UGX)</label>
+                          <input type="number" placeholder="1,500,000" className="w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                        </div>
+                        <div>
+                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Estate / Location</label>
+                          <div className="relative">
+                            <MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" />
+                            <input type="text" placeholder="e.g. Bukoto" className="w-full rounded-xl bg-white/[0.08] py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid gap-5 sm:grid-cols-3">
+                        <div>
+                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Bedrooms</label>
+                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
+                            <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Bathrooms</label>
+                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
+                            <option>1</option><option>2</option><option>3+</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Available From</label>
+                          <input type="date" className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Description</label>
+                        <textarea rows={4} placeholder="Describe your property (250-1,500 characters)" className="w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                        <p className="mt-1.5 text-xs text-white/60">Min 250, max 1,500 characters</p>
+                      </div>
+
+                      <div>
+                        <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Contact Phone</label>
+                        <div className="relative">
+                          <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" />
+                          <input type="tel" placeholder="+256 700 000 000" className="w-full rounded-xl bg-white/[0.08] py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ── Step 3: Photos ── */}
+                  {step === 3 && (
                     <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">
-                        Bedrooms
-                      </label>
-                      <select
-                        className={`w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white outline-none focus:ring-2 focus:ring-gold/30 ${TRANSITION}`}
+                      <h2 className="font-display text-2xl font-bold tracking-tighter text-white">Upload Photos</h2>
+                      <p className="mt-2 text-sm text-white/60">Minimum 3 photos, maximum 20. First photo becomes the cover.</p>
+
+                      <div
+                        className="mt-8 flex flex-col items-center justify-center rounded-3xl border-2 border-dashed p-16"
+                        style={{
+                          borderColor: "rgba(212,168,83,0.3)",
+                          background: "rgba(212,168,83,0.04)",
+                          transition: `all 500ms ${T}`,
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(212,168,83,0.6)"; e.currentTarget.style.background = "rgba(212,168,83,0.07)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(212,168,83,0.3)"; e.currentTarget.style.background = "rgba(212,168,83,0.04)"; }}
                       >
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5+</option>
-                      </select>
+                        <div className="flex h-16 w-16 items-center justify-center rounded-full" style={{ background: "linear-gradient(135deg, rgba(212,168,83,0.2), rgba(212,168,83,0.1))" }}>
+                          <ImagePlus className="h-8 w-8 text-gold" />
+                        </div>
+                        <p className="mt-5 text-sm font-bold text-white">Drag photos here or click to browse</p>
+                        <p className="mt-1.5 text-xs text-white/60">JPEG or PNG, max 5 MB per file</p>
+                        <button type="button" className="btn-gold mt-6"><Upload className="h-4 w-4" /> Choose Files</button>
+                      </div>
                     </div>
-                    <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">
-                        Bathrooms
-                      </label>
-                      <select
-                        className={`w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white outline-none focus:ring-2 focus:ring-gold/30 ${TRANSITION}`}
-                      >
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3+</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">
-                        Available From
-                      </label>
-                      <input
-                        type="date"
-                        className={`w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white outline-none focus:ring-2 focus:ring-gold/30 ${TRANSITION}`}
-                      />
-                    </div>
-                  </div>
+                  )}
 
-                  {/* Description */}
-                  <div>
-                    <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">
-                      Description
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Describe your property (250-1,500 characters)"
-                      className={`w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white placeholder:text-white/25 outline-none focus:ring-2 focus:ring-gold/30 ${TRANSITION}`}
-                    />
-                    <p className="mt-1.5 text-xs text-white/70">
-                      Min 250, max 1,500 characters
-                    </p>
-                  </div>
+                  {/* ── Step 4: Pay ── */}
+                  {step === 4 && (
+                    <div className="text-center">
+                      <h2 className="font-display text-2xl font-bold tracking-tighter text-white">Review and Pay</h2>
+                      <p className="mt-3 text-sm text-white/60">Pay UGX 30,000 to submit your listing for admin review.</p>
 
-                  {/* Contact Phone */}
-                  <div>
-                    <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">
-                      Contact Phone
-                    </label>
-                    <div className="relative">
-                      <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/25" />
-                      <input
-                        type="tel"
-                        placeholder="+256 700 000 000"
-                        className={`w-full rounded-xl bg-white/[0.06] py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-white/25 outline-none focus:ring-2 focus:ring-gold/30 ${TRANSITION}`}
-                      />
+                      <div className="mx-auto mt-8 max-w-sm rounded-2xl bg-white/[0.04] p-8 backdrop-blur-sm">
+                        <p className="section-label text-gold">Listing Fee</p>
+                        <p className="mt-3 font-display text-5xl font-bold tracking-tighter text-white">UGX 30,000</p>
+                        <p className="mt-2 text-xs text-white/60">Live for 30 days. Reactivate at same price.</p>
+
+                        <div className="mt-8 space-y-3">
+                          <button type="button" className="flex w-full items-center justify-center gap-2 rounded-xl py-4 text-sm font-bold text-white" style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)", boxShadow: "0 4px 20px rgba(212,168,83,0.3)", transition: `all 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(212,168,83,0.4)"; }} onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(212,168,83,0.3)"; }}>
+                            <Phone className="h-4 w-4" /> Pay via MTN MoMo
+                          </button>
+                          <button type="button" className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange py-4 text-sm font-bold text-white" style={{ boxShadow: "0 4px 16px rgba(212,98,42,0.2)", transition: `all 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(212,98,42,0.3)"; }} onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(212,98,42,0.2)"; }}>
+                            <Phone className="h-4 w-4" /> Pay via Airtel Money
+                          </button>
+                        </div>
+                      </div>
+
+                      <p className="mt-6 text-xs text-white/60">Annual subscribers skip this step — listings are included in your plan.</p>
                     </div>
-                  </div>
+                  )}
                 </div>
-              )}
+              </ScrollReveal>
 
-              {/* -- Step 3: Photos -------------------------------------- */}
-              {currentStep === 3 && (
-                <div>
-                  <h2 className="font-display text-xl tracking-tighter text-white sm:text-2xl">
-                    Upload Photos
-                  </h2>
-                  <p className="mt-2 text-sm text-white/70">
-                    Minimum 3 photos, maximum 20. First photo becomes the cover.
-                    JPEG/PNG, max 5 MB each.
-                  </p>
-
-                  <div
-                    className="mt-8 flex flex-col items-center justify-center rounded-3xl border-2 border-dashed p-14"
-                    style={{
-                      transition: SMOOTH,
-                      borderColor: uploadZoneHover
-                        ? "rgba(212, 168, 83, 0.6)"
-                        : "rgba(212, 168, 83, 0.3)",
-                      backgroundColor: uploadZoneHover
-                        ? "rgba(212, 168, 83, 0.07)"
-                        : "rgba(212, 168, 83, 0.04)",
-                      boxShadow: uploadZoneHover
-                        ? "inset 0 0 40px rgba(212, 168, 83, 0.06)"
-                        : "none",
-                    }}
-                    onMouseEnter={() => setUploadZoneHover(true)}
-                    onMouseLeave={() => setUploadZoneHover(false)}
+              {/* Navigation */}
+              <div className="mt-6 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => setStep((s) => Math.max(1, s - 1))}
+                  disabled={step === 1}
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-navy px-6 py-3 text-sm font-bold text-navy disabled:cursor-not-allowed disabled:opacity-40"
+                  style={{ transition: `all 500ms ${T}` }}
+                  onMouseEnter={(e) => { if (step > 1) { e.currentTarget.style.background = "#0B1929"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-2px)"; } }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0B1929"; e.currentTarget.style.transform = "translateY(0)"; }}
+                >
+                  <ChevronLeft className="h-4 w-4" /> Back
+                </button>
+                {step < 4 && (
+                  <button
+                    type="button"
+                    onClick={() => setStep((s) => Math.min(4, s + 1))}
+                    disabled={step === 1 && !category}
+                    className="btn-gold disabled:cursor-not-allowed disabled:opacity-40"
+                    style={{ transition: `all 500ms ${T}` }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
                   >
-                    {/* Gold circle icon */}
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-gold/20 to-gold/10">
-                      <ImagePlus className="h-8 w-8 text-gold" />
-                    </div>
-
-                    <p className="mt-5 text-sm font-semibold text-white">
-                      Drag photos here or click to browse
-                    </p>
-                    <p className="mt-1.5 text-xs text-white/60">
-                      JPEG or PNG, max 5 MB per file
-                    </p>
-
-                    <button type="button" className="btn-gold mt-6">
-                      <Upload className="h-4 w-4" />
-                      Choose Files
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* -- Step 4: Review & Pay -------------------------------- */}
-              {currentStep === 4 && (
-                <div className="text-center">
-                  <h2 className="font-display text-xl tracking-tighter text-white sm:text-2xl">
-                    Review &amp; Pay
-                  </h2>
-                  <p className="mt-3 text-sm text-white/70">
-                    Review your listing details and pay UGX 30,000 to submit for
-                    admin review.
-                  </p>
-
-                  {/* Frosted inner card */}
-                  <div className="mx-auto mt-8 max-w-sm rounded-2xl bg-white/[0.04] p-8 backdrop-blur-sm">
-                    <p className="section-label text-gold">Listing Fee</p>
-                    <p className="mt-3 font-display text-4xl tracking-tighter text-white">
-                      UGX 30,000
-                    </p>
-                    <p className="mt-2 text-xs text-white/60">
-                      Live for 30 days. Reactivate at same price.
-                    </p>
-
-                    <div className="mt-7 space-y-3">
-                      {/* MTN MoMo -- Gold gradient */}
-                      <button
-                        type="button"
-                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold to-gold-dark px-6 py-3.5 text-sm font-bold text-white active:scale-[0.98]"
-                        style={{
-                          transition: SMOOTH,
-                          transform:
-                            hoveredPayBtn === 0
-                              ? "translateY(-2px)"
-                              : "translateY(0)",
-                          boxShadow:
-                            hoveredPayBtn === 0
-                              ? "0 8px 32px rgba(212, 168, 83, 0.4)"
-                              : "0 4px 20px rgba(212, 168, 83, 0.3)",
-                        }}
-                        onMouseEnter={() => setHoveredPayBtn(0)}
-                        onMouseLeave={() => setHoveredPayBtn(null)}
-                      >
-                        <Phone className="h-4 w-4" />
-                        Pay via MTN MoMo
-                      </button>
-
-                      {/* Airtel Money -- Orange */}
-                      <button
-                        type="button"
-                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange px-6 py-3.5 text-sm font-bold text-white shadow-lg active:scale-[0.98]"
-                        style={{
-                          transition: SMOOTH,
-                          transform:
-                            hoveredPayBtn === 1
-                              ? "translateY(-2px)"
-                              : "translateY(0)",
-                          boxShadow:
-                            hoveredPayBtn === 1
-                              ? "0 8px 32px rgba(232, 119, 34, 0.35)"
-                              : "0 4px 16px rgba(232, 119, 34, 0.2)",
-                        }}
-                        onMouseEnter={() => setHoveredPayBtn(1)}
-                        onMouseLeave={() => setHoveredPayBtn(null)}
-                      >
-                        <Phone className="h-4 w-4" />
-                        Pay via Airtel Money
-                      </button>
-                    </div>
-                  </div>
-
-                  <p className="mt-6 text-xs text-white/60">
-                    Annual subscribers skip this step &mdash; listings are
-                    included in your plan.
-                  </p>
-                </div>
-              )}
+                    Next <ChevronRight className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
-
-      {/* == NAVIGATION BAR =============================================== */}
-      <ScrollReveal>
-        <section className="bg-smoke pb-16">
-          <div className="mx-auto flex max-w-3xl items-center justify-between px-4 pt-4 sm:px-6 lg:px-8">
-            {/* Back */}
-            <button
-              type="button"
-              onClick={() => setCurrentStep((s) => Math.max(1, s - 1))}
-              disabled={currentStep === 1}
-              className="btn-outline-white inline-flex items-center gap-2 rounded-xl border-2 border-navy px-6 py-3 text-sm font-bold text-navy disabled:cursor-not-allowed disabled:opacity-40 active:scale-[0.98]"
-              style={{
-                transition: SMOOTH,
-                transform:
-                  hoveredNavBtn === "back"
-                    ? "translateY(-2px)"
-                    : "translateY(0)",
-                boxShadow:
-                  hoveredNavBtn === "back"
-                    ? "0 6px 24px rgba(19, 17, 28, 0.15)"
-                    : "none",
-                backgroundColor:
-                  hoveredNavBtn === "back" ? "#13111c" : "transparent",
-                color: hoveredNavBtn === "back" ? "#ffffff" : undefined,
-              }}
-              onMouseEnter={() => setHoveredNavBtn("back")}
-              onMouseLeave={() => setHoveredNavBtn(null)}
-            >
-              <ChevronLeft className="h-4 w-4" />
-              Back
-            </button>
-
-            {/* Next */}
-            {currentStep < 4 ? (
-              <button
-                type="button"
-                onClick={() => setCurrentStep((s) => Math.min(4, s + 1))}
-                disabled={currentStep === 1 && !selectedCategory}
-                className="btn-gold disabled:cursor-not-allowed disabled:opacity-40"
-                style={{
-                  transition: SMOOTH,
-                  transform:
-                    hoveredNavBtn === "next"
-                      ? "translateY(-2px)"
-                      : "translateY(0)",
-                  boxShadow:
-                    hoveredNavBtn === "next"
-                      ? "0 8px 28px rgba(212, 168, 83, 0.35)"
-                      : "none",
-                }}
-                onMouseEnter={() => setHoveredNavBtn("next")}
-                onMouseLeave={() => setHoveredNavBtn(null)}
-              >
-                Next
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            ) : null}
-          </div>
-        </section>
-      </ScrollReveal>
     </main>
   );
 }
