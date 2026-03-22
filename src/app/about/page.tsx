@@ -94,7 +94,7 @@ export default function AboutPage() {
         />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid min-h-[540px] items-center gap-12 py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
+          <div className="grid min-h-[540px] items-center gap-8 py-12 sm:gap-12 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
             {/* LEFT — Text */}
             <ScrollReveal variant="left">
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-gold">
@@ -105,7 +105,7 @@ export default function AboutPage() {
                 About Us
               </div>
 
-              <h1 className="mt-8 font-display text-5xl font-bold uppercase tracking-tighter text-white md:text-6xl lg:text-7xl">
+              <h1 className="mt-8 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl">
                 Making Renting{" "}
                 <span className="text-gradient-gold">Simple</span>
               </h1>
@@ -128,23 +128,23 @@ export default function AboutPage() {
               </div>
             </ScrollReveal>
 
-            {/* RIGHT — Founder photo placeholder */}
+            {/* RIGHT — Founder photo */}
             <ScrollReveal variant="right">
               <div className="img-zoom relative hidden aspect-[4/3] overflow-hidden rounded-3xl lg:block">
                 <Image
-                  src="/property_images/houses/house_7.jpg"
-                  alt="pata.ug founder"
+                  src="/Isaac_Etyang-Profile_Photograph.jpg"
+                  alt="Etty Etiang — Founder & CEO, pata.ug"
                   fill
                   sizes="50vw"
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-navy/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 rounded-2xl bg-white/10 px-5 py-4 backdrop-blur-xl">
                   <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/60">
                     Founder &amp; CEO
                   </p>
                   <p className="mt-1 font-display text-xl font-bold text-white">
-                    pata.ug
+                    Etty Etiang
                   </p>
                 </div>
               </div>
@@ -157,11 +157,11 @@ export default function AboutPage() {
           OUR STORY
       ================================================================ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
+          <div className="grid items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
             {/* LEFT — Image */}
             <ScrollReveal variant="left">
-              <div className="img-zoom relative aspect-[4/3] overflow-hidden rounded-3xl">
+              <div className="img-zoom relative aspect-[4/3] overflow-hidden rounded-xl sm:rounded-3xl">
                 <Image
                   src="/property_images/apartments/apartment_10.jpg"
                   alt="Property in Kampala"
@@ -176,7 +176,7 @@ export default function AboutPage() {
             {/* RIGHT — Story */}
             <ScrollReveal variant="right">
               <p className="section-label text-teal">Our Story</p>
-              <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl lg:text-5xl">
+              <h2 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl lg:text-5xl">
                 Born From a{" "}
                 <span className="text-gradient-gold">Real Problem</span>
               </h2>
@@ -222,12 +222,12 @@ export default function AboutPage() {
           className="pointer-events-none absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-teal/[0.06] blur-3xl"
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-          <div className="grid gap-8 md:grid-cols-2">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
+          <div className="grid gap-4 sm:gap-8 md:grid-cols-2">
             {/* Mission */}
             <ScrollReveal variant="left">
               <div
-                className="group rounded-3xl p-8 sm:p-10"
+                className="group rounded-xl p-6 sm:rounded-3xl sm:p-8 lg:p-10"
                 style={{
                   background: "rgba(255,255,255,0.04)",
                   transition: `all 600ms ${T}`,
@@ -247,7 +247,7 @@ export default function AboutPage() {
                 >
                   <Target size={28} className="text-teal" />
                 </div>
-                <h3 className="mt-6 font-display text-2xl font-bold uppercase tracking-tighter text-white">
+                <h3 className="mt-6 font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-2xl">
                   Our Mission
                 </h3>
                 <p className="mt-4 text-base leading-relaxed text-white/60">
@@ -261,7 +261,7 @@ export default function AboutPage() {
             {/* Vision */}
             <ScrollReveal variant="right">
               <div
-                className="group rounded-3xl p-8 sm:p-10"
+                className="group rounded-xl p-6 sm:rounded-3xl sm:p-8 lg:p-10"
                 style={{
                   background: "rgba(255,255,255,0.04)",
                   transition: `all 600ms ${T}`,
@@ -281,7 +281,7 @@ export default function AboutPage() {
                 >
                   <Eye size={28} className="text-gold" />
                 </div>
-                <h3 className="mt-6 font-display text-2xl font-bold uppercase tracking-tighter text-white">
+                <h3 className="mt-6 font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-2xl">
                   Our Vision
                 </h3>
                 <p className="mt-4 text-base leading-relaxed text-white/60">
@@ -299,23 +299,23 @@ export default function AboutPage() {
           VALUES
       ================================================================ */}
       <section className="bg-smoke">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <div className="text-center">
               <p className="section-label text-gold">What We Stand For</p>
-              <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl font-bold uppercase tracking-tighter text-navy md:text-5xl">
+              <h2 className="mx-auto mt-4 max-w-3xl font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl">
                 Our <span className="text-gradient-gold">Values</span>
               </h2>
             </div>
           </ScrollReveal>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-3 sm:mt-14 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map((v, i) => {
               const Icon = v.icon;
               return (
                 <ScrollReveal key={v.title} variant="scale" delay={i * 100}>
                   <div
-                    className="group rounded-3xl bg-white p-8"
+                    className="group rounded-xl bg-white p-4 sm:rounded-2xl sm:p-6 lg:rounded-3xl lg:p-8"
                     style={{
                       boxShadow: "0 4px 24px rgba(11,25,41,0.06)",
                       transition: `all 600ms ${T}`,
@@ -367,7 +367,7 @@ export default function AboutPage() {
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,168,83,0.06),transparent_60%)]"
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
           <ScrollReveal>
             <div className="text-center">
               <p className="section-label text-gold">By the Numbers</p>
@@ -377,13 +377,13 @@ export default function AboutPage() {
             </div>
           </ScrollReveal>
 
-          <div className="mt-14 grid grid-cols-2 gap-6 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-6 lg:grid-cols-4">
             {STATS.map((s, i) => {
               const Icon = s.icon;
               return (
                 <ScrollReveal key={s.label} variant="scale" delay={i * 100}>
                   <div
-                    className="rounded-2xl bg-white/[0.04] p-6 text-center backdrop-blur-sm"
+                    className="rounded-xl bg-white/[0.04] p-4 text-center backdrop-blur-sm sm:rounded-2xl sm:p-6"
                     style={{ transition: `all 600ms ${T}` }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = "rgba(255,255,255,0.08)";
@@ -395,7 +395,7 @@ export default function AboutPage() {
                     }}
                   >
                     <Icon size={24} className="mx-auto text-gold" />
-                    <p className="mt-4 font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
+                    <p className="mt-4 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
                       {s.value}
                     </p>
                     <p className="mt-1 text-xs font-bold uppercase tracking-wider text-white/50">
@@ -413,12 +413,12 @@ export default function AboutPage() {
           HOW WE WORK — THE PATA DIFFERENCE
       ================================================================ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
+          <div className="grid items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
             {/* LEFT — Text */}
             <ScrollReveal variant="left">
               <p className="section-label text-orange">How We Work</p>
-              <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl lg:text-5xl">
+              <h2 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl lg:text-5xl">
                 The Pata{" "}
                 <span className="text-gradient-gold">Difference</span>
               </h2>
@@ -452,7 +452,7 @@ export default function AboutPage() {
 
             {/* RIGHT — Image */}
             <ScrollReveal variant="right">
-              <div className="img-zoom relative aspect-[4/3] overflow-hidden rounded-3xl">
+              <div className="img-zoom relative aspect-[4/3] overflow-hidden rounded-xl sm:rounded-3xl">
                 <Image
                   src="/property_images/houses/house_8.jpg"
                   alt="Verified property"
@@ -481,23 +481,23 @@ export default function AboutPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            {/* LEFT — Founder image placeholder */}
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
+          <div className="grid items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* LEFT — CEO photo */}
             <ScrollReveal variant="left">
-              <div className="img-zoom relative aspect-[3/4] overflow-hidden rounded-3xl">
+              <div className="img-zoom relative aspect-[3/4] overflow-hidden rounded-xl sm:rounded-3xl">
                 <Image
-                  src="/property_images/houses/house_9.jpg"
-                  alt="pata.ug team"
+                  src="/Isaac_Etyang-Profile_Photograph.jpg"
+                  alt="Etty Etiang — CEO, pata.ug"
                   fill
                   sizes="50vw"
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-navy/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="rounded-2xl bg-white/10 px-5 py-4 backdrop-blur-xl">
                     <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/60">
-                      The Team Behind pata.ug
+                      Etty Etiang — Founder &amp; CEO
                     </p>
                     <p className="mt-1 font-display text-lg font-bold text-white">
                       Built in Uganda, for Uganda
@@ -510,7 +510,7 @@ export default function AboutPage() {
             {/* RIGHT — Team text */}
             <ScrollReveal variant="right">
               <p className="section-label text-gold">Our Team</p>
-              <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-white md:text-4xl lg:text-5xl">
+              <h2 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-4xl lg:text-5xl">
                 Built by <span className="text-gradient-gold">Ugandans</span>
               </h2>
               <p className="mt-5 max-w-lg leading-relaxed text-white/60">
@@ -546,7 +546,7 @@ export default function AboutPage() {
           CTA
       ================================================================ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8 lg:py-24">
           <ScrollReveal variant="scale">
             <div
               className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl"
@@ -554,7 +554,7 @@ export default function AboutPage() {
             >
               <Users className="h-8 w-8 text-gold" />
             </div>
-            <h2 className="mt-8 font-display text-4xl font-bold uppercase tracking-tighter text-navy md:text-5xl">
+            <h2 className="mt-8 font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl">
               Join <span className="text-gradient-gold">pata.ug</span>
             </h2>
             <p className="mx-auto mt-5 max-w-md leading-relaxed text-text-muted">
