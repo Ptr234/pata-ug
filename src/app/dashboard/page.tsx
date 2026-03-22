@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
+import { getUserProfile, getFirstName } from "@/lib/user";
 import {
   Eye,
   Phone,
@@ -34,21 +35,38 @@ function formatUGX(amount: number): string {
 
 function getDealStatusStyle(status: DealStatus) {
   switch (status) {
-    case "confirmed":
-      return { bg: "rgba(31,138,68,0.15)", text: "#1F8A44" };
-    case "awaiting_landlord":
-      return { bg: "rgba(224,140,16,0.15)", text: "#E08C10" };
     case "pending":
       return { bg: "rgba(78,63,168,0.15)", text: "#9B8FD8" };
+    case "negotiating":
+      return { bg: "rgba(212,168,83,0.15)", text: "#d4a853" };
+    case "agreed":
+      return { bg: "rgba(224,140,16,0.15)", text: "#E08C10" };
+    case "payment_confirmed":
+    case "confirmed":
+      return { bg: "rgba(31,138,68,0.15)", text: "#1F8A44" };
+    case "closed":
     case "commission_paid":
       return { bg: "rgba(10,147,150,0.15)", text: "#0A9396" };
+    case "awaiting_landlord":
+      return { bg: "rgba(224,140,16,0.15)", text: "#E08C10" };
     default:
       return { bg: "rgba(255,255,255,0.06)", text: "rgba(255,255,255,0.5)" };
   }
 }
 
+const DEAL_STATUS_LABELS: Record<string, string> = {
+  pending: "Requested",
+  negotiating: "Negotiating",
+  agreed: "Pay to Confirm",
+  payment_confirmed: "Close Deal",
+  closed: "Closed",
+  awaiting_landlord: "Awaiting Landlord",
+  confirmed: "Confirmed",
+  commission_paid: "Commission Paid",
+};
+
 function formatDealStatus(status: DealStatus): string {
-  return status.split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  return DEAL_STATUS_LABELS[status] || status.split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
 /* ------------------------------------------------------------------ */
@@ -124,7 +142,7 @@ export default function DashboardPage() {
                   Welcome{" "}
                   <span className="text-gradient-teal">back</span>,{" "}
                   <br className="hidden sm:block" />
-                  John
+                  {getFirstName(getUserProfile())}
                 </h1>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-white/70">
                   Track your property search progress, manage deals, and stay on

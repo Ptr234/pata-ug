@@ -21,6 +21,7 @@ import {
   Shield,
 } from "lucide-react";
 import { NAV_LINKS } from "@/lib/constants";
+import { getUserProfile } from "@/lib/user";
 
 /* Icon map for nav links */
 const NAV_ICONS: Record<string, React.ElementType> = {
@@ -423,11 +424,11 @@ export default function Header() {
                             : "linear-gradient(135deg, #0A9396, #077B7E)",
                       }}
                     >
-                      {userRole === "admin" ? "AD" : userRole === "landlord" ? "SN" : "JD"}
+                      {getUserProfile().initials}
                     </span>
                     <div>
                       <p className="text-sm font-bold text-navy">
-                        {userRole === "admin" ? "Admin User" : userRole === "landlord" ? "Sarah Namutebi" : "John Doe"}
+                        {getUserProfile().fullName}
                       </p>
                       <p className="text-[11px] text-text-muted">
                         {userRole === "admin" ? "Admin Account" : userRole === "landlord" ? "Landlord Account" : "Client Account"}

@@ -409,12 +409,15 @@ function SearchPageContent() {
                       id={property.id}
                       title={property.title}
                       category={property.category}
+                      district={property.district}
                       estate={property.estate}
                       price={property.price}
                       bedrooms={property.bedrooms}
                       bathrooms={property.bathrooms}
                       photo={property.photos[0]}
                       isVerified={property.isVerified}
+                      negotiable={property.negotiable}
+                      upfrontMonths={property.upfrontMonths}
                       furnished={furnishedLabel(property.furnished)}
                       parking={parkingCount(property.parking)}
                       isGuest

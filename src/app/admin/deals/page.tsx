@@ -3,23 +3,25 @@
 import Link from "next/link";
 import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
-import { Handshake, ArrowLeft, MapPin, Calendar, Building2 } from "lucide-react";
+import { Handshake, ArrowLeft, MapPin, Calendar, Building2, MessageCircle } from "lucide-react";
 
 const T = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 const DEALS = [
-  { id: "1", property: "2-Bed Apartment in Bukoto", estate: "Bukoto", tenant: "John Doe", landlord: "James Mukasa", rent: "UGX 1.8M", commission: "UGX 90K", date: "18 Mar", status: "confirmed" as const },
-  { id: "2", property: "3-Bed Townhouse in Muyenga", estate: "Muyenga", tenant: "Mary Akello", landlord: "Richard Ssentamu", rent: "UGX 3.4M", commission: "UGX 170K", date: "20 Mar", status: "awaiting" as const },
-  { id: "3", property: "Studio in Naguru", estate: "Naguru", tenant: "Peter Ouma", landlord: "Grace Achieng", rent: "UGX 800K", commission: "UGX 40K", date: "21 Mar", status: "pending" as const },
-  { id: "4", property: "2-Bed in Entebbe", estate: "Entebbe", tenant: "Alice Nambi", landlord: "Annet Birungi", rent: "UGX 2.2M", commission: "UGX 110K", date: "10 Mar", status: "paid" as const },
-  { id: "5", property: "4-Bed Duplex in Kyanja", estate: "Kyanja", tenant: "David Ssali", landlord: "Herbert Kiggundu", rent: "UGX 2.5M", commission: "UGX 125K", date: "15 Mar", status: "confirmed" as const },
+  { id: "1", property: "2-Bed Apartment in Bukoto", estate: "Bukoto", tenant: "John Doe", landlord: "James Mukasa", rent: "UGX 1.7M", commission: "UGX 85K", date: "18 Mar", status: "payment_confirmed" as const },
+  { id: "2", property: "3-Bed Townhouse in Muyenga", estate: "Muyenga", tenant: "Mary Akello", landlord: "Richard Ssentamu", rent: "UGX 3.4M", commission: "UGX 170K", date: "20 Mar", status: "agreed" as const },
+  { id: "3", property: "Studio in Naguru", estate: "Naguru", tenant: "Peter Ouma", landlord: "Peter Ochieng", rent: "UGX 800K", commission: "UGX 40K", date: "21 Mar", status: "negotiating" as const },
+  { id: "4", property: "2-Bed in Entebbe", estate: "Entebbe", tenant: "Alice Nambi", landlord: "Annet Birungi", rent: "UGX 2.2M", commission: "UGX 110K", date: "10 Mar", status: "closed" as const },
+  { id: "5", property: "4-Bed Duplex in Kyanja", estate: "Kyanja", tenant: "David Ssali", landlord: "Herbert Kiggundu", rent: "UGX 2.5M", commission: "UGX 125K", date: "15 Mar", status: "pending" as const },
 ];
 
 function dealStyle(s: string) {
-  if (s === "paid") return { bg: "rgba(10,147,150,0.15)", color: "#0A9396", label: "Commission Paid" };
-  if (s === "confirmed") return { bg: "rgba(31,138,68,0.15)", color: "#1F8A44", label: "Confirmed" };
-  if (s === "awaiting") return { bg: "rgba(224,140,16,0.15)", color: "#E08C10", label: "Awaiting Landlord" };
-  return { bg: "rgba(212,168,83,0.15)", color: "#d4a853", label: "Pending" };
+  if (s === "closed") return { bg: "rgba(10,147,150,0.15)", color: "#0A9396", label: "Closed" };
+  if (s === "payment_confirmed") return { bg: "rgba(31,138,68,0.15)", color: "#1F8A44", label: "Paid — Awaiting Close" };
+  if (s === "agreed") return { bg: "rgba(224,140,16,0.15)", color: "#E08C10", label: "Agreed — Payment Sent" };
+  if (s === "negotiating") return { bg: "rgba(212,168,83,0.15)", color: "#d4a853", label: "Negotiating" };
+  if (s === "pending") return { bg: "rgba(78,63,168,0.15)", color: "#9B8FD8", label: "Requested" };
+  return { bg: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)", label: s };
 }
 
 export default function AdminDealsPage() {
@@ -52,7 +54,7 @@ export default function AdminDealsPage() {
                 <table className="w-full min-w-[800px] text-left text-sm">
                   <thead>
                     <tr>
-                      {["Property", "Tenant", "Landlord", "Rent", "Commission", "Status"].map((h) => (
+                      {["Property", "Tenant", "Landlord", "Rent", "Commission", "Status", ""].map((h) => (
                         <th key={h} className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.18em] text-gold">{h}</th>
                       ))}
                     </tr>
@@ -71,6 +73,17 @@ export default function AdminDealsPage() {
                           <td className="px-5 py-4 font-display font-bold text-white">{deal.rent}</td>
                           <td className="px-5 py-4 font-bold text-gold">{deal.commission}</td>
                           <td className="px-5 py-4"><span className="inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ background: st.bg, color: st.color }}>{st.label}</span></td>
+                          <td className="px-5 py-4">
+                            <Link
+                              href={`/admin/deals/deal-00${deal.id}/chat`}
+                              className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold"
+                              style={{ background: "rgba(212,168,83,0.1)", transition: `all 500ms ${T}` }}
+                              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.2)"; }}
+                              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.1)"; }}
+                            >
+                              <MessageCircle size={12} /> Chat
+                            </Link>
+                          </td>
                         </tr>
                       );
                     })}

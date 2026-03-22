@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
 import StatusBadge from "@/components/StatusBadge";
+import { getUserProfile } from "@/lib/user";
 import {
   Building2, Eye, Handshake, TrendingUp, Plus, Edit, RefreshCw,
   Shield, ArrowRight, MoreHorizontal, Check, Circle, CheckCircle2,
@@ -64,14 +65,26 @@ function tabToStatus(tab: ListingTab): ListingStatus | null {
 }
 
 function formatUGX(n: number) { return `UGX ${n.toLocaleString("en-UG")}`; }
-function dealLabel(s: string) { return s === "pending" ? "Pending" : s === "awaiting_landlord" ? "Awaiting Response" : s; }
+function dealLabel(s: string) {
+  const labels: Record<string, string> = {
+    pending: "New Request",
+    negotiating: "Negotiating",
+    agreed: "Awaiting Payment",
+    payment_confirmed: "Awaiting Close",
+    closed: "Closed",
+    awaiting_landlord: "Awaiting Response",
+    confirmed: "Confirmed",
+    commission_paid: "Paid",
+  };
+  return labels[s] || s;
+}
 
 /* ── Page ── */
 export default function LandlordDashboardPage() {
   const [activeTab, setActiveTab] = useState<ListingTab>("All");
   const selectedStatus = tabToStatus(activeTab);
   const filtered = selectedStatus ? landlordListings.filter((l) => l.status === selectedStatus) : landlordListings;
-  const incoming = deals.filter((d) => d.status === "pending" || d.status === "awaiting_landlord");
+  const incoming = deals.filter((d) => d.status !== "closed" && d.status !== "commission_paid");
   const doneCount = checklist.filter((c) => c.done).length;
 
   return (
@@ -90,7 +103,7 @@ export default function LandlordDashboardPage() {
                 <p className="section-label text-orange">Landlord Dashboard</p>
                 <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white sm:text-5xl lg:text-6xl">
                   Welcome <span style={{ color: "#D4622A" }}>back</span>,
-                  <br className="hidden sm:block" />Sarah Namutebi
+                  <br className="hidden sm:block" />{getUserProfile().fullName}
                 </h1>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
                   Manage your properties, track tenant interest, and close deals across Kampala.

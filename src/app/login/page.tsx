@@ -164,13 +164,15 @@ export default function LoginPage() {
 
           {/* Footer */}
           <div className="mt-12 text-center">
-            <p className="text-xs text-white/50">
-              <Users size={12} className="mr-1.5 inline text-white/60" />
-              UI Preview Mode — no authentication required
+            <p className="text-sm text-white/50">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="font-bold text-gold transition-colors duration-500 hover:text-gold-dark">
+                Sign Up
+              </Link>
             </p>
             <Link
               href="/"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-gold transition-colors duration-500 hover:text-gold-dark"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-white/60 transition-colors duration-500 hover:text-white"
             >
               Back to Home
               <ArrowRight size={14} />

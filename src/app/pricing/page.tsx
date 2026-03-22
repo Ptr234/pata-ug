@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -34,6 +35,34 @@ const DECISION_GUIDE = [
 ] as const;
 
 export default function PricingPage() {
+  const [role, setRole] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("pata-role");
+    setRole(stored); // null = guest, "tenant", "landlord", or "admin"
+    setReady(true);
+  }, []);
+
+  // Guest (not logged in) → show everything
+  // tenant → client plans only
+  // landlord → landlord plans + commission only
+  // admin → everything
+  const isGuest = !role;
+  const showClient = isGuest || role === "tenant" || role === "admin";
+  const showLandlord = isGuest || role === "landlord" || role === "admin";
+
+  // Filter decision guide cards by audience
+  const filteredGuide = isGuest || role === "admin"
+    ? DECISION_GUIDE
+    : DECISION_GUIDE.filter((item) =>
+        role === "tenant"
+          ? item.audience === "Client"
+          : item.audience === "Landlord"
+      );
+
+  // Don't render until we know the role (prevents flash of wrong content)
+  if (!ready) return null;
   return (
     <main className="min-h-screen">
 
@@ -81,11 +110,11 @@ export default function PricingPage() {
                 Money — instant, secure, no card required.
               </p>
 
-              {/* Two frosted glass stat cards */}
+              {/* Frosted glass stat cards — role-aware */}
               <div className="mt-10 flex flex-wrap gap-4">
                 {[
-                  { icon: Users, text: "Tenants from UGX 20K", accent: "#0A9396" },
-                  { icon: Building2, text: "Landlords from UGX 30K", accent: "#D4622A" },
+                  ...(showClient ? [{ icon: Users, text: "Tenants from UGX 20K", accent: "#0A9396" }] : []),
+                  ...(showLandlord ? [{ icon: Building2, text: "Landlords from UGX 30K", accent: "#D4622A" }] : []),
                 ].map((item) => (
                   <div
                     key={item.text}
@@ -129,7 +158,7 @@ export default function PricingPage() {
                     Starting from
                   </p>
                   <p className="mt-1 font-display text-2xl font-bold text-white">
-                    UGX 20,000
+                    {role === "landlord" ? "UGX 30,000" : "UGX 20,000"}
                   </p>
                 </div>
               </div>
@@ -142,6 +171,7 @@ export default function PricingPage() {
           SECTION 2 — CLIENT PLANS  |  Split (plans left, image right)
           White bg
       ================================================================ */}
+      {showClient && (
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
           <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
@@ -219,15 +249,19 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ================================================================
           SECTION 3 — GRADIENT DIVIDER
           Full-width teal-to-orange gradient strip
       ================================================================ */}
+      {showClient && showLandlord && (
       <div
         className="py-6"
         style={{
-          background: "linear-gradient(135deg, #0A9396, #077B7E 50%, #D4622A)",
+          background: isGuest
+            ? "linear-gradient(135deg, #0A9396, #077B7E 50%, #D4622A)"
+            : "linear-gradient(135deg, #d4a853, #B8903D)",
         }}
       >
         <ScrollReveal>
@@ -253,11 +287,13 @@ export default function PricingPage() {
           </div>
         </ScrollReveal>
       </div>
+      )}
 
       {/* ================================================================
           SECTION 4 — LANDLORD PLANS  |  Split REVERSED (image left, plans right)
           Navy bg + grid pattern + orange blur orb
       ================================================================ */}
+      {showLandlord && (
       <section className="relative overflow-hidden bg-navy">
         {/* Orange blur orb */}
         <div
@@ -351,11 +387,13 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ================================================================
           SECTION 5 — COMMISSION TABLE  |  Split (table left, image right)
           Smoke bg
       ================================================================ */}
+      {showLandlord && (
       <section className="bg-smoke">
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
           <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
@@ -464,11 +502,13 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ================================================================
           SECTION 6 — DECISION GUIDE  |  Full-width dark section
           Navy bg + bg image at opacity-20 + overlay
       ================================================================ */}
+      {filteredGuide.length > 0 && (
       <section className="relative overflow-hidden bg-navy">
         <Image
           src="/property_images/apartments/apartment_5.jpg"
@@ -506,9 +546,9 @@ export default function PricingPage() {
             </header>
           </ScrollReveal>
 
-          {/* 2x2 grid of frosted glass decision cards */}
-          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2">
-            {DECISION_GUIDE.map((item, i) => {
+          {/* Decision cards — filtered by role */}
+          <div className={`mx-auto grid max-w-4xl grid-cols-1 gap-4 ${filteredGuide.length > 2 ? "sm:grid-cols-2" : ""}`}>
+            {filteredGuide.map((item, i) => {
               const Icon = item.icon;
               return (
                 <ScrollReveal key={item.scenario} variant="scale" delay={i * 100}>
@@ -605,6 +645,7 @@ export default function PricingPage() {
           </ScrollReveal>
         </div>
       </section>
+      )}
 
       {/* ================================================================
           SECTION 7 — PAYMENT METHODS  |  Centered dark pill on white bg
@@ -686,15 +727,19 @@ export default function PricingPage() {
               anytime.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link href="/search" className="btn-gold-lg">
-                Browse Properties <ArrowRight size={18} />
-              </Link>
-              <Link
-                href="/login"
-                className="btn-outline-white px-8 py-4 text-base"
-              >
-                List Your Property <ArrowRight size={18} />
-              </Link>
+              {showClient && (
+                <Link href="/search" className="btn-gold-lg">
+                  Browse Properties <ArrowRight size={18} />
+                </Link>
+              )}
+              {showLandlord && (
+                <Link
+                  href={role === "landlord" ? "/landlord/listings/new" : "/login"}
+                  className={showClient ? "btn-outline-white px-8 py-4 text-base" : "btn-gold-lg"}
+                >
+                  List Your Property <ArrowRight size={18} />
+                </Link>
+              )}
             </div>
           </ScrollReveal>
         </div>

@@ -24,13 +24,16 @@ export interface Property {
   id: string;
   title: string;
   category: PropertyCategory;
-  estate: string;
+  district: string;
+  estate: string; // area within the district
   price: number; // monthly rent in UGX
   bedrooms: number;
   bathrooms: number;
   photos: string[];
   description: string;
   isVerified: boolean;
+  negotiable: boolean;
+  upfrontMonths: number; // months rent required upfront (e.g. 3 = 3 months deposit)
   status: PropertyStatus;
   availableFrom: string; // ISO date
   furnished: boolean;
@@ -53,10 +56,14 @@ export interface Notification {
 }
 
 export type DealStatus =
-  | "pending"
-  | "awaiting_landlord"
-  | "confirmed"
-  | "commission_paid";
+  | "pending"           // tenant requested
+  | "negotiating"       // admin mediating via chat
+  | "agreed"            // terms agreed — payment links sent
+  | "payment_confirmed" // both payments received
+  | "closed"            // both clicked Close Deal — contacts shared
+  | "awaiting_landlord" // legacy compat
+  | "confirmed"         // legacy compat
+  | "commission_paid";  // legacy compat
 
 export interface Deal {
   id: string;
@@ -99,6 +106,7 @@ export const properties: Property[] = [
     id: "prop-001",
     title: "Modern 2‑Bedroom Apartment in Bukoto",
     category: "apartment",
+    district: "Kampala",
     estate: "Bukoto",
     price: 1_800_000,
     bedrooms: 2,
@@ -107,6 +115,8 @@ export const properties: Property[] = [
     description:
       "Spacious 2‑bedroom apartment on a quiet street in Bukoto. Tiled floors, modern kitchen with granite countertops, and a private balcony overlooking the neighbourhood. 24‑hour security and ample water supply.",
     isVerified: true,
+    negotiable: true,
+    upfrontMonths: 3,
     status: "available",
     availableFrom: "2026-04-01",
     furnished: false,
@@ -121,6 +131,7 @@ export const properties: Property[] = [
     id: "prop-002",
     title: "Luxury 3‑Bedroom Standalone in Kololo",
     category: "standalone",
+    district: "Kampala",
     estate: "Kololo",
     price: 5_000_000,
     bedrooms: 3,
@@ -129,6 +140,8 @@ export const properties: Property[] = [
     description:
       "Executive standalone house in the prestigious Kololo hill area. Master en‑suite, large living room, mature garden with fruit trees, boys' quarters, and a double garage. Walking distance to international schools and embassies.",
     isVerified: true,
+    negotiable: false,
+    upfrontMonths: 2,
     status: "available",
     availableFrom: "2026-04-15",
     furnished: true,
@@ -143,6 +156,7 @@ export const properties: Property[] = [
     id: "prop-003",
     title: "Cosy Studio in Naguru",
     category: "studio",
+    district: "Kampala",
     estate: "Naguru",
     price: 800_000,
     bedrooms: 0,
@@ -151,6 +165,8 @@ export const properties: Property[] = [
     description:
       "Bright studio apartment ideal for a young professional. Open‑plan living and sleeping area, kitchenette with gas cooker, tiled bathroom, and shared compound parking. Close to Naguru Go‑Down arts centre.",
     isVerified: true,
+    negotiable: true,
+    upfrontMonths: 1,
     status: "available",
     availableFrom: "2026-03-25",
     furnished: true,
@@ -165,6 +181,7 @@ export const properties: Property[] = [
     id: "prop-004",
     title: "Affordable Single Room in Ntinda",
     category: "single-room",
+    district: "Kampala",
     estate: "Ntinda",
     price: 350_000,
     bedrooms: 1,
@@ -173,6 +190,8 @@ export const properties: Property[] = [
     description:
       "Self‑contained single room in a well‑maintained rental block in Ntinda Trading Centre. Shared compound, reliable water, and prepaid electricity meter. Perfect for students and young workers.",
     isVerified: false,
+    negotiable: true,
+    upfrontMonths: 2,
     status: "available",
     availableFrom: "2026-04-01",
     furnished: false,
@@ -187,6 +206,7 @@ export const properties: Property[] = [
     id: "prop-005",
     title: "Hillside 3‑Bedroom Townhouse in Muyenga",
     category: "townhouse",
+    district: "Kampala",
     estate: "Muyenga",
     price: 3_500_000,
     bedrooms: 3,
@@ -195,6 +215,8 @@ export const properties: Property[] = [
     description:
       "Semi‑detached townhouse perched on Muyenga hill with sweeping views of Lake Victoria. All bedrooms en‑suite, modern finishes, private garden, covered parking for two cars, and 24‑hour security gate.",
     isVerified: true,
+    negotiable: false,
+    upfrontMonths: 3,
     status: "reserved",
     availableFrom: "2026-05-01",
     furnished: false,
@@ -209,6 +231,7 @@ export const properties: Property[] = [
     id: "prop-006",
     title: "Executive Office Space in Nakasero",
     category: "office",
+    district: "Kampala",
     estate: "Nakasero",
     price: 4_500_000,
     bedrooms: 0,
@@ -217,6 +240,8 @@ export const properties: Property[] = [
     description:
       "Prime ground‑floor office space on Nakasero Road. 80 sqm open plan with a partitioned manager's office, reception area, staff kitchen, and two washrooms. Fibre internet ready, backup generator, and dedicated parking.",
     isVerified: true,
+    negotiable: true,
+    upfrontMonths: 6,
     status: "available",
     availableFrom: "2026-04-01",
     furnished: false,
@@ -231,6 +256,7 @@ export const properties: Property[] = [
     id: "prop-007",
     title: "2‑Bedroom Apartment in Bugolobi",
     category: "apartment",
+    district: "Kampala",
     estate: "Bugolobi",
     price: 2_000_000,
     bedrooms: 2,
@@ -239,6 +265,8 @@ export const properties: Property[] = [
     description:
       "Well‑finished apartment in a gated compound in Bugolobi flats area. Master en‑suite, spacious lounge, fitted kitchen, water heater in both bathrooms, and a large balcony. Walking distance to Game and Bugolobi Market.",
     isVerified: true,
+    negotiable: false,
+    upfrontMonths: 3,
     status: "available",
     availableFrom: "2026-04-10",
     furnished: false,
@@ -253,6 +281,7 @@ export const properties: Property[] = [
     id: "prop-008",
     title: "Budget Single Room in Kisaasi",
     category: "single-room",
+    district: "Kampala",
     estate: "Kisaasi",
     price: 300_000,
     bedrooms: 1,
@@ -261,6 +290,8 @@ export const properties: Property[] = [
     description:
       "Clean self‑contained single room off Kisaasi‑Bahai Road. Inside toilet and bathroom, cemented floor, security lights in the compound, and nearby boda‑boda stage for easy transport to the city centre.",
     isVerified: false,
+    negotiable: true,
+    upfrontMonths: 2,
     status: "available",
     availableFrom: "2026-03-28",
     furnished: false,
@@ -275,6 +306,7 @@ export const properties: Property[] = [
     id: "prop-009",
     title: "New 4‑Bedroom Duplex in Kyanja",
     category: "standalone",
+    district: "Wakiso",
     estate: "Kyanja",
     price: 2_500_000,
     bedrooms: 4,
@@ -283,6 +315,8 @@ export const properties: Property[] = [
     description:
       "Brand new duplex in a developing estate in Kyanja. Ground floor features living room, dining area, guest bedroom and washroom; upper floor has three bedrooms (master en‑suite), store room, and balcony. Tarmac access road.",
     isVerified: true,
+    negotiable: false,
+    upfrontMonths: 3,
     status: "available",
     availableFrom: "2026-04-15",
     furnished: false,
@@ -297,6 +331,7 @@ export const properties: Property[] = [
     id: "prop-010",
     title: "Furnished 1‑Bedroom in Kira",
     category: "apartment",
+    district: "Wakiso",
     estate: "Kira",
     price: 1_200_000,
     bedrooms: 1,
@@ -305,6 +340,8 @@ export const properties: Property[] = [
     description:
       "Fully furnished one‑bedroom apartment in Kira near Kampala. Comes with a queen bed, wardrobe, sofa set, TV, gas cooker, and utensils. Ideal for expats or short‑stay tenants. Water tank and prepaid meter.",
     isVerified: true,
+    negotiable: true,
+    upfrontMonths: 1,
     status: "occupied",
     availableFrom: "2026-06-01",
     furnished: true,
@@ -319,6 +356,7 @@ export const properties: Property[] = [
     id: "prop-011",
     title: "3‑Bedroom Bungalow in Naalya",
     category: "standalone",
+    district: "Wakiso",
     estate: "Naalya",
     price: 1_500_000,
     bedrooms: 3,
@@ -327,6 +365,8 @@ export const properties: Property[] = [
     description:
       "Neat bungalow in a gated estate in Naalya. Three bedrooms (master en‑suite), sit‑in kitchen, servants' quarters, small garden, and shared borehole water. Close to Naalya Housing Estate market and schools.",
     isVerified: false,
+    negotiable: true,
+    upfrontMonths: 2,
     status: "available",
     availableFrom: "2026-04-05",
     furnished: false,
@@ -341,6 +381,7 @@ export const properties: Property[] = [
     id: "prop-012",
     title: "Lakeside 2‑Bedroom Apartment in Entebbe",
     category: "apartment",
+    district: "Wakiso",
     estate: "Entebbe",
     price: 2_200_000,
     bedrooms: 2,
@@ -349,6 +390,8 @@ export const properties: Property[] = [
     description:
       "Charming apartment minutes from the Entebbe lakefront. Tiled floors, spacious rooms, reliable UMEME power with inverter backup, and a compound with lush tropical landscaping. Great for airport and NGO workers.",
     isVerified: true,
+    negotiable: false,
+    upfrontMonths: 3,
     status: "available",
     availableFrom: "2026-04-01",
     furnished: true,
@@ -406,6 +449,38 @@ export const notifications: Notification[] = [
   },
 ];
 
+// ---- Chat Messages --------------------------------------------------------
+
+export type ChatSide = "tenant" | "landlord" | "admin";
+
+export interface ChatMessage {
+  id: string;
+  dealId: string;
+  from: ChatSide;       // who sent it
+  to: ChatSide;         // who it's addressed to
+  senderName: string;
+  text: string;
+  timestamp: string;    // ISO date-time
+}
+
+export const chatMessages: ChatMessage[] = [
+  // Deal 1 — tenant wants Bukoto apartment
+  { id: "msg-001", dealId: "deal-001", from: "tenant", to: "admin", senderName: "John Doe", text: "Hi, I'm interested in the 2-bedroom apartment in Bukoto. Is it still available?", timestamp: "2026-03-18T09:00:00Z" },
+  { id: "msg-002", dealId: "deal-001", from: "admin", to: "tenant", senderName: "pata.ug", text: "Hi John! Yes, the property is still available. The listed rent is UGX 1,800,000/month. Would you like us to proceed with this price or would you like to propose a different amount?", timestamp: "2026-03-18T09:15:00Z" },
+  { id: "msg-003", dealId: "deal-001", from: "tenant", to: "admin", senderName: "John Doe", text: "Can we try UGX 1,600,000? I can move in by April 1st.", timestamp: "2026-03-18T09:30:00Z" },
+  { id: "msg-004", dealId: "deal-001", from: "admin", to: "landlord", senderName: "pata.ug", text: "Hi James, we have a verified tenant interested in your Bukoto apartment. They're offering UGX 1,600,000/month with an April 1st move-in. Would you consider this?", timestamp: "2026-03-18T09:45:00Z" },
+  { id: "msg-005", dealId: "deal-001", from: "landlord", to: "admin", senderName: "James Mukasa", text: "Lowest I can go is 1,700,000. April 1st works.", timestamp: "2026-03-18T10:20:00Z" },
+  { id: "msg-006", dealId: "deal-001", from: "admin", to: "tenant", senderName: "pata.ug", text: "Good news! The landlord is willing to negotiate. The best price available is UGX 1,700,000/month with April 1st move-in. Shall we confirm this deal?", timestamp: "2026-03-18T10:30:00Z" },
+  { id: "msg-007", dealId: "deal-001", from: "tenant", to: "admin", senderName: "John Doe", text: "That works for me. Let's confirm!", timestamp: "2026-03-18T10:45:00Z" },
+  { id: "msg-008", dealId: "deal-001", from: "admin", to: "landlord", senderName: "pata.ug", text: "Deal confirmed at UGX 1,700,000/month. Tenant moves in April 1st. We'll share contact details to both parties now. The 5% commission (UGX 85,000) will be invoiced.", timestamp: "2026-03-18T11:00:00Z" },
+
+  // Deal 3 — tenant asking about Naguru studio
+  { id: "msg-009", dealId: "deal-003", from: "tenant", to: "admin", senderName: "Peter Ouma", text: "I'd like to request the studio in Naguru. Is UGX 800K the final price?", timestamp: "2026-03-21T08:00:00Z" },
+  { id: "msg-010", dealId: "deal-003", from: "admin", to: "tenant", senderName: "pata.ug", text: "Hi Peter! The studio is listed at UGX 800,000/month. The landlord has marked this as negotiable. Would you like to propose a different price?", timestamp: "2026-03-21T08:20:00Z" },
+  { id: "msg-011", dealId: "deal-003", from: "tenant", to: "admin", senderName: "Peter Ouma", text: "Could you ask if UGX 700,000 would work?", timestamp: "2026-03-21T08:35:00Z" },
+  { id: "msg-012", dealId: "deal-003", from: "admin", to: "landlord", senderName: "pata.ug", text: "Hi Peter (landlord), a verified tenant is interested in your Naguru studio. They're proposing UGX 700,000/month. Are you open to this?", timestamp: "2026-03-21T08:50:00Z" },
+];
+
 // ---- Deals ----------------------------------------------------------------
 
 export const deals: Deal[] = [
@@ -413,8 +488,8 @@ export const deals: Deal[] = [
     id: "deal-001",
     propertyTitle: "Modern 2‑Bedroom Apartment in Bukoto",
     estate: "Bukoto",
-    agreedRent: 1_800_000,
-    status: "confirmed",
+    agreedRent: 1_700_000,
+    status: "payment_confirmed",
     date: "2026-03-18",
   },
   {
@@ -422,7 +497,7 @@ export const deals: Deal[] = [
     propertyTitle: "Hillside 3‑Bedroom Townhouse in Muyenga",
     estate: "Muyenga",
     agreedRent: 3_400_000,
-    status: "awaiting_landlord",
+    status: "agreed",
     date: "2026-03-20",
   },
   {
@@ -430,7 +505,7 @@ export const deals: Deal[] = [
     propertyTitle: "Cosy Studio in Naguru",
     estate: "Naguru",
     agreedRent: 800_000,
-    status: "pending",
+    status: "negotiating",
     date: "2026-03-21",
   },
   {
@@ -438,7 +513,7 @@ export const deals: Deal[] = [
     propertyTitle: "Lakeside 2‑Bedroom Apartment in Entebbe",
     estate: "Entebbe",
     agreedRent: 2_200_000,
-    status: "commission_paid",
+    status: "closed",
     date: "2026-03-10",
   },
 ];

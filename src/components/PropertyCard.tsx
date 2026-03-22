@@ -12,18 +12,22 @@ import {
   Lock,
   ArrowRight,
   Handshake,
+  Tag,
 } from "lucide-react";
 
 interface PropertyCardProps {
   id: string;
   title: string;
   category: string;
+  district?: string;
   estate: string;
   price: number;
   bedrooms?: number;
   bathrooms?: number;
   photo: string;
   isVerified: boolean;
+  negotiable?: boolean;
+  upfrontMonths?: number;
   furnished?: string;
   parking?: number;
   isGuest?: boolean;
@@ -39,12 +43,15 @@ export default function PropertyCard({
   id,
   title,
   category,
+  district,
   estate,
   price,
   bedrooms,
   bathrooms,
   photo,
   isVerified,
+  negotiable,
+  upfrontMonths,
   furnished,
   parking,
   isGuest = false,
@@ -95,21 +102,24 @@ export default function PropertyCard({
           {category}
         </span>
 
-        {/* Verified badge — top right */}
-        {isVerified && (
-          <span
-            className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-white"
-            style={{
-              background: "linear-gradient(135deg, #d4a853, #B8903D)",
-              boxShadow: "0 2px 8px rgba(212, 168, 83, 0.3)",
-            }}
-          >
-            <Shield className="h-3 w-3" />
-            Verified
-          </span>
-        )}
+        {/* Verification badge — top right */}
+        <span
+          className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-white"
+          style={{
+            background: isVerified
+              ? "linear-gradient(135deg, #22C55E, #16A34A)"
+              : "rgba(255,255,255,0.15)",
+            boxShadow: isVerified
+              ? "0 2px 8px rgba(34, 197, 94, 0.3)"
+              : "none",
+            backdropFilter: isVerified ? "none" : "blur(8px)",
+          }}
+        >
+          <Shield className="h-3 w-3" />
+          {isVerified ? "Verified" : "Not Verified"}
+        </span>
 
-        {/* Price — overlaid at bottom of photo */}
+        {/* Price + negotiable label — overlaid at bottom of photo */}
         <div className="absolute inset-x-0 bottom-0 px-4 pb-4">
           <p className="font-display text-2xl font-bold tracking-tight text-white">
             UGX {formatPrice(price)}
@@ -117,6 +127,25 @@ export default function PropertyCard({
               /mo
             </span>
           </p>
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            <span
+              className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-black uppercase tracking-wider"
+              style={{
+                background: negotiable
+                  ? "rgba(10, 147, 150, 0.25)"
+                  : "rgba(212, 98, 42, 0.25)",
+                color: negotiable ? "#5EEAD4" : "#FB923C",
+              }}
+            >
+              <Tag className="h-2.5 w-2.5" />
+              {negotiable ? "Negotiable" : "Fixed Price"}
+            </span>
+            {upfrontMonths && upfrontMonths > 0 && (
+              <span className="inline-flex items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white/80 backdrop-blur-sm">
+                {upfrontMonths}mo deposit
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Hover: "View" arrow indicator — slides in from right */}
@@ -145,7 +174,7 @@ export default function PropertyCard({
         {/* Estate */}
         <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-white/70">
           <MapPin className="h-3 w-3 flex-shrink-0 text-teal" />
-          <span className="truncate">{estate}</span>
+          <span className="truncate">{estate}{district ? `, ${district}` : ""}</span>
         </div>
 
         {/* Feature row */}

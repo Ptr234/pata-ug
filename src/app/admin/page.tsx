@@ -131,12 +131,12 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-3 lg:col-span-2 lg:justify-end">
-                <Link href="/admin" className="btn-gold">
+                <Link href="/admin/reports" className="btn-gold">
                   <TrendingUp className="h-4 w-4" />
                   Reports
                 </Link>
                 <Link
-                  href="/admin"
+                  href="/admin/users"
                   className="inline-flex items-center gap-2 rounded-xl bg-white/[0.06] px-5 py-3 text-xs font-bold uppercase tracking-wider text-white/80 backdrop-blur-sm"
                   style={{ transition: `all 500ms ${T}` }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.transform = "translateY(-2px)"; }}

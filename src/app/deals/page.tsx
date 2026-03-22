@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -10,6 +11,11 @@ import {
   SearchX,
   Check,
   Shield,
+  MessageCircle,
+  CreditCard,
+  Phone,
+  Lock,
+  ExternalLink,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { deals } from "@/lib/mock-data";
@@ -28,8 +34,29 @@ const STATUS_STYLES: Record<
   pending: {
     bg: "rgba(78,63,168,0.15)",
     text: "#9B8FD8",
-    label: "Pending",
+    label: "Requested",
   },
+  negotiating: {
+    bg: "rgba(212,168,83,0.15)",
+    text: "#d4a853",
+    label: "Negotiating",
+  },
+  agreed: {
+    bg: "rgba(224,140,16,0.15)",
+    text: "#E08C10",
+    label: "Pay to Confirm",
+  },
+  payment_confirmed: {
+    bg: "rgba(31,138,68,0.15)",
+    text: "#1F8A44",
+    label: "Close Deal",
+  },
+  closed: {
+    bg: "rgba(10,147,150,0.15)",
+    text: "#0A9396",
+    label: "Closed — Contacts Shared",
+  },
+  // legacy compat
   awaiting_landlord: {
     bg: "rgba(224,140,16,0.15)",
     text: "#E08C10",
@@ -55,22 +82,27 @@ function formatUGX(amount: number): string {
 /*  Stats                                                              */
 /* ------------------------------------------------------------------ */
 
-const confirmedCount = deals.filter((d) => d.status === "confirmed").length;
-const pendingCount = deals.filter(
-  (d) => d.status === "pending" || d.status === "awaiting_landlord"
-).length;
-
-const STATS = [
-  { label: "Total Deals", value: deals.length, accent: "#0A9396" },
-  { label: "Confirmed", value: confirmedCount, accent: "#1F8A44" },
-  { label: "Pending", value: pendingCount, accent: "#E08C10" },
-] as const;
-
 /* ------------------------------------------------------------------ */
 /*  Page                                                               */
 /* ------------------------------------------------------------------ */
 
 export default function DealsPage() {
+  const [dealList, setDealList] = useState(deals);
+  const [payingDealId, setPayingDealId] = useState<string | null>(null);
+
+  const closedCount = dealList.filter((d) => d.status === "closed").length;
+  const activeCount = dealList.filter((d) => ["pending", "negotiating", "agreed", "payment_confirmed"].includes(d.status)).length;
+
+  const STATS = [
+    { label: "Total Deals", value: dealList.length, accent: "#0A9396" },
+    { label: "Active", value: activeCount, accent: "#E08C10" },
+    { label: "Closed", value: closedCount, accent: "#1F8A44" },
+  ];
+
+  const updateDealStatus = (id: string, status: DealStatus) => {
+    setDealList((prev) => prev.map((d) => (d.id === id ? { ...d, status } : d)));
+  };
+
   return (
     <main className="min-h-screen">
       {/* ═══ HERO ═══ */}
@@ -243,10 +275,21 @@ export default function DealsPage() {
                         >
                           Date
                         </th>
+                        <th
+                          className="px-6 py-4"
+                          style={{
+                            fontSize: "10px",
+                            fontWeight: 900,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.18em",
+                            color: "#d4a853",
+                          }}
+                        >
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {deals.map((deal, idx) => {
+                      {dealList.map((deal, idx) => {
                         const style = STATUS_STYLES[deal.status];
                         return (
                           <tr
@@ -315,6 +358,57 @@ export default function DealsPage() {
                                 {deal.date}
                               </span>
                             </td>
+                            <td className="px-6 py-4">
+                              <div className="flex flex-wrap gap-1.5">
+                                {/* Chat — always available except closed */}
+                                {deal.status !== "closed" && (
+                                  <Link
+                                    href={`/deals/${deal.id}/chat`}
+                                    className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-bold text-teal"
+                                    style={{ background: "rgba(10,147,150,0.1)", transition: `all 400ms ${T}` }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(10,147,150,0.2)"; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(10,147,150,0.1)"; }}
+                                  >
+                                    <MessageCircle size={11} /> Chat
+                                  </Link>
+                                )}
+
+                                {/* Pay Deposit — when deal is agreed */}
+                                {deal.status === "agreed" && (
+                                  <button
+                                    type="button"
+                                    onClick={() => setPayingDealId(deal.id)}
+                                    className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-bold text-white"
+                                    style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)", boxShadow: "0 2px 8px rgba(212,168,83,0.25)", transition: `all 400ms ${T}` }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                                  >
+                                    <CreditCard size={11} /> Pay Deposit
+                                  </button>
+                                )}
+
+                                {/* Close Deal — when payment confirmed */}
+                                {deal.status === "payment_confirmed" && (
+                                  <button
+                                    type="button"
+                                    onClick={() => updateDealStatus(deal.id, "closed")}
+                                    className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-bold text-white"
+                                    style={{ background: "linear-gradient(135deg, #1F8A44, #16753A)", boxShadow: "0 2px 8px rgba(31,138,68,0.25)", transition: `all 400ms ${T}` }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                                  >
+                                    <Handshake size={11} /> Close Deal
+                                  </button>
+                                )}
+
+                                {/* Closed — show contact shared */}
+                                {deal.status === "closed" && (
+                                  <span className="inline-flex items-center gap-1 rounded-lg bg-teal/10 px-2.5 py-1.5 text-[10px] font-bold text-teal">
+                                    <Phone size={11} /> Contact Shared
+                                  </span>
+                                )}
+                              </div>
+                            </td>
                           </tr>
                         );
                       })}
@@ -357,6 +451,115 @@ export default function DealsPage() {
           )}
         </div>
       </section>
+      {/* ═══ PAYMENT MODAL ═══ */}
+      {payingDealId && (() => {
+        const deal = dealList.find((d) => d.id === payingDealId);
+        if (!deal) return null;
+        const deposit = deal.agreedRent * 3; // default 3 months — would come from property in production
+        const commission = Math.round(deal.agreedRent * 0.05);
+
+        return (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-navy/95 backdrop-blur-xl"
+            onClick={() => setPayingDealId(null)}
+          >
+            <div
+              className="mx-4 w-full max-w-md overflow-hidden rounded-3xl bg-navy"
+              style={{ boxShadow: "0 32px 64px rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="px-6 pt-6 sm:px-8 sm:pt-8">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-gold/70">
+                  Deposit Payment
+                </p>
+                <h3 className="mt-2 font-display text-xl font-bold tracking-tighter text-white">
+                  {deal.propertyTitle}
+                </h3>
+                <p className="mt-1 text-xs text-white/50">
+                  {deal.estate}
+                </p>
+              </div>
+
+              {/* Breakdown */}
+              <div className="mt-5 mx-6 sm:mx-8 rounded-xl bg-white/[0.04] p-4">
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-white/50">Agreed Monthly Rent</span>
+                    <span className="font-bold text-white">{formatUGX(deal.agreedRent)}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-white/50">Deposit (3 months)</span>
+                    <span className="font-bold text-white">{formatUGX(deposit)}</span>
+                  </div>
+                  <div className="h-px bg-white/[0.06]" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold text-gold">Total to Pay</span>
+                    <span className="font-display text-2xl font-bold tracking-tight text-gold">{formatUGX(deposit)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Wallet explanation */}
+              <div className="mt-4 mx-6 sm:mx-8 flex items-start gap-2.5 rounded-xl bg-teal/5 px-4 py-3">
+                <Shield size={14} className="mt-0.5 shrink-0 text-teal" />
+                <p className="text-[11px] leading-relaxed text-white/50">
+                  Your deposit goes into your <span className="font-bold text-teal">pata.ug wallet</span>.
+                  We only transfer to the landlord after the deal is closed and confirmed by both parties.
+                  Your money is safe with us.
+                </p>
+              </div>
+
+              {/* Payment methods */}
+              <div className="mt-5 space-y-2.5 px-6 sm:px-8">
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateDealStatus(deal.id, "payment_confirmed");
+                    setPayingDealId(null);
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold text-white"
+                  style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)", boxShadow: "0 4px 20px rgba(212,168,83,0.3)", transition: `all 500ms ${T}` }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                >
+                  <Phone size={16} /> Pay {formatUGX(deposit)} via MTN MoMo
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateDealStatus(deal.id, "payment_confirmed");
+                    setPayingDealId(null);
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange py-3.5 text-sm font-bold text-white"
+                  style={{ boxShadow: "0 4px 16px rgba(212,98,42,0.2)", transition: `all 500ms ${T}` }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                >
+                  <Phone size={16} /> Pay {formatUGX(deposit)} via Airtel Money
+                </button>
+              </div>
+
+              {/* Cancel + note */}
+              <div className="mt-4 px-6 pb-6 sm:px-8 sm:pb-8 text-center">
+                <button
+                  type="button"
+                  onClick={() => setPayingDealId(null)}
+                  className="text-xs font-medium text-white/40"
+                  style={{ transition: `color 400ms ${T}` }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.8)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.4)"; }}
+                >
+                  Cancel
+                </button>
+                <p className="mt-3 text-[10px] text-white/30">
+                  5% commission ({formatUGX(commission)}) is deducted from the landlord&apos;s payout on deal close.
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </main>
   );
 }

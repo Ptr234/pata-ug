@@ -8,7 +8,7 @@ import {
   Check,
   RotateCcw,
 } from "lucide-react";
-import { CATEGORIES, ESTATES } from "@/lib/constants";
+import { CATEGORIES, DISTRICTS, DISTRICT_NAMES } from "@/lib/constants";
 
 /* ────────────────────────── Types ────────────────────────── */
 
@@ -16,6 +16,7 @@ export interface FilterState {
   category: string;
   minPrice: number;
   maxPrice: number;
+  district: string;
   estate: string;
   bedrooms: string;
   bathrooms: string;
@@ -35,6 +36,7 @@ const DEFAULT_FILTERS: FilterState = {
   category: "",
   minPrice: 0,
   maxPrice: 0,
+  district: "",
   estate: "",
   bedrooms: "",
   bathrooms: "",
@@ -58,8 +60,6 @@ const FURNISHED_OPTIONS = ["Any", "Unfurnished", "Partially", "Fully"];
 const labelClasses =
   "block text-[10px] font-black uppercase tracking-[0.15em] text-gold/70 mb-2";
 
-const inputClasses =
-  "w-full rounded-xl bg-white/[0.12] px-3.5 py-2.5 text-sm font-medium text-white placeholder:text-white/50 outline-none transition-all duration-500 focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30";
 
 const selectClasses =
   "w-full appearance-none rounded-xl bg-white/[0.12] px-3.5 py-2.5 pr-9 text-sm font-medium text-white outline-none transition-all duration-500 focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white [&>option]:py-2";
@@ -155,6 +155,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
     filters.category !== "" ||
     filters.minPrice > 0 ||
     filters.maxPrice > 0 ||
+    filters.district !== "" ||
     filters.estate !== "" ||
     filters.bedrooms !== "" ||
     filters.bathrooms !== "" ||
@@ -189,10 +190,10 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
   /* ────────────────── Filter panel ────────────────── */
 
   const filterPanel = (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {/* 1 ─ Category */}
       <div className="relative sm:col-span-2 xl:col-span-1">
-        <label className={labelClasses}>Category</label>
+        <label className={labelClasses}>What are you looking for?</label>
         <button
           type="button"
           onClick={() => setCategoryOpen((prev) => !prev)}
@@ -264,55 +265,89 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         )}
       </div>
 
-      {/* 2 ─ Price range */}
+      {/* 2 ─ Budget */}
       <div className="sm:col-span-2 xl:col-span-1">
-        <label className={labelClasses}>Price (UGX/mo)</label>
-        <div className="flex items-center gap-2">
-          <input
-            type="number"
-            min={0}
-            placeholder="Min"
-            value={filters.minPrice || ""}
-            onChange={(e) =>
-              updateFilter("minPrice", Number(e.target.value) || 0)
+        <label className={labelClasses}>Your Budget per Month</label>
+        <div className="relative">
+          <select
+            value={
+              filters.minPrice && filters.maxPrice
+                ? `${filters.minPrice}-${filters.maxPrice}`
+                : filters.minPrice
+                  ? `${filters.minPrice}-0`
+                  : ""
             }
-            className={inputClasses}
-          />
-          <span className="shrink-0 text-white/70">&ndash;</span>
-          <input
-            type="number"
-            min={0}
-            placeholder="Max"
-            value={filters.maxPrice || ""}
-            onChange={(e) =>
-              updateFilter("maxPrice", Number(e.target.value) || 0)
-            }
-            className={inputClasses}
-          />
+            onChange={(e) => {
+              const val = e.target.value;
+              if (!val) {
+                updateFilter("minPrice", 0);
+                updateFilter("maxPrice", 0);
+              } else {
+                const [min, max] = val.split("-").map(Number);
+                updateFilter("minPrice", min);
+                updateFilter("maxPrice", max);
+              }
+            }}
+            className={selectClasses}
+          >
+            <option value="">Any Price</option>
+            <option value="0-300000">Under 300K</option>
+            <option value="300000-500000">300K – 500K</option>
+            <option value="500000-800000">500K – 800K</option>
+            <option value="800000-1500000">800K – 1.5M</option>
+            <option value="1500000-2500000">1.5M – 2.5M</option>
+            <option value="2500000-5000000">2.5M – 5M</option>
+            <option value="5000000-0">5M+</option>
+          </select>
+          <ChevronDown size={14} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/50" />
         </div>
       </div>
 
-      {/* 3 ─ Estate */}
+      {/* 3 ─ District */}
       <div>
-        <label className={labelClasses}>Estate / Area</label>
-        <input
-          type="text"
-          list="estates-datalist"
-          placeholder="e.g. Bukoto"
-          value={filters.estate}
-          onChange={(e) => updateFilter("estate", e.target.value)}
-          className={inputClasses}
-        />
-        <datalist id="estates-datalist">
-          {ESTATES.map((e) => (
-            <option key={e} value={e} />
-          ))}
-        </datalist>
+        <label className={labelClasses}>Which District?</label>
+        <div className="relative">
+          <select
+            value={filters.district}
+            onChange={(e) => {
+              updateFilter("district", e.target.value);
+              updateFilter("estate", "");
+            }}
+            className={selectClasses}
+          >
+            <option value="">All Districts</option>
+            {DISTRICT_NAMES.map((d) => (
+              <option key={d} value={d}>{d}</option>
+            ))}
+          </select>
+          <ChevronDown size={14} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/50" />
+        </div>
       </div>
 
-      {/* 4 ─ Bedrooms */}
+      {/* 4 ─ Estate / Area */}
       <div>
-        <label className={labelClasses}>Bedrooms</label>
+        <label className={labelClasses}>Estate / Area</label>
+        <div className="relative">
+          <select
+            value={filters.estate}
+            onChange={(e) => updateFilter("estate", e.target.value)}
+            className={selectClasses}
+          >
+            <option value="">All Areas</option>
+            {(filters.district
+              ? (DISTRICTS[filters.district] ?? [])
+              : Object.values(DISTRICTS).flat()
+            ).map((area) => (
+              <option key={area} value={area}>{area}</option>
+            ))}
+          </select>
+          <ChevronDown size={14} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/50" />
+        </div>
+      </div>
+
+      {/* 5 ─ Bedrooms */}
+      <div>
+        <label className={labelClasses}>How Many Beds?</label>
         <div className="relative">
           <select
             value={filters.bedrooms}
@@ -332,7 +367,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         </div>
       </div>
 
-      {/* 5 ─ Bathrooms */}
+      {/* 6 ─ Bathrooms */}
       <div>
         <label className={labelClasses}>Bathrooms</label>
         <div className="relative">
@@ -354,9 +389,9 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         </div>
       </div>
 
-      {/* 6 ─ Furnished */}
+      {/* 7 ─ Furnished */}
       <div>
-        <label className={labelClasses}>Furnished</label>
+        <label className={labelClasses}>Furnishing</label>
         <div className="relative">
           <select
             value={filters.furnished}

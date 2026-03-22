@@ -8,7 +8,7 @@ import {
   ImagePlus, Phone, Building2, ArrowLeft, Home, Bed, Bath, Calendar,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
-import { CATEGORIES } from "@/lib/constants";
+import { CATEGORIES, DISTRICTS, DISTRICT_NAMES } from "@/lib/constants";
 
 const T = "cubic-bezier(0.16, 1, 0.3, 1)";
 const STEPS = [
@@ -187,9 +187,34 @@ export default function NewListingPage() {
                         <div><label className={L}>Listing Title</label><input type="text" placeholder={isLand ? "e.g. 50x100 Plot in Wakiso" : isCommercial ? "e.g. Office Space on Nakasero Road" : "e.g. Modern 2-Bedroom Apartment in Bukoto"} className={I} style={{ transition: `all 500ms ${T}` }} /></div>
                         <div className="grid gap-5 sm:grid-cols-2">
                           <div><label className={L}>{isLand ? "Asking Price (UGX)" : "Monthly Rent (UGX)"}</label><input type="number" placeholder={isLand ? "50,000,000" : "1,500,000"} className={I} style={{ transition: `all 500ms ${T}` }} /></div>
-                          <div><label className={L}>Estate / Location</label><div className="relative"><MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" /><input type="text" placeholder="e.g. Bukoto" className={`${I} pl-11`} style={{ transition: `all 500ms ${T}` }} /></div></div>
+                          <div><label className={L}>District</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option value="">Select District</option>{DISTRICT_NAMES.map((d) => <option key={d} value={d}>{d}</option>)}</select></div>
                         </div>
-                        <div><label className={L}>Available From</label><input type="date" className={S} style={{ transition: `all 500ms ${T}` }} /></div>
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div><label className={L}>Estate / Area</label><div className="relative"><MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" /><input type="text" list="listing-areas" placeholder="e.g. Bukoto or type new area" className={`${I} pl-11`} style={{ transition: `all 500ms ${T}` }} /><datalist id="listing-areas">{Object.values(DISTRICTS).flat().map((a) => <option key={a} value={a} />)}</datalist></div><p className="mt-1 text-[10px] text-white/40">Pick from the list or type a new area name</p></div>
+                        </div>
+                        <div>
+                          <label className={L}>Price Flexibility</label>
+                          <div className="flex gap-3">
+                            <button type="button" className="flex-1 rounded-xl px-4 py-3.5 text-sm font-bold" style={{ background: "rgba(10,147,150,0.12)", border: "2px solid #0A9396", color: "#5EEAD4", transition: `all 500ms ${T}` }}>Negotiable</button>
+                            <button type="button" className="flex-1 rounded-xl px-4 py-3.5 text-sm font-bold" style={{ background: "rgba(255,255,255,0.04)", border: "2px solid transparent", color: "rgba(255,255,255,0.5)", transition: `all 500ms ${T}` }}>Fixed Price</button>
+                          </div>
+                          <p className="mt-1.5 text-[10px] text-white/40">This label will appear on your listing for tenants to see</p>
+                        </div>
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div>
+                            <label className={L}>Upfront Deposit (months)</label>
+                            <select className={S} style={{ transition: `all 500ms ${T}` }}>
+                              <option>1 month</option>
+                              <option>2 months</option>
+                              <option>3 months</option>
+                              <option>4 months</option>
+                              <option>6 months</option>
+                              <option>12 months</option>
+                            </select>
+                            <p className="mt-1.5 text-[10px] text-white/40">How many months rent the tenant pays upfront into their pata.ug wallet</p>
+                          </div>
+                          <div><label className={L}>Available From</label><input type="date" className={S} style={{ transition: `all 500ms ${T}` }} /></div>
+                        </div>
                       </div>
 
                       {/* ── Section: Property Specs (residential) ── */}

@@ -13,12 +13,50 @@ export const CATEGORIES = [
   { id: "land", label: "Land / Plot", icon: "Map", color: "green" },
 ] as const;
 
-export const ESTATES = [
-  "Bukoto", "Kololo", "Naguru", "Ntinda", "Muyenga",
-  "Bugolobi", "Nakasero", "Kamwokya", "Kisaasi", "Kyanja",
-  "Kira", "Naalya", "Najjera", "Namugongo", "Bweyogerere",
-  "Entebbe", "Wakiso", "Mukono", "Nansana", "Makindye",
-] as const;
+/* ── District → Area hierarchy (Uganda-wide) ── */
+
+export const DISTRICTS: Record<string, readonly string[]> = {
+  "Kampala": [
+    "Bukoto", "Kololo", "Naguru", "Ntinda", "Muyenga",
+    "Bugolobi", "Nakasero", "Kamwokya", "Kisaasi", "Makindye",
+    "Lubaga", "Wandegeya", "Makerere", "Kisenyi", "Mengo",
+  ],
+  "Wakiso": [
+    "Kyanja", "Kira", "Naalya", "Najjera", "Namugongo",
+    "Bweyogerere", "Nansana", "Entebbe", "Kajjansi", "Abayita Ababiri",
+    "Kasangati", "Matugga", "Buloba", "Kakiri",
+  ],
+  "Mukono": [
+    "Mukono Town", "Seeta", "Namanve", "Kyaliwajjala", "Goma",
+    "Nama", "Nakisunga",
+  ],
+  "Jinja": [
+    "Jinja Town", "Bugembe", "Kakira", "Njeru", "Walukuba",
+  ],
+  "Mbarara": [
+    "Mbarara Town", "Kakoba", "Nyamitanga", "Kamukuzi", "Ruti",
+  ],
+  "Gulu": [
+    "Gulu Town", "Laroo", "Layibi", "Pece", "Bardege",
+  ],
+  "Mbale": [
+    "Mbale Town", "Nakaloke", "Malukhu", "Wanale", "Nkoma",
+  ],
+  "Fort Portal": [
+    "Fort Portal Town", "Njara", "Kabarole", "Rwengaju",
+  ],
+  "Lira": [
+    "Lira Town", "Adyel", "Ojwina", "Railway",
+  ],
+  "Masaka": [
+    "Masaka Town", "Nyendo", "Kimanya", "Katwe",
+  ],
+} as const;
+
+export const DISTRICT_NAMES = Object.keys(DISTRICTS);
+
+/** Flat list of all areas for backwards compat */
+export const ESTATES = Object.values(DISTRICTS).flat();
 
 export const LISTING_STATES = {
   under_review: { label: "Under Review", color: "bg-gray-100 text-gray-700" },
@@ -35,8 +73,8 @@ export const CLIENT_PLANS = [
     price: "UGX 20,000",
     duration: "24 hours",
     features: [
-      "Full contacts for all listings",
-      "WhatsApp direct links",
+      "Request any property directly",
+      "pata.ug negotiates on your behalf",
       "GPS coordinates + map",
       "24-hour countdown access",
     ],
@@ -48,9 +86,9 @@ export const CLIENT_PLANS = [
     price: "UGX 120,000 / year",
     duration: "365 days",
     features: [
-      "All active contacts unlocked",
+      "Unlimited property requests",
+      "Priority negotiation support",
       "GPS coordinates + map",
-      "14-day renewal reminder",
       "Best value - save UGX 40,000+",
     ],
     cta: "Subscribe Now",
@@ -99,10 +137,11 @@ export const NAV_LINKS = [
   { label: "Browse", href: "/search" },
   { label: "Pricing", href: "/pricing" },
   { label: "How it works", href: "/how-it-works" },
-  { label: "Verified", href: "/verified" },
+  { label: "About", href: "/about" },
 ] as const;
 
 export const FOOTER_LINKS = [
+  { label: "About", href: "/about" },
   { label: "Pricing", href: "/pricing" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Verified", href: "/verified" },

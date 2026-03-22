@@ -63,6 +63,7 @@ export default function PropertyDetailPage() {
   // UI state
   const [activePhoto, setActivePhoto] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [requested, setRequested] = useState(false);
   const [isGuest, setIsGuest] = useState(true);
 
   // ------ 404 ------
@@ -95,6 +96,7 @@ export default function PropertyDetailPage() {
   const {
     title,
     category,
+    district,
     estate,
     price,
     bedrooms,
@@ -102,6 +104,8 @@ export default function PropertyDetailPage() {
     photos,
     description,
     isVerified,
+    negotiable,
+    upfrontMonths,
     status,
     availableFrom,
     furnished,
@@ -333,12 +337,16 @@ export default function PropertyDetailPage() {
                   <span className="rounded-full bg-white/95 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-navy shadow-soft backdrop-blur-sm">
                     {capitalizeCategory(category)}
                   </span>
-                  {isVerified && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-gold px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-soft">
-                      <Shield className="h-3 w-3" />
-                      Verified
-                    </span>
-                  )}
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider shadow-soft"
+                    style={{
+                      background: isVerified ? "#22C55E" : "#64748B",
+                      color: "#fff",
+                    }}
+                  >
+                    <Shield className="h-3 w-3" />
+                    {isVerified ? "Verified" : "Not Yet Verified"}
+                  </span>
                 </div>
               </ScrollReveal>
 
@@ -353,11 +361,11 @@ export default function PropertyDetailPage() {
               <ScrollReveal variant="up" delay={100}>
                 <div className="mt-2 flex items-center gap-1.5 text-text-secondary">
                   <MapPin className="h-4 w-4 flex-shrink-0 text-teal" />
-                  <span>{estate}</span>
+                  <span>{estate}, {district}</span>
                 </div>
               </ScrollReveal>
 
-              {/* Price */}
+              {/* Price + negotiable */}
               <ScrollReveal variant="up" delay={150}>
                 <p className="mt-4 font-display text-3xl tracking-tight text-teal">
                   UGX {formatPrice(price)}
@@ -365,6 +373,49 @@ export default function PropertyDetailPage() {
                     / month
                   </span>
                 </p>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-[10px] font-black uppercase tracking-wider"
+                    style={{
+                      background: negotiable ? "rgba(10,147,150,0.1)" : "rgba(212,98,42,0.1)",
+                      color: negotiable ? "#0A9396" : "#D4622A",
+                    }}
+                  >
+                    {negotiable ? "Price Negotiable" : "Fixed Price"}
+                  </span>
+                  {upfrontMonths > 0 && (
+                    <span className="inline-flex items-center gap-1.5 rounded-lg bg-gold/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-gold">
+                      {upfrontMonths} month{upfrontMonths > 1 ? "s" : ""} deposit required
+                    </span>
+                  )}
+                </div>
+
+                {/* Deposit breakdown */}
+                {upfrontMonths > 0 && (
+                  <div className="mt-3 rounded-xl bg-smoke px-4 py-3">
+                    <p className="text-[9px] font-black uppercase tracking-[0.15em] text-text-muted">
+                      Upfront Payment Breakdown
+                    </p>
+                    <div className="mt-2 space-y-1.5">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-text-muted">Monthly Rent</span>
+                        <span className="font-bold text-navy">UGX {formatPrice(price)}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-text-muted">Deposit ({upfrontMonths} month{upfrontMonths > 1 ? "s" : ""})</span>
+                        <span className="font-bold text-navy">UGX {formatPrice(price * upfrontMonths)}</span>
+                      </div>
+                      <div className="h-px bg-navy/10" />
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="font-bold text-navy">Total to Wallet</span>
+                        <span className="font-display text-lg font-bold text-teal">UGX {formatPrice(price * upfrontMonths)}</span>
+                      </div>
+                    </div>
+                    <p className="mt-2 text-[10px] leading-relaxed text-text-muted">
+                      Deposit is paid into your pata.ug wallet. We transfer to the landlord only after the deal is closed and confirmed by both parties.
+                    </p>
+                  </div>
+                )}
               </ScrollReveal>
 
               {/* Available from */}
@@ -473,48 +524,100 @@ export default function PropertyDetailPage() {
                         </Link>
                       </div>
                     ) : (
-                      /* ---- Authenticated mode ---- */
+                      /* ---- Authenticated mode — contacts hidden until deal ---- */
                       <div className="space-y-4">
-                        {/* Landlord name */}
-                        <div>
-                          <p className="section-label mb-1 text-text-muted">
-                            Landlord
-                          </p>
-                          <p className="text-base font-semibold text-navy">
-                            {landlordName}
+                        {/* Mediation notice */}
+                        <div className="flex items-start gap-3 rounded-xl bg-teal/5 px-4 py-3">
+                          <Shield className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+                          <p className="text-xs leading-relaxed text-text-muted">
+                            For your safety, pata.ug handles all communication with
+                            the landlord. Contact details are shared after a deal is
+                            confirmed.
                           </p>
                         </div>
 
-                        {/* Phone */}
-                        <div className="card-surface flex items-center gap-3 px-4 py-3">
-                          <Phone className="h-4 w-4 text-teal" />
-                          <a
-                            href={`tel:${contactPhone}`}
-                            className="text-sm font-semibold text-navy transition-colors duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-teal"
-                          >
-                            {contactPhone}
-                          </a>
-                        </div>
-
-                        {/* WhatsApp */}
-                        <a
-                          href={`https://wa.me/${contactPhone.replace(/\+/g, "")}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex w-full items-center justify-center gap-2 rounded-xl bg-green py-3 text-sm font-bold text-white shadow-soft transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-green/90 hover:shadow-card"
-                        >
-                          <MessageCircle className="h-4 w-4" />
-                          WhatsApp
-                        </a>
-
-                        {/* Deal agreed */}
+                        {/* Request property */}
                         <button
                           type="button"
-                          className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-light py-3 text-sm font-bold text-green shadow-soft transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-green hover:text-white hover:shadow-card"
+                          className="btn-gold mt-2 w-full"
+                          disabled={requested}
+                          style={{
+                            background: requested ? "#0A9396" : undefined,
+                            pointerEvents: requested ? "none" : undefined,
+                          }}
+                          onClick={() => {
+                            if (!property) return;
+                            // Create a new deal request and persist it
+                            const newDeal = {
+                              id: `deal-req-${Date.now()}`,
+                              propertyId: property.id,
+                              propertyTitle: property.title,
+                              estate: property.estate,
+                              district: property.district,
+                              agreedRent: property.price,
+                              status: "pending",
+                              date: new Date().toISOString().split("T")[0],
+                              landlordName: property.landlordName,
+                            };
+                            // Store in localStorage for the deals page
+                            const existing = JSON.parse(localStorage.getItem("pata-requests") || "[]");
+                            existing.push(newDeal);
+                            localStorage.setItem("pata-requests", JSON.stringify(existing));
+                            setRequested(true);
+                          }}
                         >
-                          <Handshake className="h-4 w-4" />
-                          I&apos;ve agreed a deal
+                          {requested ? (
+                            <>
+                              <Shield className="mr-2 inline h-4 w-4" />
+                              Request Sent — We&apos;ll Be in Touch
+                            </>
+                          ) : (
+                            <>
+                              <MessageCircle className="mr-2 inline h-4 w-4" />
+                              Request This Property
+                            </>
+                          )}
                         </button>
+
+                        {!requested && (
+                          <p className="text-center text-[11px] text-text-muted">
+                            Our team will contact the landlord and get back to you
+                            within 24 hours
+                          </p>
+                        )}
+
+                        {requested && (
+                          <Link
+                            href="/deals"
+                            className="mt-1 flex items-center justify-center gap-1.5 text-xs font-bold text-teal"
+                          >
+                            View in My Deals <ArrowRight size={12} />
+                          </Link>
+                        )}
+
+                        <div className="flex items-center gap-3">
+                          <span className="h-px flex-1 bg-smoke" />
+                          <span className="text-xs text-text-muted">or</span>
+                          <span className="h-px flex-1 bg-smoke" />
+                        </div>
+
+                        {/* Negotiate price */}
+                        {negotiable && (
+                          <button
+                            type="button"
+                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-teal/10 py-3 text-sm font-bold text-teal shadow-soft transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-teal hover:text-white hover:shadow-card"
+                          >
+                            <Handshake className="h-4 w-4" />
+                            Propose a Different Price
+                          </button>
+                        )}
+
+                        {!negotiable && (
+                          <div className="flex items-center justify-center gap-2 rounded-xl bg-orange/5 py-3 text-sm font-medium text-orange">
+                            <Lock className="h-3.5 w-3.5" />
+                            Fixed price — not negotiable
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

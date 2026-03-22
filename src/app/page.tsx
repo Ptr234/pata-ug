@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import PropertyCard from "@/components/PropertyCard";
 import ScrollReveal from "@/components/ScrollReveal";
+import HeroFilter from "@/components/HeroFilter";
 import { CATEGORIES } from "@/lib/constants";
 import { properties } from "@/lib/mock-data";
 
@@ -239,7 +240,9 @@ export default function HomePage() {
           }}
         />
 
-        <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-4 pb-20 pt-28 sm:px-6 lg:max-w-[65%] lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-10 px-4 pb-20 pt-28 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+            {/* ── LEFT: Hero text content ── */}
+            <div className="flex flex-col justify-center">
             {/* Badge */}
             <ScrollReveal delay={0}>
               <div className="animate-fade-up inline-flex w-fit items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-gold">
@@ -251,10 +254,10 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
 
-            {/* Heading — left-aligned, oversized, R/NESS impact */}
+            {/* Heading */}
             <ScrollReveal delay={100}>
               <h1 className="animate-fade-up delay-100 mt-8 max-w-2xl font-display text-5xl font-bold uppercase leading-[0.92] tracking-tighter text-white sm:text-6xl md:text-7xl lg:text-[5.5rem]">
-                Discover{" "}
+                Find{" "}
                 <br className="hidden sm:block" />
                 Your Next{" "}
                 <span className="relative">
@@ -332,6 +335,14 @@ export default function HomePage() {
                 ))}
               </div>
             </ScrollReveal>
+            </div>
+
+            {/* ── RIGHT: Filter bar ── */}
+            <ScrollReveal variant="right" delay={300}>
+              <div className="flex flex-col justify-center lg:pl-4">
+                <HeroFilter />
+              </div>
+            </ScrollReveal>
           </div>
       </section>
 
@@ -395,12 +406,15 @@ export default function HomePage() {
                   id={p.id}
                   title={p.title}
                   category={p.category}
+                  district={p.district}
                   estate={p.estate}
                   price={p.price}
                   bedrooms={p.bedrooms}
                   bathrooms={p.bathrooms}
                   photo={p.photos[0]}
                   isVerified={p.isVerified}
+                  negotiable={p.negotiable}
+                  upfrontMonths={p.upfrontMonths}
                   furnished={p.furnished ? "Furnished" : undefined}
                   parking={p.parking ? 1 : undefined}
                   isGuest

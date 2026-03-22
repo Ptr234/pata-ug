@@ -22,7 +22,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 /* ─── Step data with icons ─── */
 
 const TENANT_STEPS = [
-  { icon: Search, title: "Browse", desc: "Search thousands of verified properties across Kampala with smart filters by category, estate, price, and bedrooms." },
+  { icon: Search, title: "Browse", desc: "Search thousands of verified properties across Uganda with smart filters by district, area, category, price, and bedrooms." },
   { icon: ShoppingBag, title: "Subscribe", desc: "Purchase a Day Pass (UGX 20,000) for 24-hour access or an Annual Subscription (UGX 120,000) for unlimited access." },
   { icon: MessageCircle, title: "Connect", desc: "We handle the negotiation on your behalf. Once a deal is agreed, landlord contact details are shared securely." },
   { icon: Handshake, title: "Close", desc: "Once you agree on rent, tap 'I've agreed a deal' to confirm. The property is removed from search results." },
