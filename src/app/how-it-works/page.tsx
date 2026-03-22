@@ -127,8 +127,8 @@ export default function HowItWorksPage() {
                 <span className="text-gradient-teal">Home</span>
               </h2>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-white/70">
-                Four simple steps from browsing to moving in. No agents, no
-                hidden fees, just direct landlord connections.
+                Four simple steps from browsing to moving in. We handle all
+                negotiations and share contacts only after a successful deal.
               </p>
             </div>
           </ScrollReveal>

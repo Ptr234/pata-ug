@@ -587,7 +587,7 @@ export default function HomePage() {
                     {[
                       { icon: UserCheck, title: "Register", desc: "Sign up and verify your National ID to build trust with tenants" },
                       { icon: ImagePlus, title: "Post", desc: "List your property with photos, pricing, and details in minutes" },
-                      { icon: Megaphone, title: "Receive", desc: "Get contacted by verified tenants ready to rent — direct to your phone" },
+                      { icon: Megaphone, title: "Receive", desc: "Tenant enquiries managed by pata.ug — contacts shared after deal closure" },
                     ].map((step, i) => (
                       <li key={i} className="relative flex gap-5 pb-8 last:pb-0">
                         {i < 2 && (
