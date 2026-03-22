@@ -62,13 +62,6 @@ const DEAL_INFO: Record<string, DealInfo> = {
     landlord: { name: "Annet Birungi", phone: "+256703121212", email: "annet.b@email.com" },
     location: { lat: 0.0512, lng: 32.4637 },
   },
-  "deal-005": {
-    property: "4-Bed Duplex in Kyanja", estate: "Kyanja", district: "Wakiso", rent: "UGX 2,500,000",
-    photo: "/property_images/houses/house_5.jpg",
-    tenant: { name: "David Ssali", phone: "+256700900900", email: "david.ssali@email.com" },
-    landlord: { name: "Herbert Kiggundu", phone: "+256700900900", email: "herbert.k@email.com" },
-    location: { lat: 0.3724, lng: 32.6098 },
-  },
 };
 
 function formatTime(iso: string) {

@@ -64,7 +64,12 @@ export default function PropertyDetailPage() {
   const [activePhoto, setActivePhoto] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [requested, setRequested] = useState(false);
-  const [isGuest, setIsGuest] = useState(true);
+  const [proposing, setProposing] = useState(false);
+  const [proposedPrice, setProposedPrice] = useState("");
+  const [isGuest, setIsGuest] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return !localStorage.getItem("pata-role");
+  });
 
   // ------ 404 ------
   if (!property) {
@@ -486,28 +491,23 @@ export default function PropertyDetailPage() {
                   {/* ---- Contact Card ---- */}
                   <div className="card-surface shadow-card p-6">
                     {isGuest ? (
-                      /* ---- Guest mode ---- */
+                      /* ──── Guest mode ──── */
                       <div className="space-y-4 text-center">
-                        {/* Lock icon */}
                         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold-light">
                           <Lock className="h-6 w-6 text-gold-dark" />
                         </div>
 
                         <h3 className="font-display text-xl tracking-tighter text-navy">
-                          Unlock Contacts
+                          Interested?
                         </h3>
                         <p className="text-sm leading-relaxed text-text-muted">
-                          Get instant access to landlord phone &amp; WhatsApp for
-                          this property.
+                          Sign up or log in to request this property. We handle
+                          all negotiations on your behalf.
                         </p>
 
-                        <button
-                          type="button"
-                          onClick={() => setIsGuest(false)}
-                          className="btn-gold mt-2 w-full"
-                        >
-                          Get Day Pass &middot; UGX 20,000
-                        </button>
+                        <Link href="/signup" className="btn-gold mt-2 block w-full text-center">
+                          Create Account
+                        </Link>
 
                         <div className="flex items-center gap-3">
                           <span className="h-px flex-1 bg-smoke" />
@@ -516,38 +516,112 @@ export default function PropertyDetailPage() {
                         </div>
 
                         <Link
-                          href="/pricing"
+                          href="/login"
                           className="inline-flex items-center gap-1 text-sm font-semibold text-teal transition-colors duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-teal-dark"
                         >
-                          Annual Pass &middot; UGX 120,000/year
+                          Already have an account? Log in
                           <ExternalLink className="h-3 w-3" />
                         </Link>
                       </div>
+                    ) : requested ? (
+                      /* ──── Request sent ──── */
+                      <div className="space-y-4 text-center">
+                        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-teal/10">
+                          <Shield className="h-6 w-6 text-teal" />
+                        </div>
+
+                        <h3 className="font-display text-xl tracking-tighter text-navy">
+                          Request Sent
+                        </h3>
+                        <p className="text-sm leading-relaxed text-text-muted">
+                          Our team will contact the landlord and get back to you
+                          within 24 hours. You can track this in your deals.
+                        </p>
+
+                        <Link
+                          href="/deals"
+                          className="btn-gold mt-2 block w-full text-center"
+                        >
+                          <span className="inline-flex items-center gap-2">
+                            View in My Deals <ArrowRight size={14} />
+                          </span>
+                        </Link>
+                      </div>
+                    ) : proposing ? (
+                      /* ──── Price proposal form ──── */
+                      <div className="space-y-4">
+                        <h3 className="font-display text-lg tracking-tighter text-navy">
+                          Propose Your Price
+                        </h3>
+                        <p className="text-xs text-text-muted">
+                          Listed at UGX {formatPrice(price)}/mo. Enter your offer below.
+                        </p>
+
+                        <div className="flex items-center overflow-hidden rounded-xl bg-smoke">
+                          <span className="bg-smoke/80 px-3 py-3 text-sm font-bold text-text-muted">UGX</span>
+                          <input
+                            type="number"
+                            placeholder="e.g. 1500000"
+                            value={proposedPrice}
+                            onChange={(e) => setProposedPrice(e.target.value)}
+                            className="flex-1 bg-transparent px-3 py-3 text-sm font-bold text-navy outline-none"
+                          />
+                        </div>
+
+                        <button
+                          type="button"
+                          disabled={!proposedPrice}
+                          className="btn-gold mt-1 w-full disabled:cursor-not-allowed disabled:opacity-40"
+                          onClick={() => {
+                            if (!property) return;
+                            const newDeal = {
+                              id: `deal-req-${Date.now()}`,
+                              propertyId: property.id,
+                              propertyTitle: property.title,
+                              estate: property.estate,
+                              district: property.district,
+                              agreedRent: Number(proposedPrice) || property.price,
+                              status: "pending",
+                              date: new Date().toISOString().split("T")[0],
+                              landlordName: property.landlordName,
+                            };
+                            const existing = JSON.parse(localStorage.getItem("pata-requests") || "[]");
+                            existing.push(newDeal);
+                            localStorage.setItem("pata-requests", JSON.stringify(existing));
+                            setRequested(true);
+                            setProposing(false);
+                          }}
+                        >
+                          <Handshake className="mr-2 inline h-4 w-4" />
+                          Submit Offer
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setProposing(false)}
+                          className="w-full text-center text-xs font-medium text-text-muted"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     ) : (
-                      /* ---- Authenticated mode — contacts hidden until deal ---- */
+                      /* ──── Authenticated — request or negotiate ──── */
                       <div className="space-y-4">
                         {/* Mediation notice */}
                         <div className="flex items-start gap-3 rounded-xl bg-teal/5 px-4 py-3">
                           <Shield className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
                           <p className="text-xs leading-relaxed text-text-muted">
-                            For your safety, pata.ug handles all communication with
-                            the landlord. Contact details are shared after a deal is
-                            confirmed.
+                            pata.ug handles all communication with the landlord.
+                            Contact details are shared after a deal is closed.
                           </p>
                         </div>
 
-                        {/* Request property */}
+                        {/* Request at listed price */}
                         <button
                           type="button"
                           className="btn-gold mt-2 w-full"
-                          disabled={requested}
-                          style={{
-                            background: requested ? "#0A9396" : undefined,
-                            pointerEvents: requested ? "none" : undefined,
-                          }}
                           onClick={() => {
                             if (!property) return;
-                            // Create a new deal request and persist it
                             const newDeal = {
                               id: `deal-req-${Date.now()}`,
                               propertyId: property.id,
@@ -559,64 +633,53 @@ export default function PropertyDetailPage() {
                               date: new Date().toISOString().split("T")[0],
                               landlordName: property.landlordName,
                             };
-                            // Store in localStorage for the deals page
                             const existing = JSON.parse(localStorage.getItem("pata-requests") || "[]");
                             existing.push(newDeal);
                             localStorage.setItem("pata-requests", JSON.stringify(existing));
                             setRequested(true);
                           }}
                         >
-                          {requested ? (
-                            <>
-                              <Shield className="mr-2 inline h-4 w-4" />
-                              Request Sent — We&apos;ll Be in Touch
-                            </>
-                          ) : (
-                            <>
-                              <MessageCircle className="mr-2 inline h-4 w-4" />
-                              Request This Property
-                            </>
-                          )}
+                          <MessageCircle className="mr-2 inline h-4 w-4" />
+                          Request at UGX {formatPrice(price)}/mo
                         </button>
 
-                        {!requested && (
-                          <p className="text-center text-[11px] text-text-muted">
-                            Our team will contact the landlord and get back to you
-                            within 24 hours
-                          </p>
-                        )}
+                        <p className="text-center text-[11px] text-text-muted">
+                          Our team contacts the landlord and gets back to you within 24h
+                        </p>
 
-                        {requested && (
-                          <Link
-                            href="/deals"
-                            className="mt-1 flex items-center justify-center gap-1.5 text-xs font-bold text-teal"
-                          >
-                            View in My Deals <ArrowRight size={12} />
-                          </Link>
-                        )}
-
-                        <div className="flex items-center gap-3">
-                          <span className="h-px flex-1 bg-smoke" />
-                          <span className="text-xs text-text-muted">or</span>
-                          <span className="h-px flex-1 bg-smoke" />
-                        </div>
-
-                        {/* Negotiate price */}
+                        {/* Negotiate — only if negotiable */}
                         {negotiable && (
-                          <button
-                            type="button"
-                            className="flex w-full items-center justify-center gap-2 rounded-xl bg-teal/10 py-3 text-sm font-bold text-teal shadow-soft transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-teal hover:text-white hover:shadow-card"
-                          >
-                            <Handshake className="h-4 w-4" />
-                            Propose a Different Price
-                          </button>
+                          <>
+                            <div className="flex items-center gap-3">
+                              <span className="h-px flex-1 bg-smoke" />
+                              <span className="text-xs text-text-muted">or</span>
+                              <span className="h-px flex-1 bg-smoke" />
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => setProposing(true)}
+                              className="flex w-full items-center justify-center gap-2 rounded-xl bg-teal/10 py-3 text-sm font-bold text-teal shadow-soft transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-teal hover:text-white hover:shadow-card"
+                            >
+                              <Handshake className="h-4 w-4" />
+                              Propose a Different Price
+                            </button>
+                          </>
                         )}
 
+                        {/* Fixed price notice */}
                         {!negotiable && (
-                          <div className="flex items-center justify-center gap-2 rounded-xl bg-orange/5 py-3 text-sm font-medium text-orange">
-                            <Lock className="h-3.5 w-3.5" />
-                            Fixed price — not negotiable
-                          </div>
+                          <>
+                            <div className="flex items-center gap-3">
+                              <span className="h-px flex-1 bg-smoke" />
+                              <span className="text-[10px] text-text-muted">price info</span>
+                              <span className="h-px flex-1 bg-smoke" />
+                            </div>
+                            <div className="flex items-center justify-center gap-2 rounded-xl bg-orange/5 py-3 text-sm font-medium text-orange">
+                              <Lock className="h-3.5 w-3.5" />
+                              Fixed price — not negotiable
+                            </div>
+                          </>
                         )}
                       </div>
                     )}
