@@ -636,298 +636,221 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ SECTION 6: BROWSE BY CATEGORY ═══ */}
-      <section className="relative overflow-hidden bg-navy">
-        {/* Decorative texture */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(10,147,150,0.08),transparent_50%)]" />
-        <div aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-gold/[0.04] blur-3xl" />
+      {/* ═══ SECTION 6: BROWSE BY CATEGORY — Full image cards ═══ */}
+      <section className="relative overflow-hidden">
+        <Image src="/property_images/houses/house_4.jpg" alt="Kampala estates" fill sizes="100vw" className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/95 via-navy/92 to-navy/95" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
 
         <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <div className="flex flex-col items-center">
-              <p className="section-label text-gold">12 categories</p>
-              <h2 className="mt-3 max-w-3xl text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-7xl">
-                Find Your{" "}
-                <span className="text-gradient-gold">Perfect</span>{" "}
-                Space
-              </h2>
-              <p className="mt-5 max-w-lg text-center text-base leading-relaxed text-white/50">
-                From affordable single rooms to luxury homes and commercial
-                spaces — 12 categories across Kampala
-              </p>
-            </div>
-          </ScrollReveal>
-
-          {/* ── Featured 4 categories: tall image-style cards ── */}
-          <ScrollReveal stagger className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {CATEGORIES.slice(0, 4).map((cat, i) => {
-              const Icon = ICON_MAP[cat.icon];
-              const accents = ["from-teal/30 to-teal/5", "from-gold/30 to-gold/5", "from-orange/30 to-orange/5", "from-teal/30 to-gold/5"];
-              return (
-                <Link
-                  key={cat.id}
-                  href={`/search?category=${cat.id}`}
-                  className="reveal group relative flex min-h-[280px] flex-col justify-end overflow-hidden rounded-3xl p-7 transition-all duration-700 hover:-translate-y-2 hover:shadow-elevated"
-                >
-                  {/* Background gradient — each card unique */}
-                  <div className={`absolute inset-0 bg-gradient-to-t ${accents[i]} to-transparent`} />
-                  <div className="absolute inset-0 bg-white/[0.03]" />
-
-                  {/* Top-right ghost number */}
-                  <span className="absolute right-4 top-4 font-display text-[5rem] font-bold leading-none text-white/[0.05] transition-all duration-700 group-hover:text-white/[0.1] group-hover:scale-110">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-
-                  {/* Icon — floats up on hover */}
-                  <div className="relative mb-auto">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-white backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-1 group-hover:bg-white/20 group-hover:shadow-lg">
-                      {Icon ? <Icon className="h-7 w-7" /> : <Building2 className="h-7 w-7" />}
-                    </div>
-                  </div>
-
-                  {/* Text content */}
-                  <div className="relative">
-                    <p className="font-display text-xl font-bold tracking-tight text-white md:text-2xl">
-                      {cat.label}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-white/70 transition-colors duration-500 group-hover:text-white/60">
-                      {CATEGORY_DESCRIPTIONS[cat.id] ?? "Browse available properties"}
-                    </p>
-
-                    {/* Explore CTA — slides in */}
-                    <div className="mt-4 flex items-center gap-2 text-sm font-bold text-gold">
-                      <span className="translate-y-2 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                        Explore
-                      </span>
-                      <ArrowRight className="h-4 w-4 -translate-x-4 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
-                    </div>
-                  </div>
-
-                  {/* Bottom border glow on hover */}
-                  <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-gold/0 to-transparent transition-all duration-700 group-hover:via-gold/60" />
-                </Link>
-              );
-            })}
-          </ScrollReveal>
-
-          {/* ── Remaining 8 categories: two rows of 4 ── */}
-          <ScrollReveal stagger className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {CATEGORIES.slice(4).map((cat, i) => {
-              const Icon = ICON_MAP[cat.icon];
-              return (
-                <Link
-                  key={cat.id}
-                  href={`/search?category=${cat.id}`}
-                  className="reveal group relative overflow-hidden rounded-2xl bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.08]"
-                >
-                  {/* Subtle border glow */}
-                  <div className="absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-white/10 transition-opacity duration-500 group-hover:opacity-100" />
-
-                  <div className="relative flex items-start gap-4">
-                    <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 text-white/60 transition-all duration-500 group-hover:bg-teal group-hover:text-white group-hover:shadow-lg group-hover:shadow-teal/20">
-                      {Icon ? <Icon className="h-5 w-5" /> : <Building2 className="h-5 w-5" />}
-                    </div>
-                    <div className="min-w-0 pt-0.5">
-                      <p className="font-display text-sm font-bold tracking-tight text-white">
-                        {cat.label}
-                      </p>
-                      <p className="mt-1 text-xs leading-relaxed text-white/60 transition-colors duration-500 group-hover:text-white/55">
-                        {CATEGORY_DESCRIPTIONS[cat.id] ?? "Browse properties"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Subtle arrow on hover */}
-                  <ArrowRight className="absolute right-5 top-1/2 h-4 w-4 -translate-y-1/2 text-gold opacity-0 transition-all duration-500 group-hover:opacity-100" />
-                </Link>
-              );
-            })}
-          </ScrollReveal>
-
-          {/* CTA */}
-          <ScrollReveal>
-            <div className="mt-14 text-center">
-              <Link href="/search" className="btn-gold-lg">
-                Browse All Properties
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ═══ SECTION 7: PRICING CTA — Navy bg ═══ */}
-      <section className="relative overflow-hidden bg-navy">
-        {/* Gradient orbs */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-20 -top-20 h-72 w-72 rounded-full bg-gradient-to-br from-teal/10 to-transparent blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 rounded-full bg-gradient-to-tl from-gold/10 to-transparent blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/3 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-gold/5 to-teal/5 blur-3xl"
-        />
-
-        <div className="relative mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8">
-          <ScrollReveal>
-            <p className="section-label text-gold">Pricing</p>
-            <h2 className="mt-2 font-display text-3xl font-bold text-white md:text-4xl lg:text-5xl">
-              Simple, Transparent Pricing
+            <p className="section-label text-center text-gold">12 categories</p>
+            <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-7xl">
+              Find Your <span className="text-gradient-gold">Perfect</span> Space
             </h2>
+            <p className="mx-auto mt-5 max-w-lg text-center text-base leading-relaxed text-white/60">
+              From affordable single rooms to luxury homes and commercial spaces across Kampala
+            </p>
           </ScrollReveal>
 
-          <ScrollReveal className="mx-auto mt-12 grid max-w-2xl gap-6 sm:grid-cols-2">
-            {/* Client plan */}
-            <article className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:border-gold/30 hover:bg-white/10">
-              <p className="section-label text-teal">Client</p>
-              <p className="mt-3 font-display text-4xl font-bold text-white">
-                UGX 20,000
-              </p>
-              <p className="text-sm text-white/50">per Day Pass</p>
-              <p className="mt-4 text-sm leading-relaxed text-white/60">
-                Unlock all contacts, GPS coordinates, and WhatsApp links for 24
-                hours
-              </p>
-            </article>
+          {/* All 12 categories in a uniform grid with property bg images */}
+          <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {CATEGORIES.map((cat, i) => {
+              const Icon = ICON_MAP[cat.icon];
+              const images = [
+                "/property_images/apartments/apartment_1.jpg", "/property_images/houses/house_1.jpg",
+                "/property_images/houses/house_2.jpg", "/property_images/studios/studio_1.jpg",
+                "/property_images/rooms/room_1.jpg", "/property_images/rooms/room_2.jpg",
+                "/property_images/rooms/room_3.jpg", "/property_images/commercial/commercial_1.jpg",
+                "/property_images/commercial/commercial_2.jpg", "/property_images/commercial/commercial_3.jpg",
+                "/property_images/studios/studio_2.jpg", "/property_images/houses/house_3.jpg",
+              ];
+              return (
+                <ScrollReveal key={cat.id} variant="scale" delay={i * 60}>
+                  <Link
+                    href={`/search?category=${cat.id}`}
+                    className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-2xl"
+                    style={{ transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 20px 48px rgba(11,25,41,0.3)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+                  >
+                    {/* Background image per category */}
+                    <Image src={images[i]} alt={cat.label} fill sizes="25vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/70 to-navy/30" />
 
-            {/* Landlord plan */}
-            <article className="rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-all hover:border-gold/30 hover:bg-white/10">
-              <p className="section-label text-orange">Landlord</p>
-              <p className="mt-3 font-display text-4xl font-bold text-white">
-                UGX 30,000
-              </p>
-              <p className="text-sm text-white/50">per listing</p>
-              <p className="mt-4 text-sm leading-relaxed text-white/60">
-                List your property and reach thousands of verified tenants for
-                30 days
-              </p>
-            </article>
-          </ScrollReveal>
+                    {/* Ghost number */}
+                    <span className="absolute right-3 top-3 font-display text-4xl font-bold text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.12]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
 
-          <ScrollReveal delay={200}>
-            <div className="mt-12">
-              <Link href="/pricing" className="btn-gold-lg">
-                View pricing plans
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+                    {/* Content at bottom */}
+                    <div className="relative p-5">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-sm transition-all duration-500 group-hover:bg-teal group-hover:shadow-lg group-hover:shadow-teal/20">
+                        {Icon ? <Icon className="h-5 w-5" /> : <Building2 className="h-5 w-5" />}
+                      </div>
+                      <p className="mt-3 font-display text-base font-bold tracking-tight text-white">{cat.label}</p>
+                      <p className="mt-1 text-xs leading-relaxed text-white/60">{CATEGORY_DESCRIPTIONS[cat.id] ?? "Browse properties"}</p>
+
+                      {/* Explore — slides in on hover */}
+                      <div className="mt-3 flex items-center gap-1.5 text-xs font-bold text-gold opacity-0 transition-all duration-500 group-hover:opacity-100">
+                        Explore <ArrowRight className="h-3.5 w-3.5 -translate-x-2 transition-transform duration-500 group-hover:translate-x-0" />
+                      </div>
+                    </div>
+
+                    {/* Bottom accent */}
+                    <div className="absolute inset-x-0 bottom-0 h-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "linear-gradient(90deg, transparent, #d4a853, transparent)" }} />
+                  </Link>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+
+          <ScrollReveal delay={800}>
+            <div className="mt-14 text-center">
+              <Link href="/search" className="btn-gold-lg">Browse All Properties <ArrowRight className="h-4 w-4" /></Link>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* ═══ SECTION 8: TRUST / WHY US — White bg ═══ */}
+      {/* ═══ SECTION 7: PRICING — Split layout with image ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            {/* Left: Pricing content */}
+            <ScrollReveal variant="left">
+              <div>
+                <p className="section-label text-gold">Pricing</p>
+                <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-navy md:text-5xl">
+                  Simple <span className="text-gradient-gold">Pricing</span>
+                </h2>
+                <p className="mt-5 max-w-md leading-relaxed text-text-muted">
+                  No hidden fees. Pay via MTN MoMo or Airtel Money.
+                </p>
+
+                <div className="mt-10 space-y-4">
+                  {/* Client plan card */}
+                  <div
+                    className="group rounded-2xl bg-navy p-6"
+                    style={{ transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 16px 40px rgba(10,147,150,0.15)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="section-label text-teal">Tenant</span>
+                      <span className="font-display text-3xl font-bold text-white">UGX 20,000</span>
+                    </div>
+                    <p className="mt-2 text-sm text-white/60">Per Day Pass — 24-hour access to property contacts and GPS</p>
+                  </div>
+
+                  {/* Landlord plan card */}
+                  <div
+                    className="group rounded-2xl bg-navy p-6"
+                    style={{ transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 16px 40px rgba(212,98,42,0.15)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="section-label text-orange">Landlord</span>
+                      <span className="font-display text-3xl font-bold text-white">UGX 30,000</span>
+                    </div>
+                    <p className="mt-2 text-sm text-white/60">Per listing — live for 30 days, reviewed within 24 hours</p>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <Link href="/pricing" className="btn-gold-lg">View all plans <ArrowRight className="h-4 w-4" /></Link>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Right: Property image */}
+            <ScrollReveal variant="right">
+              <div className="img-zoom relative hidden aspect-[3/4] overflow-hidden rounded-3xl lg:block">
+                <Image src="/property_images/houses/house_9.jpg" alt="Premium property" fill sizes="50vw" className="object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/50 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/10 p-5 backdrop-blur-xl">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/60">Annual savings</p>
+                  <p className="mt-1 font-display text-2xl font-bold text-white">Save UGX 40,000+</p>
+                  <p className="mt-1 text-xs text-white/60">Switch to annual for unlimited access</p>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ SECTION 8: WHY US + FINAL CTA — Dark immersive ═══ */}
+      <section className="relative overflow-hidden">
+        <Image src="/property_images/houses/house_8.jpg" alt="Properties in Kampala" fill sizes="100vw" className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/95 via-navy/90 to-navy/95" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
+
+        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
           <ScrollReveal>
             <p className="section-label text-center text-gold">Why choose us</p>
-            <h2 className="mt-2 text-center font-display text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-              Why pata.ug?
+            <h2 className="mt-3 text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+              Why <span className="text-gradient-gold">Pata.ug</span>?
             </h2>
           </ScrollReveal>
 
-          <ScrollReveal stagger className="mt-14 grid gap-8 md:grid-cols-3">
+          {/* 3 trust cards */}
+          <div className="mt-16 grid gap-5 md:grid-cols-3">
             {[
-              {
-                icon: Shield,
-                title: "Verified Properties",
-                desc: "Every listing can earn a Verified badge through our on-ground inspection team. Real photos, real properties.",
-              },
-              {
-                icon: CreditCard,
-                title: "Transparent Pricing",
-                desc: "No hidden fees or broker commissions. Pay via MTN MoMo or Airtel Money — instant and secure.",
-              },
-              {
-                icon: Phone,
-                title: "Managed Deals",
-                desc: "We handle tenant-landlord negotiations. Contacts are shared only after a successful deal closure.",
-              },
-            ].map((item) => (
-              <article
-                key={item.title}
-                className="reveal rounded-2xl bg-smoke p-8 text-center transition-all hover:bg-teal-light/40 hover:shadow-card"
-              >
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-light text-teal">
-                  <item.icon className="h-7 w-7" />
+              { icon: Shield, title: "Verified Properties", desc: "Every listing can earn a Verified badge through our on-ground inspection team. Real photos, real properties.", accent: "#0A9396" },
+              { icon: CreditCard, title: "Transparent Pricing", desc: "No hidden fees or broker commissions. Pay via MTN MoMo or Airtel Money — instant and secure.", accent: "#d4a853" },
+              { icon: Phone, title: "Managed Deals", desc: "We handle tenant-landlord negotiations. Contacts are shared only after a successful deal closure.", accent: "#D4622A" },
+            ].map((item, i) => (
+              <ScrollReveal key={item.title} variant="scale" delay={i * 100}>
+                <div
+                  className="group relative overflow-hidden rounded-3xl bg-white/[0.04] p-8 text-center backdrop-blur-sm"
+                  style={{ transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-8px)"; e.currentTarget.style.boxShadow = `0 24px 48px ${item.accent}15`; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+                >
+                  <div className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: `linear-gradient(135deg, ${item.accent}10, transparent)` }} />
+                  <div className="relative">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: `${item.accent}15` }}>
+                      <item.icon className="h-8 w-8" style={{ color: item.accent }} />
+                    </div>
+                    <h3 className="mt-6 font-display text-xl font-bold tracking-tight text-white">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/60">{item.desc}</p>
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 h-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)` }} />
                 </div>
-                <h3 className="mt-5 font-display text-lg font-semibold text-navy">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                  {item.desc}
-                </p>
-              </article>
+              </ScrollReveal>
             ))}
-          </ScrollReveal>
+          </div>
 
-          {/* Trusted by strip */}
-          <ScrollReveal>
+          {/* Trusted estates */}
+          <ScrollReveal delay={400}>
             <div className="mt-20 flex flex-col items-center gap-4">
-              <p className="text-sm text-text-muted">
-                Trusted by landlords across Uganda
-              </p>
+              <p className="text-sm text-white/60">Trusted by landlords across Uganda</p>
               <div className="flex flex-wrap justify-center gap-3">
-                {["Kololo", "Bukoto", "Muyenga", "Naguru", "Entebbe", "Ntinda"].map(
-                  (estate) => (
-                    <span
-                      key={estate}
-                      className="rounded-full bg-smoke px-4 py-1.5 text-xs font-medium text-text-muted"
-                    >
-                      {estate}
-                    </span>
-                  )
-                )}
+                {["Kololo", "Bukoto", "Muyenga", "Naguru", "Entebbe", "Ntinda"].map((estate) => (
+                  <span key={estate} className="rounded-full bg-white/[0.06] px-4 py-1.5 text-xs font-medium text-white/70">{estate}</span>
+                ))}
               </div>
             </div>
           </ScrollReveal>
 
-          {/* Final CTA banner */}
-          <ScrollReveal delay={100}>
-            <div className="border-gradient relative mt-20 overflow-hidden rounded-3xl bg-navy p-10 text-center md:p-16">
-              <Image
-                src="/property_images/houses/house_8.jpg"
-                alt="Beautiful house in Kampala"
-                fill
-                sizes="100vw"
-                className="object-cover opacity-20"
-              />
-              <div className="absolute inset-0 bg-navy/80" />
-              <div className="relative">
-                <h3 className="font-display text-2xl font-bold text-white md:text-3xl lg:text-4xl">
-                  Ready to find your next home?
-                </h3>
-                <p className="mx-auto mt-4 max-w-md text-base text-white/60">
-                  Join thousands of tenants and landlords already using pata.ug
-                </p>
-
-                <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                  <Link href="/search" className="btn-gold-lg">
-                    Browse Properties
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link href="/login" className="btn-outline-white">
-                    List Your Property
-                  </Link>
-                </div>
-
-                {/* Trust badges */}
-                <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-white/50">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-green" /> No signup
-                  required to browse
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-green" /> Pay via MoMo
-                  or Airtel
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-green" /> Cancel anytime
-                </span>
-                </div>
+          {/* Final CTA */}
+          <ScrollReveal delay={500}>
+            <div className="mt-20 rounded-3xl bg-white/[0.04] p-10 text-center backdrop-blur-sm md:p-16">
+              <h3 className="font-display text-3xl font-bold uppercase tracking-tighter text-white md:text-4xl lg:text-5xl">
+                Ready to <span className="text-gradient-gold">Start</span>?
+              </h3>
+              <p className="mx-auto mt-4 max-w-md text-base text-white/60">
+                Join thousands of tenants and landlords already using pata.ug
+              </p>
+              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                <Link href="/search" className="btn-gold-lg">Browse Properties <ArrowRight className="h-4 w-4" /></Link>
+                <Link href="/login" className="btn-outline-white px-8 py-4 text-base">Get Started <ArrowRight className="h-4 w-4" /></Link>
+              </div>
+              <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-white/60">
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-green" /> No signup required to browse</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-green" /> Pay via MoMo or Airtel</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-green" /> Cancel anytime</span>
               </div>
             </div>
           </ScrollReveal>
