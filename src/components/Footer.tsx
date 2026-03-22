@@ -5,14 +5,14 @@ import { FOOTER_LINKS } from "@/lib/constants";
 export default function Footer() {
   return (
     <footer className="bg-navy text-white">
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16">
+        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-3">
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block">
-              <Image src="/logo/logofordarkbg.png" alt="pata.ug" width={180} height={54} className="h-12 w-auto" />
+              <Image src="/logo/logofordarkbg.png" alt="pata.ug" width={590} height={172} className="h-10 w-auto sm:h-11" />
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/60 sm:mt-4">
               Find your next home in Uganda
             </p>
           </div>
@@ -22,7 +22,7 @@ export default function Footer() {
             <h3 className="text-[10px] font-semibold uppercase tracking-widest text-white/50">
               Quick Links
             </h3>
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 sm:mt-5 sm:flex-col sm:gap-y-3">
               {FOOTER_LINKS.map(({ label, href }) => (
                 <li key={href}>
                   <Link
@@ -41,7 +41,7 @@ export default function Footer() {
             <h3 className="text-[10px] font-semibold uppercase tracking-widest text-white/50">
               Contact
             </h3>
-            <ul className="mt-5 space-y-3 text-sm text-white/60">
+            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60 sm:mt-5 sm:flex-col sm:gap-y-3">
               <li>
                 <a
                   href="mailto:support@pata.ug"
@@ -63,9 +63,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar — white/10 divider only */}
+      {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-5">
+        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-5">
           <p className="text-center text-xs text-white/60">
             &copy; {new Date().getFullYear()} pata.ug. All rights reserved.
           </p>

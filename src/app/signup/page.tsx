@@ -103,7 +103,7 @@ export default function SignupPage() {
           {/* Logo */}
           <div className="mb-8 text-center">
             <Link href="/" className="inline-block">
-              <Image src="/logo/logofordarkbg.png" alt="pata.ug" width={180} height={54} className="mx-auto h-12 w-auto" />
+              <Image src="/logo/logofordarkbg.png" alt="pata.ug" width={590} height={172} className="mx-auto h-14 w-auto" />
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-white/60">
               Create your account to get started

@@ -150,15 +150,15 @@ export default function Header() {
         }}
       />
 
-      <div className="relative mx-auto flex h-[72px] max-w-7xl items-center px-4 lg:px-8">
+      <div className="relative mx-auto flex h-14 max-w-7xl items-center px-4 sm:h-16 lg:h-[72px] lg:px-8">
         {/* ═══ Logo ═══ */}
-        <Link href="/" className="mr-12 shrink-0">
+        <Link href="/" className="mr-6 shrink-0 lg:mr-12">
           <Image
             src="/logo/logofordarkbg.png"
             alt="pata.ug"
-            width={180}
-            height={54}
-            className="h-12 w-auto"
+            width={590}
+            height={172}
+            className="h-9 w-auto sm:h-10 lg:h-11"
             priority
           />
         </Link>
@@ -528,21 +528,21 @@ export default function Header() {
         </div>
       </div>
 
-      {/* ═══ Mobile menu ═══ */}
+      {/* ═══ Mobile menu — full-screen overlay ═══ */}
       {mobileMenuOpen && (
         <div
-          className="lg:hidden"
+          className="fixed inset-0 top-14 z-40 lg:hidden sm:top-16"
           style={{
-            background: "rgba(11, 25, 41, 0.98)",
-            backdropFilter: "blur(24px)",
-            borderTop: "1px solid rgba(212, 168, 83, 0.06)",
+            background: "rgba(11, 25, 41, 0.97)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
             animation:
-              "fadeInDown 400ms cubic-bezier(0.16, 1, 0.3, 1) both",
+              "fadeInDown 350ms cubic-bezier(0.16, 1, 0.3, 1) both",
           }}
         >
-          <div className="mx-auto max-w-7xl px-5 pb-8 pt-5">
+          <div className="flex h-full flex-col px-5 pb-24 pt-6 overflow-y-auto">
             {/* Nav links with icons */}
-            <nav className="flex flex-col gap-1">
+            <nav className="flex flex-col gap-1.5">
               {NAV_LINKS.map((link, i) => {
                 const isActive = pathname === link.href;
                 const NavIcon = NAV_ICONS[link.href] ?? Home;
@@ -550,10 +550,10 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`flex items-center gap-3.5 rounded-2xl px-5 py-4 text-sm font-semibold ${
+                    className={`touch-press-sm flex items-center gap-3.5 rounded-2xl px-5 py-4 text-sm font-semibold ${
                       isActive
                         ? "bg-gold/10 text-gold"
-                        : "text-white/55 hover:bg-white/[0.03] hover:text-white"
+                        : "text-white/55 active:bg-white/[0.06]"
                     }`}
                     style={{
                       animation: `fadeInUp 500ms cubic-bezier(0.16, 1, 0.3, 1) ${i * 60}ms both`,
@@ -561,12 +561,12 @@ export default function Header() {
                     }}
                   >
                     <span
-                      className={`flex h-9 w-9 items-center justify-center rounded-xl ${
+                      className={`flex h-10 w-10 items-center justify-center rounded-xl ${
                         isActive ? "bg-gold/15" : "bg-white/[0.04]"
                       }`}
                     >
                       <NavIcon
-                        size={16}
+                        size={18}
                         className={isActive ? "text-gold" : "text-white/70"}
                       />
                     </span>
@@ -581,10 +581,13 @@ export default function Header() {
               })}
             </nav>
 
+            {/* Spacer */}
+            <div className="flex-1" />
+
             {/* CTA */}
             <Link
               href="/login"
-              className="btn-gold mt-5 w-full justify-center py-3.5 text-sm"
+              className="btn-gold mt-6 w-full justify-center py-4 text-sm"
               style={{
                 animation:
                   "fadeInUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both",
