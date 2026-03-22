@@ -150,7 +150,7 @@ export default function Header() {
         }}
       />
 
-      <div className="relative mx-auto flex h-14 max-w-7xl items-center px-4 sm:h-16 lg:h-[72px] lg:px-8">
+      <div className="relative flex h-14 items-center px-4 sm:h-16 sm:px-6 lg:h-[72px] lg:px-10">
         {/* ═══ Logo ═══ */}
         <Link href="/" className="mr-4 shrink-0 lg:mr-6">
           <Image
