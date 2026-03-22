@@ -526,7 +526,7 @@ export default function HomePage() {
             <ScrollReveal variant="left">
               <div
                 className="group relative overflow-hidden rounded-3xl"
-                style={{ transition: `all 600ms ${T}` }}
+                style={{ transition: `all 600ms cubic-bezier(0.16, 1, 0.3, 1)` }}
                 onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(10,147,150,0.15)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
               >
@@ -578,7 +578,7 @@ export default function HomePage() {
             <ScrollReveal variant="right">
               <div
                 className="group relative overflow-hidden rounded-3xl"
-                style={{ transition: `all 600ms ${T}` }}
+                style={{ transition: `all 600ms cubic-bezier(0.16, 1, 0.3, 1)` }}
                 onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(212,98,42,0.15)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
               >
