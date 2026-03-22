@@ -164,6 +164,17 @@ export default function NewListingPage() {
                     <div className="space-y-6">
                       <h2 className="font-display text-2xl font-bold tracking-tighter text-white">Property Details</h2>
 
+                      {/* Category indicator */}
+                      {category && (
+                        <div className="flex items-center gap-3 rounded-xl bg-orange/10 px-4 py-3">
+                          <Building2 className="h-4 w-4 text-orange" />
+                          <span className="text-sm font-bold text-orange">
+                            {CATEGORIES.find((c) => c.id === category)?.label ?? category}
+                          </span>
+                          <button type="button" onClick={() => setStep(1)} className="ml-auto text-xs text-white/60 hover:text-white" style={{ transition: `color 500ms ${T}` }}>Change</button>
+                        </div>
+                      )}
+
                       <div>
                         <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Listing Title</label>
                         <input type="text" placeholder="e.g. Modern 2-Bedroom Apartment in Bukoto" className="w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
@@ -199,6 +210,28 @@ export default function NewListingPage() {
                         <div>
                           <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Available From</label>
                           <input type="date" className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                        </div>
+                      </div>
+
+                      {/* Furnished, Parking, Pet-friendly */}
+                      <div className="grid gap-5 sm:grid-cols-3">
+                        <div>
+                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Furnished</label>
+                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
+                            <option>Unfurnished</option><option>Partially Furnished</option><option>Fully Furnished</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Parking</label>
+                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
+                            <option>No Parking</option><option>1 Space</option><option>2 Spaces</option><option>3+ Spaces</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Pet-Friendly</label>
+                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
+                            <option>No</option><option>Yes</option>
+                          </select>
                         </div>
                       </div>
 
