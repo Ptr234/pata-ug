@@ -29,7 +29,8 @@ let _cache: Hierarchy | null = null;
 export async function loadHierarchy(): Promise<Hierarchy> {
   if (_cache) return _cache;
   try {
-    const res = await fetch("/data/uga_admin_hierarchy.json");
+    const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    const res = await fetch(`${base}/data/uga_admin_hierarchy.json`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     _cache = await res.json();
     return _cache!;

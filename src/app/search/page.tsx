@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useState, useMemo, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -65,6 +65,7 @@ export default function SearchPage() {
 /* ─────────────────────────── Page Content ────────────────────────── */
 
 function SearchPageContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") ?? "";
   const initialRegion = searchParams.get("region") ?? "";
@@ -324,7 +325,7 @@ function SearchPageContent() {
               <button
                 onClick={() => {
                   // Clear category by navigating to /search
-                  window.location.href = "/search";
+                  router.push("/search");
                 }}
                 className="flex items-center gap-1 rounded-full bg-gold/10 px-2.5 py-1 text-xs font-bold text-gold transition-all duration-400 hover:bg-gold/20"
               >
@@ -598,7 +599,7 @@ function SearchPageContent() {
                 <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
                   <button
                     type="button"
-                    onClick={() => { window.location.href = "/search"; }}
+                    onClick={() => { router.push("/search"); }}
                     className="btn-gold"
                   >
                     <ArrowRight className="h-4 w-4" />
