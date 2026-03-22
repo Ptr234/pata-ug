@@ -1,13 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
 import {
   Home,
   Building2,
+  Shield,
   ArrowRight,
+  Users,
 } from "lucide-react";
 
 const T = "cubic-bezier(0.16, 1, 0.3, 1)";
@@ -31,31 +32,18 @@ const ROLES = [
     accent: "#D4622A",
     accentLight: "rgba(212,98,42,0.12)",
   },
+  {
+    id: "admin",
+    label: "Admin",
+    desc: "Review listings, manage verifications, and oversee platform operations",
+    icon: Shield,
+    href: "/admin",
+    accent: "#4E3FA8",
+    accentLight: "rgba(78,63,168,0.12)",
+  },
 ] as const;
 
 export default function LoginPage() {
-  const router = useRouter();
-
-  const handleLogin = (role: typeof ROLES[number]) => {
-    localStorage.setItem("pata-role", role.id);
-
-    // Load default profile if user hasn't signed up before
-    const existing = localStorage.getItem("pata-user");
-    if (!existing) {
-      const defaultUser = {
-        fullName: role.id === "landlord" ? "Sarah Namutebi" : "John Doe",
-        phone: role.id === "landlord" ? "+256772200200" : "+256700100100",
-        email: role.id === "landlord" ? "sarah.namutebi@email.com" : "john.doe@email.com",
-        nationalId: "",
-        role: role.id,
-        verificationStatus: "verified",
-      };
-      localStorage.setItem("pata-user", JSON.stringify(defaultUser));
-    }
-
-    router.push(role.href);
-  };
-
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden">
       {/* Full-bleed background image */}
@@ -84,8 +72,9 @@ export default function LoginPage() {
         <ScrollReveal variant="scale">
           {/* Logo */}
           <div className="mb-12 text-center">
-            <Link href="/" className="inline-block">
-              <Image src="/logo/logofordarkbg.png" alt="pata.ug" width={180} height={54} className="mx-auto h-12 w-auto" />
+            <Link href="/" className="inline-block font-display text-3xl tracking-tight">
+              <span className="text-white">pata</span>
+              <span className="text-gradient-gold font-extrabold">.ug</span>
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-white/60">
               Select how you want to access the platform
@@ -93,15 +82,14 @@ export default function LoginPage() {
           </div>
 
           {/* Role cards */}
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-3">
             {ROLES.map((role, i) => {
               const Icon = role.icon;
               return (
                 <ScrollReveal key={role.id} variant="scale" delay={i * 100}>
-                  <button
-                    type="button"
-                    onClick={() => handleLogin(role)}
-                    className="group relative flex w-full flex-col items-center overflow-hidden rounded-3xl bg-white/[0.04] p-8 text-center backdrop-blur-sm sm:p-10"
+                  <Link
+                    href={role.href}
+                    className="group relative flex flex-col items-center overflow-hidden rounded-3xl bg-white/[0.04] p-8 text-center backdrop-blur-sm sm:p-10"
                     style={{
                       transition: `all 600ms ${T}`,
                     }}
@@ -168,7 +156,7 @@ export default function LoginPage() {
                         background: `linear-gradient(90deg, transparent, ${role.accent}, transparent)`,
                       }}
                     />
-                  </button>
+                  </Link>
                 </ScrollReveal>
               );
             })}

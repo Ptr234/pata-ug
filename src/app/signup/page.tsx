@@ -102,8 +102,12 @@ export default function SignupPage() {
         <ScrollReveal variant="scale">
           {/* Logo */}
           <div className="mb-8 text-center">
-            <Link href="/" className="inline-block">
-              <Image src="/logo/logofordarkbg.png" alt="pata.ug" width={180} height={54} className="mx-auto h-12 w-auto" />
+            <Link
+              href="/"
+              className="inline-block font-display text-3xl tracking-tight"
+            >
+              <span className="text-white">pata</span>
+              <span className="text-gradient-gold font-extrabold">.ug</span>
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-white/60">
               Create your account to get started

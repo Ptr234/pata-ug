@@ -10,7 +10,7 @@ import {
   Calendar,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
-import { AGENCY_FEE_TIERS } from "@/lib/constants";
+import { COMMISSION_TIERS } from "@/lib/constants";
 
 function formatUGX(amount: number): string {
   return `UGX ${amount.toLocaleString("en-UG")}`;
@@ -21,10 +21,10 @@ const SMOOTH = "all 500ms cubic-bezier(0.16, 1, 0.3, 1)";
 const TRANSACTIONS = [
   {
     date: "2026-03-18",
-    desc: "Deal agency fee - Bukoto apartment",
+    desc: "Deal commission - Bukoto apartment",
     amount: 90_000,
     method: "MTN MoMo",
-    type: "agency-fee" as const,
+    type: "commission" as const,
   },
   {
     date: "2026-03-15",
@@ -35,10 +35,10 @@ const TRANSACTIONS = [
   },
   {
     date: "2026-03-10",
-    desc: "Deal agency fee - Entebbe apartment",
+    desc: "Deal commission - Entebbe apartment",
     amount: 110_000,
     method: "MTN MoMo",
-    type: "agency-fee" as const,
+    type: "commission" as const,
   },
   {
     date: "2026-03-05",
@@ -89,17 +89,17 @@ export default function BillingPage() {
               </Link>
               <span className="mx-2 text-white/60">/</span>
               <span className="font-medium text-white">
-                Billing &amp; Agency Fees
+                Billing &amp; Commissions
               </span>
             </nav>
 
             <p className="section-label mb-2 text-orange">Financials</p>
 
             <h1 className="font-display text-3xl tracking-tighter text-white">
-              Billing &amp; Agency Fees
+              Billing &amp; Commissions
             </h1>
             <p className="mt-1 text-sm text-white/70">
-              Full payment history and agency fee details
+              Full payment history and commission details
             </p>
           </div>
         </header>
@@ -143,7 +143,7 @@ export default function BillingPage() {
                 </article>
               </ScrollReveal>
 
-              {/* Total Agency Fees */}
+              {/* Total Commissions */}
               <ScrollReveal variant="scale" delay={100}>
                 <article
                   className="rounded-2xl bg-navy p-6 cursor-default"
@@ -164,14 +164,14 @@ export default function BillingPage() {
                       <TrendingUp className="h-5 w-5 text-teal" />
                     </div>
                     <p className="text-sm font-medium text-white/70">
-                      Total Agency Fees
+                      Total Commissions
                     </p>
                   </div>
                   <p className="font-display mt-3 text-2xl tracking-tighter text-white">
                     UGX 340,000
                   </p>
                   <p className="mt-1 text-xs text-white/70">
-                    5% on 1 month&apos;s rent per deal
+                    5% of confirmed deals
                   </p>
                 </article>
               </ScrollReveal>
@@ -297,17 +297,17 @@ export default function BillingPage() {
         </section>
       </ScrollReveal>
 
-      {/* -- Agency fee reference --------------------------------------- */}
+      {/* -- Commission reference --------------------------------------- */}
       <ScrollReveal>
         <section className="bg-smoke">
           <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="overflow-hidden rounded-2xl bg-navy">
               <div className="px-6 py-5">
                 <h2 className="font-display text-lg tracking-tighter text-white">
-                  Agency Fee Reference
+                  Commission Reference
                 </h2>
                 <p className="mt-0.5 text-sm text-white/70">
-                  5% on 1 month&apos;s agreed rent — not the full upfront
+                  5% flat rate on all confirmed deals
                 </p>
               </div>
               <div className="overflow-x-auto">
@@ -318,7 +318,7 @@ export default function BillingPage() {
                         Agreed Rent
                       </th>
                       <th className="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-gold">
-                        5% Agency Fee
+                        5% Commission
                       </th>
                       <th className="px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-gold">
                         You Receive
@@ -326,7 +326,7 @@ export default function BillingPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {AGENCY_FEE_TIERS.map((tier, i) => (
+                    {COMMISSION_TIERS.map((tier, i) => (
                       <tr
                         key={tier.rent}
                         style={{
@@ -346,7 +346,7 @@ export default function BillingPage() {
                         </td>
                         <td className="px-6 py-3.5">
                           <span className="font-semibold text-red">
-                            {formatUGX(tier.agencyFee)}
+                            {formatUGX(tier.commission)}
                           </span>
                         </td>
                         <td className="px-6 py-3.5">

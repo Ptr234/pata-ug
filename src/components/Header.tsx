@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
@@ -152,20 +151,41 @@ export default function Header() {
 
       <div className="relative mx-auto flex h-[72px] max-w-7xl items-center px-4 lg:px-8">
         {/* ═══ Logo ═══ */}
-        <Link href="/" className="mr-12 shrink-0">
-          <Image
-            src="/logo/logofordarkbg.png"
-            alt="pata.ug"
-            width={180}
-            height={54}
-            className="h-12 w-auto"
-            priority
-          />
+        <Link
+          href="/"
+          className="group mr-12 shrink-0 font-display text-2xl tracking-tight"
+        >
+          <span className="text-white transition-all duration-500 group-hover:text-white/80">
+            pata
+          </span>
+          <span
+            className="font-extrabold"
+            style={{
+              background: "linear-gradient(135deg, #d4a853 0%, #f0d89f 50%, #d4a853 100%)",
+              backgroundSize: "200% auto",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              transition: "background-position 800ms ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundPosition = "right center";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundPosition = "left center";
+            }}
+          >
+            .ug
+          </span>
         </Link>
 
         {/* ═══ Center nav links — spacious, editorial ═══ */}
         <nav className="hidden flex-1 items-center gap-0.5 lg:flex">
-          {NAV_LINKS.map((link) => {
+          {NAV_LINKS.filter((link) => {
+            // Hide "Verified" on tenant dashboard routes (verification is landlord-only)
+            if (link.href === "/verified" && (pathname.startsWith("/dashboard") || pathname.startsWith("/deals") || pathname.startsWith("/account"))) return false;
+            return true;
+          }).map((link) => {
             const isActive =
               pathname === link.href ||
               pathname.startsWith(link.href + "/");
@@ -543,7 +563,10 @@ export default function Header() {
           <div className="mx-auto max-w-7xl px-5 pb-8 pt-5">
             {/* Nav links with icons */}
             <nav className="flex flex-col gap-1">
-              {NAV_LINKS.map((link, i) => {
+              {NAV_LINKS.filter((link) => {
+                if (link.href === "/verified" && (pathname.startsWith("/dashboard") || pathname.startsWith("/deals") || pathname.startsWith("/account"))) return false;
+                return true;
+              }).map((link, i) => {
                 const isActive = pathname === link.href;
                 const NavIcon = NAV_ICONS[link.href] ?? Home;
                 return (

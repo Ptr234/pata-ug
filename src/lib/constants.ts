@@ -2,9 +2,7 @@ export const CATEGORIES = [
   { id: "apartment", label: "Apartment / Flat", icon: "Building2", color: "teal" },
   { id: "standalone", label: "Standalone House", icon: "Home", color: "teal" },
   { id: "townhouse", label: "Townhouse / Maisonette", icon: "Castle", color: "orange" },
-  { id: "duplex", label: "Duplex", icon: "Layers", color: "orange" },
   { id: "studio", label: "Studio", icon: "Square", color: "orange" },
-  { id: "serviced-apartment", label: "Serviced Apartment", icon: "Star", color: "teal" },
   { id: "single-room", label: "Single Room / Bedsitter", icon: "DoorOpen", color: "amber" },
   { id: "shared-house", label: "Room in Shared House", icon: "Users", color: "amber" },
   { id: "servant-quarters", label: "Servant Quarters", icon: "Warehouse", color: "gold" },
@@ -13,23 +11,6 @@ export const CATEGORIES = [
   { id: "warehouse", label: "Commercial - Warehouse", icon: "Package", color: "purple" },
   { id: "short-stay", label: "Short Stay / Serviced", icon: "CalendarDays", color: "green" },
   { id: "land", label: "Land / Plot", icon: "Map", color: "green" },
-] as const;
-
-export const LIFESTYLE_TAGS = [
-  { id: "family-friendly", label: "Family-Friendly", icon: "Users", color: "teal" },
-  { id: "bachelor-pad", label: "Bachelor Pad", icon: "User", color: "orange" },
-  { id: "student-friendly", label: "Student-Friendly", icon: "GraduationCap", color: "amber" },
-  { id: "luxury", label: "Luxury", icon: "Crown", color: "gold" },
-  { id: "budget", label: "Budget", icon: "Wallet", color: "green" },
-  { id: "pet-friendly", label: "Pet-Friendly", icon: "Dog", color: "teal" },
-  { id: "gated-community", label: "Gated Community", icon: "Shield", color: "navy" },
-] as const;
-
-export const PAYMENT_TERMS = [
-  { id: "monthly", label: "Monthly" },
-  { id: "quarterly", label: "Quarterly" },
-  { id: "6-months", label: "6 Months" },
-  { id: "annual", label: "Annual" },
 ] as const;
 
 /* ── District → Area hierarchy (Uganda-wide) ── */
@@ -144,12 +125,12 @@ export const LANDLORD_PLANS = [
   },
 ] as const;
 
-export const AGENCY_FEE_TIERS = [
-  { rent: 500_000, agencyFee: 25_000, net: 475_000 },
-  { rent: 800_000, agencyFee: 40_000, net: 760_000 },
-  { rent: 1_500_000, agencyFee: 75_000, net: 1_425_000 },
-  { rent: 2_500_000, agencyFee: 125_000, net: 2_375_000 },
-  { rent: 5_000_000, agencyFee: 250_000, net: 4_750_000 },
+export const COMMISSION_TIERS = [
+  { rent: 500_000, commission: 25_000, net: 475_000 },
+  { rent: 800_000, commission: 40_000, net: 760_000 },
+  { rent: 1_500_000, commission: 75_000, net: 1_425_000 },
+  { rent: 2_500_000, commission: 125_000, net: 2_375_000 },
+  { rent: 5_000_000, commission: 250_000, net: 4_750_000 },
 ] as const;
 
 export const NAV_LINKS = [

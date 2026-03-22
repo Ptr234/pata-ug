@@ -33,9 +33,9 @@ const KEY_METRICS = [
 ];
 
 const MONTHLY_DATA = [
-  { month: "January", listings: "UGX 1.2M", agencyFees: "UGX 1.8M", dayPasses: "UGX 680K", annualSubs: "UGX 960K", total: "UGX 4.6M" },
-  { month: "February", listings: "UGX 1.5M", agencyFees: "UGX 2.1M", dayPasses: "UGX 720K", annualSubs: "UGX 1.08M", total: "UGX 5.4M" },
-  { month: "March", listings: "UGX 1.8M", agencyFees: "UGX 2.4M", dayPasses: "UGX 840K", annualSubs: "UGX 1.2M", total: "UGX 6.2M" },
+  { month: "January", listings: "UGX 1.2M", commissions: "UGX 1.8M", dayPasses: "UGX 680K", annualSubs: "UGX 960K", total: "UGX 4.6M" },
+  { month: "February", listings: "UGX 1.5M", commissions: "UGX 2.1M", dayPasses: "UGX 720K", annualSubs: "UGX 1.08M", total: "UGX 5.4M" },
+  { month: "March", listings: "UGX 1.8M", commissions: "UGX 2.4M", dayPasses: "UGX 840K", annualSubs: "UGX 1.2M", total: "UGX 6.2M" },
 ];
 
 const SUBSCRIPTION_BREAKDOWN = [
@@ -49,7 +49,7 @@ const DEAL_PIPELINE = [
   { status: "Pending", count: 14, color: "#d4a853" },
   { status: "Awaiting Landlord", count: 8, color: "#E08C10" },
   { status: "Confirmed", count: 23, color: "#1F8A44" },
-  { status: "Agency Fee Paid", count: 44, color: "#0A9396" },
+  { status: "Commission Paid", count: 44, color: "#0A9396" },
 ];
 
 const TOP_AREAS = [
@@ -137,7 +137,7 @@ export default function AdminReportsPage() {
                 <table className="w-full min-w-[700px] text-left text-sm">
                   <thead>
                     <tr>
-                      {["Month", "Listing Fees", "Agency Fees", "Day Passes", "Annual Subs", "Total"].map((h) => (
+                      {["Month", "Listing Fees", "Commissions", "Day Passes", "Annual Subs", "Total"].map((h) => (
                         <th key={h} className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.18em] text-gold">{h}</th>
                       ))}
                     </tr>
@@ -147,7 +147,7 @@ export default function AdminReportsPage() {
                       <tr key={row.month} className={i % 2 === 0 ? "bg-white/[0.02]" : ""} style={{ transition: `background-color 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(212,168,83,0.05)"; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent"; }}>
                         <td className="px-5 py-4 font-medium text-white">{row.month}</td>
                         <td className="px-5 py-4 text-white/70">{row.listings}</td>
-                        <td className="px-5 py-4 text-white/70">{row.agencyFees}</td>
+                        <td className="px-5 py-4 text-white/70">{row.commissions}</td>
                         <td className="px-5 py-4 text-white/70">{row.dayPasses}</td>
                         <td className="px-5 py-4 text-white/70">{row.annualSubs}</td>
                         <td className="px-5 py-4 font-display font-bold text-gold">{row.total}</td>

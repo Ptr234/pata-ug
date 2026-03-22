@@ -33,7 +33,7 @@ const VALUES = [
   {
     icon: Eye,
     title: "Radical Transparency",
-    desc: "No hidden fees. No surprise charges. Our pricing, agency fee structure, and verification process are all public and clear.",
+    desc: "No hidden fees. No surprise charges. Our pricing, commission structure, and verification process are all public and clear.",
     accent: "#d4a853",
   },
   {
@@ -433,7 +433,7 @@ export default function AboutPage() {
                   { text: "Every user verified with National ID before transacting", icon: Shield },
                   { text: "All listings reviewed by our team within 24 hours", icon: CheckCircle2 },
                   { text: "pata.ug mediates all negotiations — no direct contact until deal closes", icon: Handshake },
-                  { text: "5% agency fee on 1 month's rent — not the full upfront", icon: Zap },
+                  { text: "Transparent 5% commission on successful deals only", icon: Zap },
                 ].map((item) => {
                   const Icon = item.icon;
                   return (

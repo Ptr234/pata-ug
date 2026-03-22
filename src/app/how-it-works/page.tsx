@@ -42,7 +42,7 @@ const DEAL_FLOW = [
   { step: "02", label: "Landlord\nreceives SMS", color: "#0A9396" },
   { step: "03", label: "Client\nconfirms rent", color: "#d4a853" },
   { step: "04", label: "Both sides\nconfirm deal", color: "#d4a853" },
-  { step: "05", label: "5% agency fee\nrequested", color: "#D4622A" },
+  { step: "05", label: "5% commission\nrequested", color: "#D4622A" },
 ];
 
 const VERIFIED_FLOW = [
@@ -388,8 +388,8 @@ export default function HowItWorksPage() {
 
           <ScrollReveal delay={400}>
             <p className="mx-auto mt-14 max-w-md text-center text-sm text-white/60">
-              5% agency fee on 1 month&apos;s agreed rent — not the full upfront
-              deposit. Flat rate on all confirmed deals.
+              Commission is based on the agreed rent — not the listed price.
+              5% flat rate on all confirmed deals.
             </p>
           </ScrollReveal>
         </div>

@@ -3,24 +3,27 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, ChevronDown } from "lucide-react";
-import { CATEGORIES } from "@/lib/constants";
-import LocationPicker from "@/components/LocationPicker";
-import type { LocationSelection } from "@/lib/locations";
+import { CATEGORIES, DISTRICTS, DISTRICT_NAMES } from "@/lib/constants";
 
 const BEDROOM_OPTIONS = ["Any", "1", "2", "3", "4", "5+"];
 
 export default function HeroFilter() {
   const router = useRouter();
   const [category, setCategory] = useState("");
-  const [loc, setLoc] = useState<Partial<LocationSelection>>({});
+  const [district, setDistrict] = useState("");
+  const [estate, setEstate] = useState("");
   const [budget, setBudget] = useState("");
   const [bedrooms, setBedrooms] = useState("");
+
+  const areas = district
+    ? (DISTRICTS[district] ?? [])
+    : Object.values(DISTRICTS).flat();
 
   const handleApply = () => {
     const params = new URLSearchParams();
     if (category) params.set("category", category);
-    if (loc.region) params.set("region", loc.region);
-    if (loc.district) params.set("district", loc.district);
+    if (district) params.set("district", district);
+    if (estate) params.set("q", estate);
     if (budget) {
       const [min, max] = budget.split("-");
       if (min) params.set("minPrice", min);
@@ -62,20 +65,65 @@ export default function HeroFilter() {
             >
               <option value="">All Types</option>
               {CATEGORIES.map((c) => (
-                <option key={c.id} value={c.id}>{c.label}</option>
+                <option key={c.id} value={c.id}>
+                  {c.label}
+                </option>
               ))}
             </select>
-            <ChevronDown size={12} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40" />
+            <ChevronDown
+              size={12}
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
+            />
           </div>
         </div>
 
-        {/* Location — cascading from real Uganda data */}
-        <div className="sm:col-span-2 lg:col-span-1">
-          <LocationPicker
-            compact
-            value={loc}
-            onChange={(l) => setLoc(l)}
-          />
+        {/* District */}
+        <div>
+          <label className={labelBase}>Which District?</label>
+          <div className="relative">
+            <select
+              value={district}
+              onChange={(e) => {
+                setDistrict(e.target.value);
+                setEstate("");
+              }}
+              className={selectBase}
+            >
+              <option value="">All Districts</option>
+              {DISTRICT_NAMES.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              size={12}
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
+            />
+          </div>
+        </div>
+
+        {/* Estate / Area */}
+        <div>
+          <label className={labelBase}>Estate / Area</label>
+          <div className="relative">
+            <select
+              value={estate}
+              onChange={(e) => setEstate(e.target.value)}
+              className={selectBase}
+            >
+              <option value="">All Areas</option>
+              {areas.map((a) => (
+                <option key={a} value={a}>
+                  {a}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              size={12}
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
+            />
+          </div>
         </div>
 
         {/* Budget */}
@@ -96,7 +144,10 @@ export default function HeroFilter() {
               <option value="2500000-5000000">2.5M – 5M</option>
               <option value="5000000-0">5M+</option>
             </select>
-            <ChevronDown size={12} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40" />
+            <ChevronDown
+              size={12}
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
+            />
           </div>
         </div>
 
@@ -110,10 +161,15 @@ export default function HeroFilter() {
               className={selectBase}
             >
               {BEDROOM_OPTIONS.map((opt) => (
-                <option key={opt} value={opt === "Any" ? "" : opt}>{opt}</option>
+                <option key={opt} value={opt === "Any" ? "" : opt}>
+                  {opt}
+                </option>
               ))}
             </select>
-            <ChevronDown size={12} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40" />
+            <ChevronDown
+              size={12}
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
+            />
           </div>
         </div>
       </div>
@@ -130,11 +186,13 @@ export default function HeroFilter() {
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateY(-2px)";
-          e.currentTarget.style.boxShadow = "0 8px 24px rgba(212, 168, 83, 0.35)";
+          e.currentTarget.style.boxShadow =
+            "0 8px 24px rgba(212, 168, 83, 0.35)";
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = "translateY(0)";
-          e.currentTarget.style.boxShadow = "0 4px 16px rgba(212, 168, 83, 0.25)";
+          e.currentTarget.style.boxShadow =
+            "0 4px 16px rgba(212, 168, 83, 0.25)";
         }}
       >
         <Search size={14} />

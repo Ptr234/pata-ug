@@ -16,7 +16,6 @@ import {
   Phone,
   Lock,
   ExternalLink,
-  Clock,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { deals } from "@/lib/mock-data";
@@ -50,7 +49,7 @@ const STATUS_STYLES: Record<
   payment_confirmed: {
     bg: "rgba(31,138,68,0.15)",
     text: "#1F8A44",
-    label: "Paid — Processing",
+    label: "Close Deal",
   },
   closed: {
     bg: "rgba(10,147,150,0.15)",
@@ -71,7 +70,7 @@ const STATUS_STYLES: Record<
   commission_paid: {
     bg: "rgba(10,147,150,0.15)",
     text: "#0A9396",
-    label: "Agency Fee Paid",
+    label: "Commission Paid",
   },
 };
 
@@ -90,22 +89,6 @@ function formatUGX(amount: number): string {
 export default function DealsPage() {
   const [dealList, setDealList] = useState(deals);
   const [payingDealId, setPayingDealId] = useState<string | null>(null);
-  const [walletBalance, setWalletBalance] = useState(() => {
-    if (typeof window === "undefined") return 0;
-    return Number(localStorage.getItem("pata-wallet") || "0");
-  });
-
-  const deductFromWallet = (amount: number) => {
-    const newBalance = Math.max(0, walletBalance - amount);
-    setWalletBalance(newBalance);
-    localStorage.setItem("pata-wallet", String(newBalance));
-  };
-
-  const addToWallet = (amount: number) => {
-    const newBalance = walletBalance + amount;
-    setWalletBalance(newBalance);
-    localStorage.setItem("pata-wallet", String(newBalance));
-  };
 
   const closedCount = dealList.filter((d) => d.status === "closed").length;
   const activeCount = dealList.filter((d) => ["pending", "negotiating", "agreed", "payment_confirmed"].includes(d.status)).length;
@@ -377,7 +360,7 @@ export default function DealsPage() {
                             </td>
                             <td className="px-6 py-4">
                               <div className="flex flex-wrap gap-1.5">
-                                {/* Chat — available for active deals */}
+                                {/* Chat — always available except closed */}
                                 {deal.status !== "closed" && (
                                   <Link
                                     href={`/deals/${deal.id}/chat`}
@@ -390,14 +373,7 @@ export default function DealsPage() {
                                   </Link>
                                 )}
 
-                                {/* Pending / Negotiating — waiting on pata.ug */}
-                                {(deal.status === "pending" || deal.status === "negotiating") && (
-                                  <span className="inline-flex items-center gap-1 rounded-lg bg-white/[0.04] px-2.5 py-1.5 text-[10px] font-bold text-white/40">
-                                    <Clock size={11} /> Awaiting pata.ug
-                                  </span>
-                                )}
-
-                                {/* Agreed — admin confirmed, tenant can pay deposit */}
+                                {/* Pay Deposit — when deal is agreed */}
                                 {deal.status === "agreed" && (
                                   <button
                                     type="button"
@@ -411,24 +387,25 @@ export default function DealsPage() {
                                   </button>
                                 )}
 
-                                {/* Payment confirmed — pata.ug is processing */}
+                                {/* Close Deal — when payment confirmed */}
                                 {deal.status === "payment_confirmed" && (
-                                  <span className="inline-flex items-center gap-1 rounded-lg bg-green/10 px-2.5 py-1.5 text-[10px] font-bold text-green">
-                                    <Shield size={11} /> Paid — Processing Transfer
-                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => updateDealStatus(deal.id, "closed")}
+                                    className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-bold text-white"
+                                    style={{ background: "linear-gradient(135deg, #1F8A44, #16753A)", boxShadow: "0 2px 8px rgba(31,138,68,0.25)", transition: `all 400ms ${T}` }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                                  >
+                                    <Handshake size={11} /> Close Deal
+                                  </button>
                                 )}
 
-                                {/* Closed — contacts shared via chat */}
+                                {/* Closed — show contact shared */}
                                 {deal.status === "closed" && (
-                                  <Link
-                                    href={`/deals/${deal.id}/chat`}
-                                    className="inline-flex items-center gap-1 rounded-lg bg-teal/10 px-2.5 py-1.5 text-[10px] font-bold text-teal"
-                                    style={{ transition: `all 400ms ${T}` }}
-                                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(10,147,150,0.2)"; }}
-                                    onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(10,147,150,0.1)"; }}
-                                  >
-                                    <Phone size={11} /> View Contacts
-                                  </Link>
+                                  <span className="inline-flex items-center gap-1 rounded-lg bg-teal/10 px-2.5 py-1.5 text-[10px] font-bold text-teal">
+                                    <Phone size={11} /> Contact Shared
+                                  </span>
                                 )}
                               </div>
                             </td>
@@ -478,12 +455,8 @@ export default function DealsPage() {
       {payingDealId && (() => {
         const deal = dealList.find((d) => d.id === payingDealId);
         if (!deal) return null;
-        const upfrontRent = deal.agreedRent * (deal.upfrontMonths || 1);
-        const secDep = deal.securityDeposit || 0;
-        const totalDeposit = upfrontRent + secDep;
-        const agencyFee = Math.round(deal.agreedRent * 0.05); // 5% on 1 month only
-        const hasEnough = walletBalance >= totalDeposit;
-        const shortfall = totalDeposit - walletBalance;
+        const deposit = deal.agreedRent * 3; // default 3 months — would come from property in production
+        const commission = Math.round(deal.agreedRent * 0.05);
 
         return (
           <div
@@ -497,137 +470,77 @@ export default function DealsPage() {
             >
               {/* Header */}
               <div className="px-6 pt-6 sm:px-8 sm:pt-8">
-                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-gold/70">Deposit Payment</p>
-                <h3 className="mt-2 font-display text-xl font-bold tracking-tighter text-white">{deal.propertyTitle}</h3>
-                <p className="mt-1 text-xs text-white/50">{deal.estate}</p>
-              </div>
-
-              {/* Wallet balance */}
-              <div className="mt-4 mx-6 sm:mx-8 flex items-center justify-between rounded-xl bg-white/[0.04] px-4 py-3">
-                <div className="flex items-center gap-2">
-                  <CreditCard size={14} className="text-gold" />
-                  <span className="text-xs font-bold text-white/50">Wallet Balance</span>
-                </div>
-                <span className={`font-display text-lg font-bold tracking-tight ${hasEnough ? "text-teal" : "text-white"}`}>
-                  {formatUGX(walletBalance)}
-                </span>
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-gold/70">
+                  Deposit Payment
+                </p>
+                <h3 className="mt-2 font-display text-xl font-bold tracking-tighter text-white">
+                  {deal.propertyTitle}
+                </h3>
+                <p className="mt-1 text-xs text-white/50">
+                  {deal.estate}
+                </p>
               </div>
 
               {/* Breakdown */}
-              <div className="mt-3 mx-6 sm:mx-8 rounded-xl bg-white/[0.04] p-4">
-                <div className="space-y-2">
+              <div className="mt-5 mx-6 sm:mx-8 rounded-xl bg-white/[0.04] p-4">
+                <div className="space-y-2.5">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-white/50">Agreed Monthly Rent</span>
-                    <span className="font-bold text-white">{formatUGX(deal.agreedRent)}/mo</span>
+                    <span className="font-bold text-white">{formatUGX(deal.agreedRent)}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-white/50">Upfront Rent ({deal.upfrontMonths || 1} month{(deal.upfrontMonths || 1) > 1 ? "s" : ""})</span>
-                    <span className="font-bold text-white">{formatUGX(upfrontRent)}</span>
+                    <span className="text-white/50">Deposit (3 months)</span>
+                    <span className="font-bold text-white">{formatUGX(deposit)}</span>
                   </div>
-                  {secDep > 0 && (
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/50">Security Deposit</span>
-                      <span className="font-bold text-white">{formatUGX(secDep)}</span>
-                    </div>
-                  )}
-                  <div className="h-px bg-white/[0.06]" />
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-bold text-white">Total to Wallet</span>
-                    <span className="font-display text-lg font-bold text-white">{formatUGX(totalDeposit)}</span>
-                  </div>
-
-                  {hasEnough && (
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/50">From Your Wallet</span>
-                      <span className="font-bold text-teal">- {formatUGX(totalDeposit)}</span>
-                    </div>
-                  )}
-                  {!hasEnough && walletBalance > 0 && (
-                    <>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-white/50">From Your Wallet</span>
-                        <span className="font-bold text-teal">- {formatUGX(walletBalance)}</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-white/50">Still Needed</span>
-                        <span className="font-bold text-orange">{formatUGX(shortfall)}</span>
-                      </div>
-                    </>
-                  )}
                   <div className="h-px bg-white/[0.06]" />
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-gold">
-                      {hasEnough ? "Pay from Wallet" : "Top Up Amount"}
-                    </span>
-                    <span className="font-display text-2xl font-bold tracking-tight text-gold">
-                      {formatUGX(hasEnough ? totalDeposit : shortfall)}
-                    </span>
+                    <span className="text-sm font-bold text-gold">Total to Pay</span>
+                    <span className="font-display text-2xl font-bold tracking-tight text-gold">{formatUGX(deposit)}</span>
                   </div>
                 </div>
               </div>
 
-              {/* Actions */}
-              <div className="mt-5 space-y-2.5 px-6 sm:px-8">
-                {hasEnough ? (
-                  /* Wallet has enough — pay directly */
-                  <button
-                    type="button"
-                    onClick={() => {
-                      deductFromWallet(totalDeposit);
-                      updateDealStatus(deal.id, "payment_confirmed");
-                      setPayingDealId(null);
-                    }}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold text-white"
-                    style={{ background: "linear-gradient(135deg, #0A9396, #077B7E)", boxShadow: "0 4px 20px rgba(10,147,150,0.3)", transition: `all 500ms ${T}` }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
-                  >
-                    <CreditCard size={16} /> Pay {formatUGX(totalDeposit)} from Wallet
-                  </button>
-                ) : (
-                  /* Wallet insufficient — top up first */
-                  <>
-                    <div className="flex items-start gap-2.5 rounded-xl bg-orange/5 px-4 py-3">
-                      <Shield size={14} className="mt-0.5 shrink-0 text-orange" />
-                      <p className="text-[11px] leading-relaxed text-white/50">
-                        {walletBalance > 0
-                          ? `Your wallet has ${formatUGX(walletBalance)} but you need ${formatUGX(totalDeposit)}. Top up ${formatUGX(shortfall)} to proceed.`
-                          : `Top up ${formatUGX(totalDeposit)} to your wallet to pay the deposit.`}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        addToWallet(hasEnough ? 0 : shortfall);
-                        updateDealStatus(deal.id, "payment_confirmed");
-                        setPayingDealId(null);
-                      }}
-                      className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold text-white"
-                      style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)", boxShadow: "0 4px 20px rgba(212,168,83,0.3)", transition: `all 500ms ${T}` }}
-                      onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
-                    >
-                      <Phone size={16} /> Top Up {formatUGX(shortfall)} via MTN MoMo
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        addToWallet(hasEnough ? 0 : shortfall);
-                        updateDealStatus(deal.id, "payment_confirmed");
-                        setPayingDealId(null);
-                      }}
-                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange py-3.5 text-sm font-bold text-white"
-                      style={{ boxShadow: "0 4px 16px rgba(212,98,42,0.2)", transition: `all 500ms ${T}` }}
-                      onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
-                    >
-                      <Phone size={16} /> Top Up {formatUGX(shortfall)} via Airtel Money
-                    </button>
-                  </>
-                )}
+              {/* Wallet explanation */}
+              <div className="mt-4 mx-6 sm:mx-8 flex items-start gap-2.5 rounded-xl bg-teal/5 px-4 py-3">
+                <Shield size={14} className="mt-0.5 shrink-0 text-teal" />
+                <p className="text-[11px] leading-relaxed text-white/50">
+                  Your deposit goes into your <span className="font-bold text-teal">pata.ug wallet</span>.
+                  We only transfer to the landlord after the deal is closed and confirmed by both parties.
+                  Your money is safe with us.
+                </p>
               </div>
 
-              {/* Footer */}
+              {/* Payment methods */}
+              <div className="mt-5 space-y-2.5 px-6 sm:px-8">
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateDealStatus(deal.id, "payment_confirmed");
+                    setPayingDealId(null);
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold text-white"
+                  style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)", boxShadow: "0 4px 20px rgba(212,168,83,0.3)", transition: `all 500ms ${T}` }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                >
+                  <Phone size={16} /> Pay {formatUGX(deposit)} via MTN MoMo
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateDealStatus(deal.id, "payment_confirmed");
+                    setPayingDealId(null);
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange py-3.5 text-sm font-bold text-white"
+                  style={{ boxShadow: "0 4px 16px rgba(212,98,42,0.2)", transition: `all 500ms ${T}` }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                >
+                  <Phone size={16} /> Pay {formatUGX(deposit)} via Airtel Money
+                </button>
+              </div>
+
+              {/* Cancel + note */}
               <div className="mt-4 px-6 pb-6 sm:px-8 sm:pb-8 text-center">
                 <button
                   type="button"
@@ -639,8 +552,8 @@ export default function DealsPage() {
                 >
                   Cancel
                 </button>
-                <p className="mt-2 text-[10px] text-white/30">
-                  Funds held securely · 5% agency fee on 1 month rent ({formatUGX(agencyFee)}) deducted from landlord payout
+                <p className="mt-3 text-[10px] text-white/30">
+                  5% commission ({formatUGX(commission)}) is deducted from the landlord&apos;s payout on deal close.
                 </p>
               </div>
             </div>

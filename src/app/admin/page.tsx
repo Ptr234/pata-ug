@@ -34,7 +34,7 @@ const STATS = [
   { label: "Active Deals", value: "23", icon: Handshake, accent: "#0A9396" },
   { label: "Monthly Revenue", value: "UGX 4.2M", icon: TrendingUp, accent: "#1F8A44" },
   { label: "Active Users", value: "1,847", icon: Users, accent: "#D4622A" },
-  { label: "Agency Fees Collected", value: "UGX 890K", icon: CreditCard, accent: "#d4a853" },
+  { label: "Commission Collected", value: "UGX 890K", icon: CreditCard, accent: "#d4a853" },
 ] as const;
 
 /* ── Listing Reviews ── */
@@ -92,7 +92,7 @@ function visitStyles(s: VisitStatus) {
 const ACTIONS = [
   { label: "Review Listings", desc: "Approve, reject, or flag new submissions", href: "/admin/listings", icon: ClipboardCheck },
   { label: "Schedule Verification", desc: "Assign field agents to property visits", href: "/admin/verification", icon: Shield },
-  { label: "View Deals", desc: "Monitor deal progress and agency fees", href: "/admin/deals", icon: Handshake },
+  { label: "View Deals", desc: "Monitor deal progress and commissions", href: "/admin/deals", icon: Handshake },
   { label: "Financial Reports", desc: "Revenue breakdowns and payouts", href: "/admin/reports", icon: TrendingUp },
 ] as const;
 
@@ -356,7 +356,7 @@ export default function AdminDashboardPage() {
                 <div className="mt-8 space-y-5">
                   {[
                     { label: "Listing Fees", value: "UGX 1.8M", color: "#fff" },
-                    { label: "Deal Agency Fees", value: "UGX 2.4M", color: "#fff" },
+                    { label: "Deal Commissions", value: "UGX 2.4M", color: "#fff" },
                   ].map((row) => (
                     <div key={row.label} className="flex items-center justify-between">
                       <span className="text-sm text-white/60">{row.label}</span>
