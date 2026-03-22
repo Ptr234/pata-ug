@@ -163,8 +163,8 @@ export default function Header() {
           />
         </Link>
 
-        {/* ═══ Center nav links — spacious, editorial ═══ */}
-        <nav className="hidden flex-1 items-center gap-0.5 lg:flex">
+        {/* ═══ Nav links — spread across full width ═══ */}
+        <nav className="hidden flex-1 items-center justify-around lg:flex">
           {NAV_LINKS.map((link) => {
             const isActive =
               pathname === link.href ||
