@@ -35,13 +35,42 @@ const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const isLoggedInRoute =
+  const isDashboardRoute =
     pathname.startsWith("/dashboard") ||
     pathname.startsWith("/landlord") ||
     pathname.startsWith("/admin") ||
     pathname.startsWith("/deals") ||
     pathname.startsWith("/account") ||
     pathname.startsWith("/notifications");
+
+  // Persist login state via localStorage
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState<"tenant" | "landlord" | "admin">("tenant");
+
+  useEffect(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("pata-role") : null;
+    if (stored) {
+      setLoggedIn(true);
+      setUserRole(stored as "tenant" | "landlord" | "admin");
+    }
+
+    if (isDashboardRoute) {
+      const role = pathname.startsWith("/admin") ? "admin" : pathname.startsWith("/landlord") ? "landlord" : "tenant";
+      localStorage.setItem("pata-role", role);
+      setLoggedIn(true);
+      setUserRole(role);
+    }
+  }, [isDashboardRoute, pathname]);
+
+  const isLoggedInRoute = loggedIn || isDashboardRoute;
+
+  const handleLogout = () => {
+    localStorage.removeItem("pata-role");
+    setLoggedIn(false);
+    setProfileOpen(false);
+    router.push("/login");
+  };
+
   const [profileOpen, setProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -229,7 +258,7 @@ export default function Header() {
         {/* ═══ Right section ═══ */}
         <div className="ml-auto flex items-center gap-2 lg:gap-3">
           {/* Landlord-only: List Property CTA (visible on /landlord routes) */}
-          {pathname.startsWith("/landlord") && (
+          {(userRole === "landlord" && loggedIn) && (
             <Link
               href="/landlord/listings/new"
               className="hidden items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider text-gold md:inline-flex"
@@ -333,9 +362,9 @@ export default function Header() {
                 <span
                   className="flex h-9 w-9 items-center justify-center rounded-full text-[11px] font-bold text-white"
                   style={{
-                    background: pathname.startsWith("/admin")
+                    background: userRole === "admin"
                       ? "linear-gradient(135deg, #d4a853, #B8903D)"
-                      : pathname.startsWith("/landlord")
+                      : userRole === "landlord"
                         ? "linear-gradient(135deg, #D4622A, #B54E1C)"
                         : "linear-gradient(135deg, #0A9396, #077B7E)",
                     boxShadow: profileOpen
@@ -354,7 +383,7 @@ export default function Header() {
                         "0 0 0 0px rgba(212, 168, 83, 0)";
                   }}
                 >
-                  {pathname.startsWith("/admin") ? "AD" : pathname.startsWith("/landlord") ? "SN" : "JD"}
+                  {userRole === "admin" ? "AD" : userRole === "landlord" ? "SN" : "JD"}
                 </span>
                 <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-[1.5px] border-navy bg-green" />
               </div>
@@ -387,21 +416,21 @@ export default function Header() {
                     <span
                       className="flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold text-white"
                       style={{
-                        background: pathname.startsWith("/admin")
+                        background: userRole === "admin"
                           ? "linear-gradient(135deg, #d4a853, #B8903D)"
-                          : pathname.startsWith("/landlord")
+                          : userRole === "landlord"
                             ? "linear-gradient(135deg, #D4622A, #B54E1C)"
                             : "linear-gradient(135deg, #0A9396, #077B7E)",
                       }}
                     >
-                      {pathname.startsWith("/admin") ? "AD" : pathname.startsWith("/landlord") ? "SN" : "JD"}
+                      {userRole === "admin" ? "AD" : userRole === "landlord" ? "SN" : "JD"}
                     </span>
                     <div>
                       <p className="text-sm font-bold text-navy">
-                        {pathname.startsWith("/admin") ? "Admin User" : pathname.startsWith("/landlord") ? "Sarah Namutebi" : "John Doe"}
+                        {userRole === "admin" ? "Admin User" : userRole === "landlord" ? "Sarah Namutebi" : "John Doe"}
                       </p>
                       <p className="text-[11px] text-text-muted">
-                        {pathname.startsWith("/admin") ? "Admin Account" : pathname.startsWith("/landlord") ? "Landlord Account" : "Client Account"}
+                        {userRole === "admin" ? "Admin Account" : userRole === "landlord" ? "Landlord Account" : "Client Account"}
                       </p>
                     </div>
                   </div>
@@ -410,7 +439,7 @@ export default function Header() {
                 <div className="py-1.5">
                   {[
                     {
-                      href: pathname.startsWith("/admin") ? "/admin" : pathname.startsWith("/landlord") ? "/landlord" : "/dashboard",
+                      href: userRole === "admin" ? "/admin" : userRole === "landlord" ? "/landlord" : "/dashboard",
                       icon: LayoutDashboard,
                       label: "Dashboard",
                     },
@@ -458,10 +487,7 @@ export default function Header() {
                 <div className="border-t border-smoke/80 py-1.5">
                   <button
                     type="button"
-                    onClick={() => {
-                      setProfileOpen(false);
-                      router.push("/login");
-                    }}
+                    onClick={handleLogout}
                     className="flex w-full items-center gap-3 px-5 py-2.5 text-sm text-red"
                     style={{
                       transition:
