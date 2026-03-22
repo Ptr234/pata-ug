@@ -128,23 +128,23 @@ export default function AboutPage() {
               </div>
             </ScrollReveal>
 
-            {/* RIGHT — Founder photo */}
+            {/* RIGHT — Property image */}
             <ScrollReveal variant="right">
               <div className="img-zoom relative hidden aspect-[4/3] overflow-hidden rounded-3xl lg:block">
                 <Image
-                  src="/Isaac_Etyang-Profile_Photograph.jpg"
-                  alt="Etty Etiang — Founder & CEO, pata.ug"
+                  src="/property_images/houses/house_7.jpg"
+                  alt="Property in Kampala"
                   fill
                   sizes="50vw"
-                  className="object-cover object-top"
+                  className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-navy/20 to-transparent" />
                 <div className="absolute bottom-6 left-6 rounded-2xl bg-white/10 px-5 py-4 backdrop-blur-xl">
                   <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/60">
-                    Founder &amp; CEO
+                    Trusted Platform
                   </p>
                   <p className="mt-1 font-display text-xl font-bold text-white">
-                    Etty Etiang
+                    pata.ug
                   </p>
                 </div>
               </div>
