@@ -1137,68 +1137,29 @@ export function PropertyDetailPage() {
                       </div>
                     </div>
 
-                    {!isGuest && (
-                      <div className="mt-4 grid grid-cols-2 gap-2">
-                        <a
-                          href={`tel:${contactPhone}`}
-                          className="flex items-center justify-center gap-1.5 rounded-xl bg-navy py-2.5 text-[11px] font-bold text-white transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-navy/90"
-                        >
-                          <Phone className="h-3.5 w-3.5" />
-                          Call
-                        </a>
-                        <a
-                          href={`https://wa.me/${whatsappPhone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi, I'm interested in "${title}" listed on pata.ug`)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-[11px] font-bold text-white transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
-                          style={{ background: "#25D366" }}
-                        >
-                          <MessageCircle className="h-3.5 w-3.5" />
-                          WhatsApp
-                        </a>
-                      </div>
-                    )}
+                    {/* Contact details hidden — only revealed after deal is closed */}
+                    <div className="mt-4 flex items-start gap-3 rounded-xl bg-gold/5 px-4 py-3">
+                      <Lock className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                      <p className="text-xs leading-relaxed text-text-muted">
+                        Contact details are shared only after the deal is closed and confirmed by both parties.
+                      </p>
+                    </div>
                   </div>
 
-                  {/* ---- Location Map ---- */}
+                  {/* ---- Location Map (hidden until deal closed) ---- */}
                   <div className="card-surface overflow-hidden">
                     <p className="px-5 pt-4 text-[9px] font-black uppercase tracking-[0.15em] text-text-muted mb-2">Location</p>
-                    {!isGuest && property.location?.lat && property.location?.lng ? (
-                      <div className="relative h-56 w-full">
-                        <iframe
-                          title="Property location map"
-                          width="100%"
-                          height="100%"
-                          style={{ border: 0 }}
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                          src={`https://www.openstreetmap.org/export/embed.html?bbox=${property.location.lng - 0.008}%2C${property.location.lat - 0.005}%2C${property.location.lng + 0.008}%2C${property.location.lat + 0.005}&layer=mapnik&marker=${property.location.lat}%2C${property.location.lng}`}
-                        />
-                        <a
-                          href={`https://www.openstreetmap.org/?mlat=${property.location.lat}&mlon=${property.location.lng}#map=16/${property.location.lat}/${property.location.lng}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-lg bg-white/90 px-2.5 py-1.5 text-[10px] font-bold text-navy shadow-soft backdrop-blur-sm transition-all duration-300 hover:bg-white hover:shadow-card"
-                        >
-                          <ExternalLink className="h-3 w-3" />
-                          View Larger Map
-                        </a>
+                    <div className="flex h-48 items-center justify-center text-center px-5 pb-4">
+                      <div>
+                        <Lock className="mx-auto h-6 w-6 text-text-muted" />
+                        <p className="mt-2 text-sm text-text-muted">
+                          Exact location and map are shared after the deal is closed
+                        </p>
+                        <p className="mt-1 text-[10px] text-text-muted/60">
+                          General area: {estate}, {district}
+                        </p>
                       </div>
-                    ) : (
-                      <div className="flex h-48 items-center justify-center text-center px-5 pb-4">
-                        <div>
-                          <MapPin className="mx-auto h-6 w-6 text-text-muted" />
-                          <p className="mt-2 text-sm text-text-muted">
-                            {isGuest ? "Sign in to view the property location on the map" : "Map coordinates unavailable"}
-                          </p>
-                          {isGuest && (
-                            <Link href="/login" className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-teal transition-colors hover:text-teal-dark">
-                              Log in to view <ExternalLink className="h-3 w-3" />
-                            </Link>
-                          )}
-                        </div>
-                      </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
