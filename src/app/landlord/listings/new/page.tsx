@@ -160,96 +160,151 @@ export default function NewListingPage() {
                   )}
 
                   {/* ── Step 2: Details ── */}
-                  {step === 2 && (
-                    <div className="space-y-6">
+                  {step === 2 && (() => {
+                    const L = "mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60";
+                    const I = `w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30`;
+                    const S = `w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white`;
+                    const isResidential = ["apartment","standalone","townhouse","studio","single-room","shared-house","servant-quarters","short-stay"].includes(category);
+                    const isCommercial = ["office","shop","warehouse"].includes(category);
+                    const isLand = category === "land";
+                    const showBedrooms = isResidential && category !== "studio";
+                    return (
+                    <div className="space-y-8">
                       <h2 className="font-display text-2xl font-bold tracking-tighter text-white">Property Details</h2>
 
                       {/* Category indicator */}
                       {category && (
                         <div className="flex items-center gap-3 rounded-xl bg-orange/10 px-4 py-3">
                           <Building2 className="h-4 w-4 text-orange" />
-                          <span className="text-sm font-bold text-orange">
-                            {CATEGORIES.find((c) => c.id === category)?.label ?? category}
-                          </span>
+                          <span className="text-sm font-bold text-orange">{CATEGORIES.find((c) => c.id === category)?.label ?? category}</span>
                           <button type="button" onClick={() => setStep(1)} className="ml-auto text-xs text-white/60 hover:text-white" style={{ transition: `color 500ms ${T}` }}>Change</button>
                         </div>
                       )}
 
-                      <div>
-                        <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Listing Title</label>
-                        <input type="text" placeholder="e.g. Modern 2-Bedroom Apartment in Bukoto" className="w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                      {/* ── Section: Basic Info ── */}
+                      <div className="space-y-5">
+                        <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Basic Information</p>
+                        <div><label className={L}>Listing Title</label><input type="text" placeholder="e.g. Modern 2-Bedroom Apartment in Bukoto" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div><label className={L}>Monthly Rent (UGX)</label><input type="number" placeholder="1,500,000" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                          <div><label className={L}>Estate / Location</label><div className="relative"><MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" /><input type="text" placeholder="e.g. Bukoto" className={`${I} pl-11`} style={{ transition: `all 500ms ${T}` }} /></div></div>
+                        </div>
+                        <div><label className={L}>Available From</label><input type="date" className={S} style={{ transition: `all 500ms ${T}` }} /></div>
                       </div>
 
-                      <div className="grid gap-5 sm:grid-cols-2">
-                        <div>
-                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Monthly Rent (UGX)</label>
-                          <input type="number" placeholder="1,500,000" className="w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                      {/* ── Section: Property Specs (residential) ── */}
+                      {(isResidential || isCommercial) && (
+                        <div className="space-y-5">
+                          <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Property Specifications</p>
+                          <div className="grid gap-5 sm:grid-cols-3">
+                            {showBedrooms && (
+                              <div><label className={L}>Bedrooms</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+                            )}
+                            <div><label className={L}>Bathrooms</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>1</option><option>2</option><option>3+</option></select></div>
+                            {isCommercial && (
+                              <div><label className={L}>Floor Area (sqm)</label><input type="number" placeholder="e.g. 80" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                            )}
+                            {category === "studio" && (
+                              <div><label className={L}>Floor Level</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Ground</option><option>1st</option><option>2nd</option><option>3rd+</option></select></div>
+                            )}
+                            {(category === "apartment" || category === "townhouse") && (
+                              <div><label className={L}>Total Floors in Building</label><input type="number" placeholder="e.g. 4" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                            )}
+                          </div>
+
+                          {category === "apartment" && (
+                            <div><label className={L}>Floor Level</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Ground</option><option>1st</option><option>2nd</option><option>3rd</option><option>4th+</option></select></div>
+                          )}
+
+                          {category === "standalone" && (
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <div><label className={L}>Compound Size</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Small</option><option>Medium</option><option>Large</option></select></div>
+                              <div><label className={L}>Parking Bays</label><input type="number" placeholder="e.g. 2" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                            </div>
+                          )}
+
+                          {category === "shared-house" && (
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <div><label className={L}>Current Housemates</label><input type="number" placeholder="e.g. 3" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                              <div><label className={L}>Bathroom Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Private</option><option>Shared</option></select></div>
+                            </div>
+                          )}
+
+                          {category === "single-room" && (
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <div><label className={L}>Bathroom Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Private</option><option>Shared</option></select></div>
+                              <div><label className={L}>Compound Access</label><input type="text" placeholder="e.g. Gated, shared yard" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                            </div>
+                          )}
+
+                          {category === "office" && (
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <div><label className={L}>Private Offices</label><input type="number" placeholder="e.g. 3" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                              <div><label className={L}>Parking Bays</label><input type="number" placeholder="e.g. 4" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                            </div>
+                          )}
+
+                          {category === "shop" && (
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <div><label className={L}>Frontage Width (m)</label><input type="number" placeholder="e.g. 6" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                              <div><label className={L}>Storage Room</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
+                            </div>
+                          )}
+
+                          {category === "warehouse" && (
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <div><label className={L}>Loading Bay</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
+                              <div><label className={L}>Clearance Height (m)</label><input type="number" placeholder="e.g. 5" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                            </div>
+                          )}
+
+                          {category === "short-stay" && (
+                            <div className="grid gap-5 sm:grid-cols-2">
+                              <div><label className={L}>Minimum Stay</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>1 night</option><option>1 week</option><option>1 month</option></select></div>
+                              <div><label className={L}>Housekeeping</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
+                            </div>
+                          )}
                         </div>
-                        <div>
-                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Estate / Location</label>
-                          <div className="relative">
-                            <MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" />
-                            <input type="text" placeholder="e.g. Bukoto" className="w-full rounded-xl bg-white/[0.08] py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                      )}
+
+                      {/* ── Section: Land-specific ── */}
+                      {isLand && (
+                        <div className="space-y-5">
+                          <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Land Details</p>
+                          <div className="grid gap-5 sm:grid-cols-2">
+                            <div><label className={L}>Plot Size</label><input type="text" placeholder="e.g. 50x100 ft or 0.25 acres" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                            <div><label className={L}>Zoning Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Residential</option><option>Commercial</option><option>Mixed Use</option></select></div>
+                          </div>
+                          <div className="grid gap-5 sm:grid-cols-2">
+                            <div><label className={L}>Title Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Freehold</option><option>Leasehold</option><option>Mailo</option><option>Customary</option></select></div>
+                            <div><label className={L}>Road Access</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Tarmac</option><option>Murram</option><option>Footpath</option></select></div>
                           </div>
                         </div>
-                      </div>
+                      )}
 
-                      <div className="grid gap-5 sm:grid-cols-3">
-                        <div>
-                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Bedrooms</label>
-                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
-                            <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option>
-                          </select>
+                      {/* ── Section: Amenities ── */}
+                      <div className="space-y-5">
+                        <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Amenities and Features</p>
+                        <div className="grid gap-5 sm:grid-cols-3">
+                          <div><label className={L}>Furnished</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Unfurnished</option><option>Partially Furnished</option><option>Fully Furnished</option></select></div>
+                          <div><label className={L}>Parking</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No Parking</option><option>1 Space</option><option>2 Spaces</option><option>3+ Spaces</option></select></div>
+                          <div><label className={L}>Pet-Friendly</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
                         </div>
-                        <div>
-                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Bathrooms</label>
-                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
-                            <option>1</option><option>2</option><option>3+</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Available From</label>
-                          <input type="date" className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div><label className={L}>Water Source</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>NWSC Mains</option><option>Borehole</option><option>Rainwater</option><option>Tank</option></select></div>
+                          <div><label className={L}>Utilities Included</label><select multiple className={`${S} min-h-[100px]`} style={{ transition: `all 500ms ${T}` }}><option>Water</option><option>Electricity</option><option>Wi-Fi</option><option>Security</option><option>Garbage Collection</option></select></div>
                         </div>
                       </div>
 
-                      {/* Furnished, Parking, Pet-friendly */}
-                      <div className="grid gap-5 sm:grid-cols-3">
-                        <div>
-                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Furnished</label>
-                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
-                            <option>Unfurnished</option><option>Partially Furnished</option><option>Fully Furnished</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Parking</label>
-                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
-                            <option>No Parking</option><option>1 Space</option><option>2 Spaces</option><option>3+ Spaces</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Pet-Friendly</label>
-                          <select className="w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white" style={{ transition: `all 500ms ${T}` }}>
-                            <option>No</option><option>Yes</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Description</label>
-                        <textarea rows={4} placeholder="Describe your property (250-1,500 characters)" className="w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
-                        <p className="mt-1.5 text-xs text-white/60">Min 250, max 1,500 characters</p>
-                      </div>
-
-                      <div>
-                        <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Contact Phone</label>
-                        <div className="relative">
-                          <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" />
-                          <input type="tel" placeholder="+256 700 000 000" className="w-full rounded-xl bg-white/[0.08] py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
-                        </div>
+                      {/* ── Section: Description and Contact ── */}
+                      <div className="space-y-5">
+                        <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Description and Contact</p>
+                        <div><label className={L}>Description</label><textarea rows={4} placeholder="Describe your property in detail (250-1,500 characters)" className={`${I} resize-none`} style={{ transition: `all 500ms ${T}` }} /><p className="mt-1.5 text-xs text-white/60">Min 250, max 1,500 characters</p></div>
+                        <div><label className={L}>Contact Phone</label><div className="relative"><Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" /><input type="tel" placeholder="+256 700 000 000" className={`${I} pl-11`} style={{ transition: `all 500ms ${T}` }} /></div></div>
                       </div>
                     </div>
-                  )}
+                    );
+                  })()}
 
                   {/* ── Step 3: Photos ── */}
                   {step === 3 && (
