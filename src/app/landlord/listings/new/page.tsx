@@ -184,9 +184,9 @@ export default function NewListingPage() {
                       {/* ── Section: Basic Info ── */}
                       <div className="space-y-5">
                         <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Basic Information</p>
-                        <div><label className={L}>Listing Title</label><input type="text" placeholder="e.g. Modern 2-Bedroom Apartment in Bukoto" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                        <div><label className={L}>Listing Title</label><input type="text" placeholder={isLand ? "e.g. 50x100 Plot in Wakiso" : isCommercial ? "e.g. Office Space on Nakasero Road" : "e.g. Modern 2-Bedroom Apartment in Bukoto"} className={I} style={{ transition: `all 500ms ${T}` }} /></div>
                         <div className="grid gap-5 sm:grid-cols-2">
-                          <div><label className={L}>Monthly Rent (UGX)</label><input type="number" placeholder="1,500,000" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
+                          <div><label className={L}>{isLand ? "Asking Price (UGX)" : "Monthly Rent (UGX)"}</label><input type="number" placeholder={isLand ? "50,000,000" : "1,500,000"} className={I} style={{ transition: `all 500ms ${T}` }} /></div>
                           <div><label className={L}>Estate / Location</label><div className="relative"><MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" /><input type="text" placeholder="e.g. Bukoto" className={`${I} pl-11`} style={{ transition: `all 500ms ${T}` }} /></div></div>
                         </div>
                         <div><label className={L}>Available From</label><input type="date" className={S} style={{ transition: `all 500ms ${T}` }} /></div>
@@ -282,19 +282,33 @@ export default function NewListingPage() {
                         </div>
                       )}
 
-                      {/* ── Section: Amenities ── */}
+                      {/* ── Section: Amenities (not for land) ── */}
+                      {!isLand && (
                       <div className="space-y-5">
                         <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Amenities and Features</p>
                         <div className="grid gap-5 sm:grid-cols-3">
-                          <div><label className={L}>Furnished</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Unfurnished</option><option>Partially Furnished</option><option>Fully Furnished</option></select></div>
-                          <div><label className={L}>Parking</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No Parking</option><option>1 Space</option><option>2 Spaces</option><option>3+ Spaces</option></select></div>
-                          <div><label className={L}>Pet-Friendly</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
+                          {!isCommercial && <div><label className={L}>Furnished</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Unfurnished</option><option>Partially Furnished</option><option>Fully Furnished</option></select></div>}
+                          {category !== "warehouse" && <div><label className={L}>Parking</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No Parking</option><option>1 Space</option><option>2 Spaces</option><option>3+ Spaces</option></select></div>}
+                          {isResidential && <div><label className={L}>Pet-Friendly</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>}
                         </div>
                         <div className="grid gap-5 sm:grid-cols-2">
                           <div><label className={L}>Water Source</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>NWSC Mains</option><option>Borehole</option><option>Rainwater</option><option>Tank</option></select></div>
                           <div><label className={L}>Utilities Included</label><select multiple className={`${S} min-h-[100px]`} style={{ transition: `all 500ms ${T}` }}><option>Water</option><option>Electricity</option><option>Wi-Fi</option><option>Security</option><option>Garbage Collection</option></select></div>
                         </div>
                       </div>
+                      )}
+
+                      {/* ── Section: Land amenities (land-only) ── */}
+                      {isLand && (
+                      <div className="space-y-5">
+                        <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Site Features</p>
+                        <div className="grid gap-5 sm:grid-cols-3">
+                          <div><label className={L}>Electricity Access</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Nearby</option><option>On-site</option></select></div>
+                          <div><label className={L}>Water Access</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Borehole</option><option>NWSC Nearby</option></select></div>
+                          <div><label className={L}>Fenced</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Partially</option><option>Fully Fenced</option></select></div>
+                        </div>
+                      </div>
+                      )}
 
                       {/* ── Section: Description and Contact ── */}
                       <div className="space-y-5">
