@@ -164,7 +164,7 @@ export default function Header() {
         </Link>
 
         {/* ═══ Nav links — spread across full width ═══ */}
-        <nav className="hidden flex-1 items-center justify-between lg:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-10 lg:flex">
           {NAV_LINKS.map((link) => {
             const isActive =
               pathname === link.href ||
@@ -175,7 +175,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group relative flex-1 text-center px-2 py-2.5"
+                className="group relative px-5 py-2.5"
               >
                 {/* Hover pill bg */}
                 <span
