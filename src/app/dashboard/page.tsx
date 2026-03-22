@@ -21,6 +21,7 @@ import {
   Search,
   ChevronRight,
   Calendar,
+  Wallet,
 } from "lucide-react";
 import { properties, deals } from "@/lib/mock-data";
 import type { DealStatus } from "@/lib/mock-data";
@@ -62,7 +63,7 @@ const DEAL_STATUS_LABELS: Record<string, string> = {
   closed: "Closed",
   awaiting_landlord: "Awaiting Landlord",
   confirmed: "Confirmed",
-  commission_paid: "Commission Paid",
+  commission_paid: "Agency Fee Paid",
 };
 
 function formatDealStatus(status: DealStatus): string {
@@ -97,6 +98,8 @@ const T = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 export default function DashboardPage() {
   const [seconds, setSeconds] = useState(23 * 3600 + 14 * 60);
+  const [topUpOpen, setTopUpOpen] = useState(false);
+  const [topUpAmount, setTopUpAmount] = useState("");
 
   useEffect(() => {
     const id = setInterval(() => setSeconds((s) => (s > 0 ? s - 1 : 0)), 1000);
@@ -199,6 +202,32 @@ export default function DashboardPage() {
                     <Shield className="h-3.5 w-3.5" />
                     Profile
                   </Link>
+                </div>
+
+                {/* Wallet — compact inline card */}
+                <div
+                  className="mt-6 flex items-center gap-3 rounded-2xl bg-white/[0.04] px-4 py-3"
+                  style={{ transition: `all 500ms ${T}`, maxWidth: "320px" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+                >
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gold/15">
+                    <Wallet size={16} className="text-gold" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[9px] font-black uppercase tracking-wider text-white/30">Wallet Balance</p>
+                    <p className="font-display text-lg font-bold tracking-tight text-white">UGX {Number(typeof window !== "undefined" ? localStorage.getItem("pata-wallet") || "0" : "0").toLocaleString("en-UG")}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setTopUpOpen(true)}
+                    className="rounded-lg px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-white"
+                    style={{ background: "#C0303A", transition: `all 400ms ${T}` }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "#A52830"; e.currentTarget.style.transform = "scale(1.05)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "#C0303A"; e.currentTarget.style.transform = "scale(1)"; }}
+                  >
+                    Top Up
+                  </button>
                 </div>
               </ScrollReveal>
             </div>
@@ -613,6 +642,120 @@ export default function DashboardPage() {
           </ScrollReveal>
         </div>
       </section>
+      {/* ═══ TOP-UP POPUP ═══ */}
+      {topUpOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-navy/90 backdrop-blur-md"
+          onClick={() => setTopUpOpen(false)}
+        >
+          <div
+            className="mx-4 w-full max-w-sm overflow-hidden rounded-3xl bg-navy"
+            style={{ boxShadow: "0 32px 64px rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 pt-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15">
+                  <Wallet size={18} className="text-gold" />
+                </div>
+                <div>
+                  <p className="text-[9px] font-black uppercase tracking-wider text-gold/70">Top Up</p>
+                  <p className="text-sm font-bold text-white">Add Funds to Wallet</p>
+                </div>
+              </div>
+
+              {/* Quick amounts */}
+              <div className="mt-5 grid grid-cols-3 gap-2">
+                {["500000", "1000000", "2000000", "3000000", "5000000", "10000000"].map((amt) => {
+                  const label = Number(amt) >= 1000000
+                    ? `${Number(amt) / 1000000}M`
+                    : `${Number(amt) / 1000}K`;
+                  return (
+                    <button
+                      key={amt}
+                      type="button"
+                      onClick={() => setTopUpAmount(amt)}
+                      className="rounded-xl py-2.5 text-center text-xs font-bold"
+                      style={{
+                        background: topUpAmount === amt ? "rgba(212,168,83,0.15)" : "rgba(255,255,255,0.04)",
+                        color: topUpAmount === amt ? "#d4a853" : "rgba(255,255,255,0.5)",
+                        border: topUpAmount === amt ? "1px solid rgba(212,168,83,0.3)" : "1px solid transparent",
+                        transition: `all 400ms ${T}`,
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Custom amount */}
+              <div className="mt-4">
+                <p className="mb-1.5 text-[9px] font-black uppercase tracking-wider text-white/30">Or enter amount</p>
+                <div className="flex items-center overflow-hidden rounded-xl bg-white/[0.06]">
+                  <span className="bg-white/[0.04] px-3 py-3 text-xs font-bold text-white/40">UGX</span>
+                  <input
+                    type="number"
+                    placeholder="0"
+                    value={topUpAmount}
+                    onChange={(e) => setTopUpAmount(e.target.value)}
+                    className="flex-1 bg-transparent px-3 py-3 text-sm font-bold text-white outline-none placeholder:text-white/20"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Payment buttons */}
+            <div className="mt-5 space-y-2 px-6">
+              <button
+                type="button"
+                disabled={!topUpAmount}
+                onClick={() => {
+                  const current = Number(localStorage.getItem("pata-wallet") || "0");
+                  localStorage.setItem("pata-wallet", String(current + Number(topUpAmount)));
+                  setTopUpAmount("");
+                  setTopUpOpen(false);
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-white disabled:opacity-30"
+                style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)", boxShadow: "0 4px 16px rgba(212,168,83,0.25)", transition: `all 500ms ${T}` }}
+              >
+                <Phone size={15} /> MTN MoMo
+              </button>
+              <button
+                type="button"
+                disabled={!topUpAmount}
+                onClick={() => {
+                  const current = Number(localStorage.getItem("pata-wallet") || "0");
+                  localStorage.setItem("pata-wallet", String(current + Number(topUpAmount)));
+                  setTopUpAmount("");
+                  setTopUpOpen(false);
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-orange py-3 text-sm font-bold text-white disabled:opacity-30"
+                style={{ boxShadow: "0 4px 16px rgba(212,98,42,0.2)", transition: `all 500ms ${T}` }}
+              >
+                <Phone size={15} /> Airtel Money
+              </button>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-4 px-6 pb-6 text-center">
+              <button
+                type="button"
+                onClick={() => setTopUpOpen(false)}
+                className="text-xs text-white/30"
+                style={{ transition: `color 400ms ${T}` }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; }}
+              >
+                Cancel
+              </button>
+              <p className="mt-2 text-[9px] text-white/20">
+                Funds are held securely in your pata.ug wallet
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

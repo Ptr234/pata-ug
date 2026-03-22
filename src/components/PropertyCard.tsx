@@ -13,6 +13,13 @@ import {
   ArrowRight,
   Handshake,
   Tag,
+  Star,
+  Users,
+  GraduationCap,
+  Crown,
+  Wallet,
+  Dog,
+  Home,
 } from "lucide-react";
 
 interface PropertyCardProps {
@@ -26,10 +33,14 @@ interface PropertyCardProps {
   bathrooms?: number;
   photo: string;
   isVerified: boolean;
+  isFeatured?: boolean;
   negotiable?: boolean;
   upfrontMonths?: number;
+  securityDeposit?: number;
+  fencing?: string[];
   furnished?: string;
   parking?: number;
+  lifestyleTags?: string[];
   isGuest?: boolean;
 }
 
@@ -38,6 +49,26 @@ function formatPrice(amount: number): string {
     maximumFractionDigits: 0,
   }).format(amount);
 }
+
+const LIFESTYLE_ICONS: Record<string, React.ReactNode> = {
+  "family-friendly": <Users className="h-2.5 w-2.5" />,
+  "bachelor-pad": <Home className="h-2.5 w-2.5" />,
+  "student-friendly": <GraduationCap className="h-2.5 w-2.5" />,
+  "luxury": <Crown className="h-2.5 w-2.5" />,
+  "budget": <Wallet className="h-2.5 w-2.5" />,
+  "pet-friendly": <Dog className="h-2.5 w-2.5" />,
+  "gated-community": <Shield className="h-2.5 w-2.5" />,
+};
+
+const LIFESTYLE_LABELS: Record<string, string> = {
+  "family-friendly": "Family",
+  "bachelor-pad": "Bachelor",
+  "student-friendly": "Student",
+  "luxury": "Luxury",
+  "budget": "Budget",
+  "pet-friendly": "Pets OK",
+  "gated-community": "Gated",
+};
 
 export default function PropertyCard({
   id,
@@ -50,10 +81,14 @@ export default function PropertyCard({
   bathrooms,
   photo,
   isVerified,
+  isFeatured,
   negotiable,
   upfrontMonths,
+  securityDeposit,
+  fencing,
   furnished,
   parking,
+  lifestyleTags,
   isGuest = false,
 }: PropertyCardProps) {
   const [hovered, setHovered] = useState(false);
@@ -98,9 +133,17 @@ export default function PropertyCard({
         />
 
         {/* Category badge — top left */}
-        <span className="absolute left-3 top-3 rounded-lg bg-white/90 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.15em] text-navy backdrop-blur-sm">
-          {category}
-        </span>
+        <div className="absolute left-3 top-3 flex items-center gap-1.5">
+          <span className="rounded-lg bg-white/90 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.15em] text-navy backdrop-blur-sm">
+            {category}
+          </span>
+          {isFeatured && (
+            <span className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[9px] font-black uppercase tracking-wider text-white" style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)", boxShadow: "0 2px 6px rgba(212,168,83,0.35)" }}>
+              <Star className="h-2.5 w-2.5" />
+              Featured
+            </span>
+          )}
+        </div>
 
         {/* Verification badge — top right */}
         <span
@@ -202,7 +245,36 @@ export default function PropertyCard({
               {furnished}
             </span>
           )}
+          {fencing && fencing.length > 0 && fencing[0] !== "none" && (
+            <span className="inline-flex items-center gap-1 rounded-lg bg-white/[0.06] px-2 py-1 text-[10px] font-medium text-white/60">
+              <Shield className="h-3 w-3 text-gold" />
+              {fencing.map(f => f === "wall" ? "Wall" : f === "live" ? "Live" : f === "chain-link" ? "Chain" : "Open").join("+")}
+            </span>
+          )}
         </div>
+
+        {/* Lifestyle tags */}
+        {lifestyleTags && lifestyleTags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1">
+            {lifestyleTags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center gap-1 rounded-md bg-white/[0.06] px-1.5 py-0.5 text-[9px] font-medium text-white/50"
+              >
+                {LIFESTYLE_ICONS[tag]}
+                {LIFESTYLE_LABELS[tag] || tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Security deposit */}
+        {securityDeposit && securityDeposit > 0 && (
+          <div className="mt-2 flex items-center gap-1 text-[10px] text-white/40">
+            <Lock className="h-3 w-3 text-gold/60" />
+            Deposit: UGX {formatPrice(securityDeposit)}
+          </div>
+        )}
 
         {/* CTA section */}
         {isGuest ? (

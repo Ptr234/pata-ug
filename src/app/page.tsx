@@ -415,6 +415,8 @@ export default function HomePage() {
                   isVerified={p.isVerified}
                   negotiable={p.negotiable}
                   upfrontMonths={p.upfrontMonths}
+                  securityDeposit={p.securityDeposit}
+                  fencing={p.fencing}
                   furnished={p.furnished ? "Furnished" : undefined}
                   parking={p.parking ? 1 : undefined}
                   isGuest
@@ -678,6 +680,7 @@ export default function HomePage() {
                 "/property_images/rooms/room_3.jpg", "/property_images/commercial/commercial_1.jpg",
                 "/property_images/commercial/commercial_2.jpg", "/property_images/commercial/commercial_3.jpg",
                 "/property_images/studios/studio_2.jpg", "/property_images/houses/house_3.jpg",
+                "/property_images/apartments/apartment_7.jpg", "/property_images/houses/house_12.jpg",
               ];
               return (
                 <ScrollReveal key={cat.id} variant="scale" delay={i * 60}>
@@ -812,7 +815,7 @@ export default function HomePage() {
           <div className="mt-16 grid gap-5 md:grid-cols-3">
             {[
               { icon: Shield, title: "Verified Properties", desc: "Every listing can earn a Verified badge through our on-ground inspection team. Real photos, real properties.", accent: "#0A9396" },
-              { icon: CreditCard, title: "Transparent Pricing", desc: "No hidden fees or broker commissions. Pay via MTN MoMo or Airtel Money — instant and secure.", accent: "#d4a853" },
+              { icon: CreditCard, title: "Transparent Pricing", desc: "No hidden fees or broker agency fees. Pay via MTN MoMo or Airtel Money — instant and secure.", accent: "#d4a853" },
               { icon: Phone, title: "Managed Deals", desc: "We handle tenant-landlord negotiations. Contacts are shared only after a successful deal closure.", accent: "#D4622A" },
             ].map((item, i) => (
               <ScrollReveal key={item.title} variant="scale" delay={i * 100}>

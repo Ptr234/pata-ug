@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Check, Shield, ArrowRight } from "lucide-react";
 
 interface PlanCardProps {
@@ -8,6 +9,7 @@ interface PlanCardProps {
   duration: string;
   features: readonly string[];
   cta: string;
+  href?: string;
   popular?: boolean;
   variant?: "client" | "landlord";
 }
@@ -18,6 +20,7 @@ export default function PlanCard({
   duration,
   features,
   cta,
+  href,
   popular = false,
   variant = "client",
 }: PlanCardProps) {
@@ -135,8 +138,8 @@ export default function PlanCard({
         </ul>
 
         {/* CTA */}
-        <button
-          type="button"
+        <Link
+          href={href || "/signup"}
           className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-sm font-black uppercase tracking-wider text-white"
           style={{
             background: popular
@@ -162,7 +165,7 @@ export default function PlanCard({
         >
           {cta}
           <ArrowRight className="h-4 w-4" />
-        </button>
+        </Link>
       </div>
     </div>
   );

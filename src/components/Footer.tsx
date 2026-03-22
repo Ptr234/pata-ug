@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FOOTER_LINKS } from "@/lib/constants";
 
 export default function Footer() {
@@ -9,9 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block">
-              <span className="font-display text-2xl font-bold tracking-editorial text-white">
-                pata<span className="text-gold">.ug</span>
-              </span>
+              <Image src="/logo/logofordarkbg.png" alt="pata.ug" width={180} height={54} className="h-12 w-auto" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
               Find your next home in Uganda

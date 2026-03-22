@@ -44,7 +44,7 @@ const checklist: ChecklistItem[] = [
   { label: "Upload property photos", done: true, icon: Camera, desc: "Minimum 3 photos uploaded" },
   { label: "Request a Verified badge", done: false, icon: BadgeCheck, desc: "Schedule an agent visit" },
   { label: "Respond to a deal request", done: false, icon: MessageSquare, desc: "Confirm or reject tenant offers" },
-  { label: "Complete commission payment", done: false, icon: Wallet, desc: "Pay 5% on confirmed deals" },
+  { label: "Complete agency fee payment", done: false, icon: Wallet, desc: "Pay 5% on confirmed deals" },
 ];
 
 const STATS = [
@@ -74,7 +74,7 @@ function dealLabel(s: string) {
     closed: "Closed",
     awaiting_landlord: "Awaiting Response",
     confirmed: "Confirmed",
-    commission_paid: "Paid",
+    commission_paid: "Agency Fee Paid",
   };
   return labels[s] || s;
 }
@@ -84,7 +84,7 @@ export default function LandlordDashboardPage() {
   const [activeTab, setActiveTab] = useState<ListingTab>("All");
   const selectedStatus = tabToStatus(activeTab);
   const filtered = selectedStatus ? landlordListings.filter((l) => l.status === selectedStatus) : landlordListings;
-  const incoming = deals.filter((d) => d.status !== "closed" && d.status !== "commission_paid");
+  const incoming = deals.filter((d) => d.status !== "closed" && d.status !== "commission_paid"); // commission_paid kept for legacy compat
   const doneCount = checklist.filter((c) => c.done).length;
 
   return (
@@ -331,7 +331,7 @@ export default function LandlordDashboardPage() {
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {[
               { label: "Total Listing Fees", value: "UGX 240,000", sub: "8 listings x UGX 30,000", accent: "#D4622A" },
-              { label: "Total Commissions", value: "UGX 340,000", sub: "5% of confirmed deals", accent: "#d4a853" },
+              { label: "Total Agency Fees", value: "UGX 340,000", sub: "5% of confirmed deals", accent: "#d4a853" },
               { label: "Current Plan", value: "Pay-Per-Listing", sub: "UGX 30,000 per listing", accent: "#0A9396" },
             ].map((card, i) => (
               <ScrollReveal key={card.label} variant="scale" delay={i * 100}>
