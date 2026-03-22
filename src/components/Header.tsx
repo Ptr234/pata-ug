@@ -151,7 +151,11 @@ export default function Header() {
 
         {/* ═══ Center nav links — spacious, editorial ═══ */}
         <nav className="hidden flex-1 items-center gap-0.5 lg:flex">
-          {NAV_LINKS.map((link) => {
+          {NAV_LINKS.filter((link) => {
+            // Hide "Verified" on tenant dashboard routes (verification is landlord-only)
+            if (link.href === "/verified" && (pathname.startsWith("/dashboard") || pathname.startsWith("/deals") || pathname.startsWith("/account"))) return false;
+            return true;
+          }).map((link) => {
             const isActive =
               pathname === link.href ||
               pathname.startsWith(link.href + "/");
@@ -532,7 +536,10 @@ export default function Header() {
           <div className="mx-auto max-w-7xl px-5 pb-8 pt-5">
             {/* Nav links with icons */}
             <nav className="flex flex-col gap-1">
-              {NAV_LINKS.map((link, i) => {
+              {NAV_LINKS.filter((link) => {
+                if (link.href === "/verified" && (pathname.startsWith("/dashboard") || pathname.startsWith("/deals") || pathname.startsWith("/account"))) return false;
+                return true;
+              }).map((link, i) => {
                 const isActive = pathname === link.href;
                 const NavIcon = NAV_ICONS[link.href] ?? Home;
                 return (
