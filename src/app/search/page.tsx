@@ -503,10 +503,14 @@ function SearchPageContent() {
                   category.
                 </p>
                 <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-                  <Link href="/search" className="btn-gold">
+                  <button
+                    type="button"
+                    onClick={() => { window.location.href = "/search"; }}
+                    className="btn-gold"
+                  >
                     <ArrowRight className="h-4 w-4" />
                     Reset Filters
-                  </Link>
+                  </button>
                   <Link href="/" className="btn-outline-white">
                     Back to Home
                   </Link>
