@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { getUserProfile } from "@/lib/user";
 import {
   Check,
   ArrowRight,
@@ -18,7 +19,7 @@ import PlanCard from "@/components/PlanCard";
 import {
   CLIENT_PLANS,
   LANDLORD_PLANS,
-  COMMISSION_TIERS,
+  AGENCY_FEE_TIERS,
 } from "@/lib/constants";
 
 const T = "cubic-bezier(0.16, 1, 0.3, 1)";
@@ -36,21 +37,42 @@ const DECISION_GUIDE = [
 
 export default function PricingPage() {
   const [role, setRole] = useState<string | null>(null);
+  const [verified, setVerified] = useState(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("pata-role");
-    setRole(stored); // null = guest, "tenant", "landlord", or "admin"
+    setRole(stored);
+    const profile = getUserProfile();
+    setVerified(profile.verificationStatus === "verified");
     setReady(true);
   }, []);
 
-  // Guest (not logged in) → show everything
-  // tenant → client plans only
-  // landlord → landlord plans + commission only
-  // admin → everything
   const isGuest = !role;
+  const isLoggedIn = !!role;
   const showClient = isGuest || role === "tenant" || role === "admin";
   const showLandlord = isGuest || role === "landlord" || role === "admin";
+
+  // Where CTAs should go based on state
+  const ctaHref = isGuest
+    ? "/signup"
+    : !verified
+      ? "/account/profile"
+      : role === "tenant"
+        ? "/search"
+        : role === "landlord"
+          ? "/landlord/listings/new"
+          : "/admin";
+
+  const ctaLabel = isGuest
+    ? "Get Started Today"
+    : !verified
+      ? "Complete Verification"
+      : role === "tenant"
+        ? "Browse Properties"
+        : role === "landlord"
+          ? "List a Property"
+          : "Admin Dashboard";
 
   // Filter decision guide cards by audience
   const filteredGuide = isGuest || role === "admin"
@@ -71,6 +93,16 @@ export default function PricingPage() {
           Navy bg + grid pattern + gold radial glow
       ================================================================ */}
       <section className="relative overflow-hidden bg-navy">
+        {/* Full-bleed background image */}
+        <Image
+          src="/property_images/apartments/apartment_7.jpg"
+          alt="Properties in Kampala"
+          fill
+          sizes="100vw"
+          className="object-cover opacity-20"
+          priority
+        />
+        <div className="absolute inset-0 bg-navy/80" />
         {/* Grid pattern */}
         <div
           aria-hidden="true"
@@ -196,7 +228,8 @@ export default function PricingPage() {
                       price={plan.price}
                       duration={plan.duration}
                       features={plan.features}
-                      cta={plan.cta}
+                      cta={isLoggedIn && verified ? plan.cta : isLoggedIn ? "Verify to Subscribe" : plan.cta}
+                      href={ctaHref}
                       popular={plan.popular}
                       variant="client"
                     />
@@ -357,7 +390,8 @@ export default function PricingPage() {
                       price={plan.price}
                       duration={plan.duration}
                       features={plan.features}
-                      cta={plan.cta}
+                      cta={isLoggedIn && verified ? plan.cta : isLoggedIn ? "Verify to Subscribe" : plan.cta}
+                      href={ctaHref}
                       popular={plan.popular}
                       variant="landlord"
                     />
@@ -371,7 +405,7 @@ export default function PricingPage() {
                   {[
                     "Listings live for 30 days",
                     "Admin review within 24 hours",
-                    "5% commission only on deals",
+                    "5% agency fee on 1 month rent",
                   ].map((text) => (
                     <span
                       key={text}
@@ -390,7 +424,7 @@ export default function PricingPage() {
       )}
 
       {/* ================================================================
-          SECTION 5 — COMMISSION TABLE  |  Split (table left, image right)
+          SECTION 5 — AGENCY FEE TABLE  |  Split (table left, image right)
           Smoke bg
       ================================================================ */}
       {showLandlord && (
@@ -401,13 +435,14 @@ export default function PricingPage() {
             {/* LEFT — Table */}
             <div>
               <ScrollReveal variant="left">
-                <p className="section-label text-gold">Commission</p>
+                <p className="section-label text-gold">Agency Fee</p>
                 <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl lg:text-5xl">
-                  5% Deal <span className="text-gradient-gold">Commission</span>
+                  5% Deal <span className="text-gradient-gold">Agency Fee</span>
                 </h2>
                 <p className="mt-5 max-w-lg leading-relaxed text-text-muted">
-                  Charged on the agreed monthly rent when a deal is confirmed — not
-                  the listed price.
+                  5% is charged on 1 month&apos;s agreed rent only — not the full
+                  upfront deposit. Deducted from the landlord&apos;s payout when
+                  the deal closes.
                 </p>
               </ScrollReveal>
 
@@ -423,7 +458,7 @@ export default function PricingPage() {
                     <table className="w-full min-w-[440px] text-left text-sm">
                       <thead>
                         <tr>
-                          {["Agreed Monthly Rent", "5% Commission", "You Receive"].map(
+                          {["Agreed Monthly Rent", "5% Agency Fee", "You Receive"].map(
                             (h) => (
                               <th
                                 key={h}
@@ -436,7 +471,7 @@ export default function PricingPage() {
                         </tr>
                       </thead>
                       <tbody>
-                        {COMMISSION_TIERS.map((tier, i) => (
+                        {AGENCY_FEE_TIERS.map((tier, i) => (
                           <tr
                             key={tier.rent}
                             style={{
@@ -461,7 +496,7 @@ export default function PricingPage() {
                               {formatUGX(tier.rent)}
                             </td>
                             <td className="px-6 py-4 font-bold text-orange">
-                              {formatUGX(tier.commission)}
+                              {formatUGX(tier.agencyFee)}
                             </td>
                             <td className="px-6 py-4 font-bold text-green">
                               {formatUGX(tier.net)}
@@ -552,8 +587,9 @@ export default function PricingPage() {
               const Icon = item.icon;
               return (
                 <ScrollReveal key={item.scenario} variant="scale" delay={i * 100}>
-                  <div
-                    className="group relative overflow-hidden rounded-2xl"
+                  <Link
+                    href={ctaHref}
+                    className="group relative block overflow-hidden rounded-2xl"
                     style={{ transition: `all 600ms ${T}` }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-6px)";
@@ -629,7 +665,7 @@ export default function PricingPage() {
                         background: `linear-gradient(90deg, transparent, ${item.color}, transparent)`,
                       }}
                     />
-                  </div>
+                  </Link>
                 </ScrollReveal>
               );
             })}
@@ -638,8 +674,8 @@ export default function PricingPage() {
           {/* Gold CTA */}
           <ScrollReveal delay={500}>
             <div className="mt-14 text-center">
-              <Link href="/login" className="btn-gold-lg">
-                Get Started Today <ArrowRight size={16} />
+              <Link href={ctaHref} className="btn-gold-lg">
+                {ctaLabel} <ArrowRight size={16} />
               </Link>
             </div>
           </ScrollReveal>

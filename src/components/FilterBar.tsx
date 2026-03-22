@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import {
   SlidersHorizontal,
   X,
@@ -8,7 +8,8 @@ import {
   Check,
   RotateCcw,
 } from "lucide-react";
-import { CATEGORIES, DISTRICTS, DISTRICT_NAMES } from "@/lib/constants";
+import { CATEGORIES, LIFESTYLE_TAGS } from "@/lib/constants";
+import LocationPicker from "@/components/LocationPicker";
 
 /* ────────────────────────── Types ────────────────────────── */
 
@@ -16,14 +17,25 @@ export interface FilterState {
   category: string;
   minPrice: number;
   maxPrice: number;
+  region: string;
   district: string;
+  county: string;
+  subcounty: string;
+  parish: string;
+  village: string;
   estate: string;
   bedrooms: string;
   bathrooms: string;
   furnished: string;
+  fencing: string;
   parking: boolean;
   petFriendly: boolean;
   verified: boolean;
+  lifestyleTag: string;
+  featured: boolean;
+  nearSchool: boolean;
+  nearHospital: boolean;
+  nearShopping: boolean;
 }
 
 export interface FilterBarProps {
@@ -36,14 +48,25 @@ const DEFAULT_FILTERS: FilterState = {
   category: "",
   minPrice: 0,
   maxPrice: 0,
+  region: "",
   district: "",
+  county: "",
+  subcounty: "",
+  parish: "",
+  village: "",
   estate: "",
   bedrooms: "",
   bathrooms: "",
   furnished: "",
+  fencing: "",
   parking: false,
   petFriendly: false,
   verified: false,
+  lifestyleTag: "",
+  featured: false,
+  nearSchool: false,
+  nearHospital: false,
+  nearShopping: false,
 };
 
 const CATEGORY_OPTIONS = [
@@ -133,36 +156,49 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const onChangeRef = useRef(onFilterChange);
+  onChangeRef.current = onFilterChange;
 
   const updateFilter = useCallback(
     <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
-      setFilters((prev) => ({ ...prev, [key]: value }));
+      setFilters((prev) => {
+        const next = { ...prev, [key]: value };
+        // Defer parent notification to avoid setState-during-render
+        queueMicrotask(() => onChangeRef.current?.(next));
+        return next;
+      });
     },
     []
   );
 
-  const handleApply = useCallback(() => {
-    onFilterChange?.(filters);
-    setMobileOpen(false);
-  }, [filters, onFilterChange]);
-
   const handleClear = useCallback(() => {
     setFilters(DEFAULT_FILTERS);
-    onFilterChange?.(DEFAULT_FILTERS);
-  }, [onFilterChange]);
+    queueMicrotask(() => onChangeRef.current?.(DEFAULT_FILTERS));
+  }, []);
 
   const hasActiveFilters =
     filters.category !== "" ||
     filters.minPrice > 0 ||
     filters.maxPrice > 0 ||
+    filters.region !== "" ||
     filters.district !== "" ||
+    filters.county !== "" ||
+    filters.subcounty !== "" ||
+    filters.parish !== "" ||
+    filters.village !== "" ||
     filters.estate !== "" ||
+    filters.fencing !== "" ||
     filters.bedrooms !== "" ||
     filters.bathrooms !== "" ||
     filters.furnished !== "" ||
     filters.parking ||
     filters.petFriendly ||
-    filters.verified;
+    filters.verified ||
+    filters.lifestyleTag !== "" ||
+    filters.featured ||
+    filters.nearSchool ||
+    filters.nearHospital ||
+    filters.nearShopping;
 
   const selectedCategories = filters.category
     ? filters.category.split(",").filter(Boolean)
@@ -190,9 +226,9 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
   /* ────────────────── Filter panel ────────────────── */
 
   const filterPanel = (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="space-y-4">
       {/* 1 ─ Category */}
-      <div className="relative sm:col-span-2 xl:col-span-1">
+      <div className="relative">
         <label className={labelClasses}>What are you looking for?</label>
         <button
           type="button"
@@ -266,7 +302,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
       </div>
 
       {/* 2 ─ Budget */}
-      <div className="sm:col-span-2 xl:col-span-1">
+      <div>
         <label className={labelClasses}>Your Budget per Month</label>
         <div className="relative">
           <select
@@ -303,46 +339,27 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         </div>
       </div>
 
-      {/* 3 ─ District */}
+      {/* 3 ─ Location (full Uganda hierarchy) */}
       <div>
-        <label className={labelClasses}>Which District?</label>
-        <div className="relative">
-          <select
-            value={filters.district}
-            onChange={(e) => {
-              updateFilter("district", e.target.value);
-              updateFilter("estate", "");
-            }}
-            className={selectClasses}
-          >
-            <option value="">All Districts</option>
-            {DISTRICT_NAMES.map((d) => (
-              <option key={d} value={d}>{d}</option>
-            ))}
-          </select>
-          <ChevronDown size={14} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/50" />
-        </div>
-      </div>
-
-      {/* 4 ─ Estate / Area */}
-      <div>
-        <label className={labelClasses}>Estate / Area</label>
-        <div className="relative">
-          <select
-            value={filters.estate}
-            onChange={(e) => updateFilter("estate", e.target.value)}
-            className={selectClasses}
-          >
-            <option value="">All Areas</option>
-            {(filters.district
-              ? (DISTRICTS[filters.district] ?? [])
-              : Object.values(DISTRICTS).flat()
-            ).map((area) => (
-              <option key={area} value={area}>{area}</option>
-            ))}
-          </select>
-          <ChevronDown size={14} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/50" />
-        </div>
+        <LocationPicker
+          value={{
+            region: filters.region,
+            district: filters.district,
+            county: filters.county,
+            subcounty: filters.subcounty,
+            parish: filters.parish,
+            village: filters.village,
+          }}
+          onChange={(loc) => {
+            updateFilter("region", loc.region);
+            updateFilter("district", loc.district);
+            updateFilter("county", loc.county);
+            updateFilter("subcounty", loc.subcounty);
+            updateFilter("parish", loc.parish);
+            updateFilter("village", loc.village);
+            updateFilter("estate", "");
+          }}
+        />
       </div>
 
       {/* 5 ─ Bedrooms */}
@@ -411,8 +428,53 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         </div>
       </div>
 
-      {/* 7, 8, 9 ─ Toggles */}
-      <div className="flex flex-wrap items-end gap-2 sm:col-span-2 xl:col-span-2">
+      {/* 8 ─ Fencing */}
+      <div>
+        <label className={labelClasses}>Fencing</label>
+        <div className="relative">
+          <select
+            value={filters.fencing}
+            onChange={(e) => updateFilter("fencing", e.target.value)}
+            className={selectClasses}
+          >
+            <option value="">Any</option>
+            <option value="wall">Wall Fence</option>
+            <option value="live">Live Fence</option>
+            <option value="chain-link">Chain Link</option>
+            <option value="no-gate">No Gate</option>
+          </select>
+          <ChevronDown
+            size={14}
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/50"
+          />
+        </div>
+      </div>
+
+      {/* 9 ─ Lifestyle */}
+      <div>
+        <label className={labelClasses}>Lifestyle</label>
+        <div className="relative">
+          <select
+            value={filters.lifestyleTag}
+            onChange={(e) => updateFilter("lifestyleTag", e.target.value)}
+            className={selectClasses}
+          >
+            <option value="">Any</option>
+            {LIFESTYLE_TAGS.map((tag) => (
+              <option key={tag.id} value={tag.id}>
+                {tag.label}
+              </option>
+            ))}
+          </select>
+          <ChevronDown
+            size={14}
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/50"
+          />
+        </div>
+      </div>
+
+      {/* 10, 11, 12, 13 ─ Toggles */}
+      <div className="flex flex-wrap items-end gap-2">
         <Toggle
           label="Parking"
           checked={filters.parking}
@@ -428,56 +490,51 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
           checked={filters.verified}
           onChange={() => updateFilter("verified", !filters.verified)}
         />
+        <Toggle
+          label="Featured"
+          checked={filters.featured}
+          onChange={() => updateFilter("featured", !filters.featured)}
+        />
+      </div>
+
+      {/* 14 ─ Proximity / Nearby Filters */}
+      <div>
+        <label className={labelClasses}>Nearby Amenities</label>
+        <div className="flex flex-wrap items-end gap-2">
+          <Toggle
+            label="Near School"
+            checked={filters.nearSchool}
+            onChange={() => updateFilter("nearSchool", !filters.nearSchool)}
+          />
+          <Toggle
+            label="Near Hospital"
+            checked={filters.nearHospital}
+            onChange={() => updateFilter("nearHospital", !filters.nearHospital)}
+          />
+          <Toggle
+            label="Near Shopping"
+            checked={filters.nearShopping}
+            onChange={() => updateFilter("nearShopping", !filters.nearShopping)}
+          />
+        </div>
       </div>
     </div>
   );
 
   /* ────────────────── Action bar ─────────────────── */
 
-  const actionBar = (
-    <div
-      className="mt-5 flex items-center justify-between pt-5"
-      style={{
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-      }}
-    >
-      {hasActiveFilters ? (
-        <button
-          type="button"
-          onClick={handleClear}
-          className="flex items-center gap-1.5 text-xs font-medium text-white/70 transition-colors duration-400 hover:text-white/70"
-        >
-          <RotateCcw className="h-3.5 w-3.5" />
-          Clear all
-        </button>
-      ) : (
-        <span />
-      )}
+  const actionBar = hasActiveFilters ? (
+    <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
       <button
         type="button"
-        onClick={handleApply}
-        className="inline-flex items-center gap-2 rounded-xl px-6 py-2.5 text-xs font-black uppercase tracking-wider text-white"
-        style={{
-          background: "linear-gradient(135deg, #d4a853, #B8903D)",
-          boxShadow: "0 4px 16px rgba(212, 168, 83, 0.25)",
-          transition: "all 500ms cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "translateY(-2px)";
-          e.currentTarget.style.boxShadow =
-            "0 8px 24px rgba(212, 168, 83, 0.35)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "translateY(0)";
-          e.currentTarget.style.boxShadow =
-            "0 4px 16px rgba(212, 168, 83, 0.25)";
-        }}
+        onClick={handleClear}
+        className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-white/[0.04] py-2.5 text-xs font-medium text-white/50 transition-all duration-400 hover:bg-white/[0.08] hover:text-white/80"
       >
-        <Check className="h-3.5 w-3.5" />
-        Apply Filters
+        <RotateCcw className="h-3.5 w-3.5" />
+        Clear All Filters
       </button>
     </div>
-  );
+  ) : null;
 
   /* ────────────────────────── Render ─────────────────────── */
 

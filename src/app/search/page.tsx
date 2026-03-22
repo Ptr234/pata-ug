@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useState, useMemo, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -24,6 +24,16 @@ import { CATEGORIES } from "@/lib/constants";
 /* ─────────────────────────── Sort types ──────────────────────────── */
 
 type SortOption = "newest" | "price-asc" | "price-desc";
+
+/** Parse a distance string like "500m" or "1.2km" into metres. */
+function parseDistanceMetres(d: string): number {
+  const num = parseFloat(d);
+  if (Number.isNaN(num)) return Infinity;
+  return d.toLowerCase().includes("km") ? num * 1000 : num;
+}
+
+/** Max distance (metres) to count as "near". */
+const NEAR_THRESHOLD = 2000;
 
 const SORT_LABELS: Record<SortOption, string> = {
   newest: "Newest",
@@ -55,10 +65,43 @@ export default function SearchPage() {
 /* ─────────────────────────── Page Content ────────────────────────── */
 
 function SearchPageContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") ?? "";
+  const initialRegion = searchParams.get("region") ?? "";
+  const initialDistrict = searchParams.get("district") ?? "";
+  const initialMinPrice = Number(searchParams.get("minPrice") || "0");
+  const initialMaxPrice = Number(searchParams.get("maxPrice") || "0");
+  const initialBedrooms = searchParams.get("bedrooms") ?? "";
 
-  const [filters, setFilters] = useState<FilterState | null>(null);
+  const [filters, setFilters] = useState<FilterState | null>(
+    (initialRegion || initialDistrict || initialMinPrice || initialMaxPrice || initialBedrooms)
+      ? {
+          category: initialCategory,
+          minPrice: initialMinPrice,
+          maxPrice: initialMaxPrice,
+          region: initialRegion,
+          district: initialDistrict,
+          county: "",
+          subcounty: "",
+          parish: "",
+          village: "",
+          estate: "",
+          bedrooms: initialBedrooms,
+          bathrooms: "",
+          furnished: "",
+          fencing: "",
+          parking: false,
+          petFriendly: false,
+          verified: false,
+          lifestyleTag: "",
+          featured: false,
+          nearSchool: false,
+          nearHospital: false,
+          nearShopping: false,
+        }
+      : null
+  );
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [sortOpen, setSortOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -85,6 +128,22 @@ function SearchPageContent() {
         result = result.filter((p) => p.price >= filters.minPrice);
       if (filters.maxPrice > 0)
         result = result.filter((p) => p.price <= filters.maxPrice);
+
+      // Location hierarchy filtering
+      if (filters.region)
+        result = result.filter((p) => p.loc?.region === filters.region);
+      if (filters.district)
+        result = result.filter((p) => p.loc?.district === filters.district);
+      if (filters.county)
+        result = result.filter((p) => p.loc?.county === filters.county);
+      if (filters.subcounty)
+        result = result.filter((p) => p.loc?.subcounty === filters.subcounty);
+      if (filters.parish)
+        result = result.filter((p) => p.loc?.parish === filters.parish);
+      if (filters.village)
+        result = result.filter((p) => p.loc?.village === filters.village);
+
+      // Legacy estate text search (fallback)
       if (filters.estate) {
         const q = filters.estate.toLowerCase();
         result = result.filter((p) => p.estate.toLowerCase().includes(q));
@@ -107,6 +166,25 @@ function SearchPageContent() {
       if (filters.parking) result = result.filter((p) => p.parking);
       if (filters.petFriendly) result = result.filter((p) => p.petFriendly);
       if (filters.verified) result = result.filter((p) => p.isVerified);
+      if (filters.fencing) result = result.filter((p) => p.fencing?.includes(filters.fencing as typeof p.fencing[number]));
+      if (filters.lifestyleTag) result = result.filter((p) => p.lifestyleTags?.includes(filters.lifestyleTag as typeof p.lifestyleTags[number]));
+      if (filters.featured) result = result.filter((p) => p.isFeatured);
+
+      // Proximity / nearby filters
+      if (filters.nearSchool)
+        result = result.filter((p) =>
+          p.nearbyPlaces?.some((np) => np.type === "school" && parseDistanceMetres(np.distance) <= NEAR_THRESHOLD)
+        );
+      if (filters.nearHospital)
+        result = result.filter((p) =>
+          p.nearbyPlaces?.some((np) => np.type === "hospital" && parseDistanceMetres(np.distance) <= NEAR_THRESHOLD)
+        );
+      if (filters.nearShopping)
+        result = result.filter((p) =>
+          p.nearbyPlaces?.some((np) =>
+            (np.type === "supermarket" || np.type === "mall") && parseDistanceMetres(np.distance) <= NEAR_THRESHOLD
+          )
+        );
     }
 
     switch (sortBy) {
@@ -247,7 +325,7 @@ function SearchPageContent() {
               <button
                 onClick={() => {
                   // Clear category by navigating to /search
-                  window.location.href = "/search";
+                  router.push("/search");
                 }}
                 className="flex items-center gap-1 rounded-full bg-gold/10 px-2.5 py-1 text-xs font-bold text-gold transition-all duration-400 hover:bg-gold/20"
               >
@@ -381,19 +459,28 @@ function SearchPageContent() {
       </div>
 
       {/* ═══ Content area ═══ */}
-      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
-        {/* Filter Bar */}
-        <ScrollReveal variant="up">
-          <FilterBar onFilterChange={handleFilterChange} />
-        </ScrollReveal>
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="flex gap-6 lg:gap-8">
+          {/* ═══ LEFT SIDEBAR — Filter (sticky) ═══ */}
+          <aside className="hidden w-72 shrink-0 lg:block xl:w-80">
+            <div className="sticky top-[90px]">
+              <FilterBar onFilterChange={handleFilterChange} />
+            </div>
+          </aside>
 
-        {/* Property Grid or Empty State */}
+          {/* Mobile filter (shown inline on small screens) */}
+          <div className="mb-4 lg:hidden">
+            <FilterBar onFilterChange={handleFilterChange} />
+          </div>
+
+          {/* ═══ RIGHT — Property Grid ═══ */}
+          <div className="min-w-0 flex-1">
         {filteredProperties.length > 0 ? (
           <ScrollReveal variant="scale">
             <div
               className={
                 viewMode === "grid"
-                  ? "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                  ? "grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3"
                   : "flex flex-col gap-4"
               }
             >
@@ -416,10 +503,14 @@ function SearchPageContent() {
                       bathrooms={property.bathrooms}
                       photo={property.photos[0]}
                       isVerified={property.isVerified}
+                      isFeatured={property.isFeatured}
                       negotiable={property.negotiable}
                       upfrontMonths={property.upfrontMonths}
+                      securityDeposit={property.securityDeposit}
+                      fencing={property.fencing}
                       furnished={furnishedLabel(property.furnished)}
                       parking={parkingCount(property.parking)}
+                      lifestyleTags={property.lifestyleTags}
                       isGuest
                     />
                   </div>
@@ -508,7 +599,7 @@ function SearchPageContent() {
                 <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
                   <button
                     type="button"
-                    onClick={() => { window.location.href = "/search"; }}
+                    onClick={() => { router.push("/search"); }}
                     className="btn-gold"
                   >
                     <ArrowRight className="h-4 w-4" />
@@ -522,6 +613,8 @@ function SearchPageContent() {
             </div>
           </ScrollReveal>
         )}
+          </div>
+        </div>
       </div>
     </main>
   );

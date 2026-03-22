@@ -8,11 +8,11 @@ import { Handshake, ArrowLeft, MapPin, Calendar, Building2, MessageCircle } from
 const T = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 const DEALS = [
-  { id: "1", property: "2-Bed Apartment in Bukoto", estate: "Bukoto", tenant: "John Doe", landlord: "James Mukasa", rent: "UGX 1.7M", commission: "UGX 85K", date: "18 Mar", status: "payment_confirmed" as const },
-  { id: "2", property: "3-Bed Townhouse in Muyenga", estate: "Muyenga", tenant: "Mary Akello", landlord: "Richard Ssentamu", rent: "UGX 3.4M", commission: "UGX 170K", date: "20 Mar", status: "agreed" as const },
-  { id: "3", property: "Studio in Naguru", estate: "Naguru", tenant: "Peter Ouma", landlord: "Peter Ochieng", rent: "UGX 800K", commission: "UGX 40K", date: "21 Mar", status: "negotiating" as const },
-  { id: "4", property: "2-Bed in Entebbe", estate: "Entebbe", tenant: "Alice Nambi", landlord: "Annet Birungi", rent: "UGX 2.2M", commission: "UGX 110K", date: "10 Mar", status: "closed" as const },
-  { id: "5", property: "4-Bed Duplex in Kyanja", estate: "Kyanja", tenant: "David Ssali", landlord: "Herbert Kiggundu", rent: "UGX 2.5M", commission: "UGX 125K", date: "15 Mar", status: "pending" as const },
+  { id: "1", property: "2-Bed Apartment in Bukoto", estate: "Bukoto", tenant: "John Doe", landlord: "James Mukasa", rent: "UGX 1.7M", agencyFee: "UGX 85K", date: "18 Mar", status: "payment_confirmed" as const },
+  { id: "2", property: "3-Bed Townhouse in Muyenga", estate: "Muyenga", tenant: "Mary Akello", landlord: "Richard Ssentamu", rent: "UGX 3.4M", agencyFee: "UGX 170K", date: "20 Mar", status: "agreed" as const },
+  { id: "3", property: "Studio in Naguru", estate: "Naguru", tenant: "Peter Ouma", landlord: "Peter Ochieng", rent: "UGX 800K", agencyFee: "UGX 40K", date: "21 Mar", status: "negotiating" as const },
+  { id: "4", property: "2-Bed in Entebbe", estate: "Entebbe", tenant: "Alice Nambi", landlord: "Annet Birungi", rent: "UGX 2.2M", agencyFee: "UGX 110K", date: "10 Mar", status: "closed" as const },
+  { id: "5", property: "4-Bed Duplex in Kyanja", estate: "Kyanja", tenant: "David Ssali", landlord: "Herbert Kiggundu", rent: "UGX 2.5M", agencyFee: "UGX 125K", date: "15 Mar", status: "pending" as const },
 ];
 
 function dealStyle(s: string) {
@@ -40,7 +40,7 @@ export default function AdminDealsPage() {
               Deal <span className="text-gradient-gold">Management</span>
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
-              Monitor all active deals and commission payments
+              Monitor all active deals and agency fee payments
             </p>
           </ScrollReveal>
         </div>
@@ -54,7 +54,7 @@ export default function AdminDealsPage() {
                 <table className="w-full min-w-[800px] text-left text-sm">
                   <thead>
                     <tr>
-                      {["Property", "Tenant", "Landlord", "Rent", "Commission", "Status", ""].map((h) => (
+                      {["Property", "Tenant", "Landlord", "Rent/mo", "5% (1mo)", "Status", ""].map((h) => (
                         <th key={h} className="px-5 py-4 text-[10px] font-black uppercase tracking-[0.18em] text-gold">{h}</th>
                       ))}
                     </tr>
@@ -71,7 +71,7 @@ export default function AdminDealsPage() {
                           <td className="px-5 py-4 text-white/70">{deal.tenant}</td>
                           <td className="px-5 py-4 text-white/70">{deal.landlord}</td>
                           <td className="px-5 py-4 font-display font-bold text-white">{deal.rent}</td>
-                          <td className="px-5 py-4 font-bold text-gold">{deal.commission}</td>
+                          <td className="px-5 py-4 font-bold text-gold">{deal.agencyFee}</td>
                           <td className="px-5 py-4"><span className="inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ background: st.bg, color: st.color }}>{st.label}</span></td>
                           <td className="px-5 py-4">
                             <Link

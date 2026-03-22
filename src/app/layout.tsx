@@ -22,7 +22,7 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "pata.ug - Property Marketplace Uganda",
   description:
-    "Find verified rental properties across Kampala. Apartments, houses, rooms, and commercial spaces. We manage the deal from search to move-in.",
+    "Find verified rental properties across Uganda. Apartments, houses, rooms, and commercial spaces. We manage the deal from search to move-in.",
   keywords: [
     "Uganda",
     "Kampala",
@@ -33,6 +33,10 @@ export const metadata: Metadata = {
     "landlord",
     "tenant",
   ],
+  icons: {
+    icon: "/logo/Favicon.png",
+    apple: "/logo/Favicon.png",
+  },
 };
 
 export default function RootLayout({

@@ -8,7 +8,8 @@ import {
   ImagePlus, Phone, Building2, ArrowLeft, Home, Bed, Bath, Calendar,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
-import { CATEGORIES, DISTRICTS, DISTRICT_NAMES } from "@/lib/constants";
+import { CATEGORIES } from "@/lib/constants";
+import LocationPicker from "@/components/LocationPicker";
 
 const T = "cubic-bezier(0.16, 1, 0.3, 1)";
 const STEPS = [
@@ -21,6 +22,9 @@ const STEPS = [
 export default function NewListingPage() {
   const [step, setStep] = useState(1);
   const [category, setCategory] = useState("");
+  const [listingLoc, setListingLoc] = useState({
+    region: "", district: "", county: "", subcounty: "", parish: "", village: "",
+  });
 
   return (
     <main className="min-h-screen">
@@ -161,66 +165,111 @@ export default function NewListingPage() {
 
                   {/* ── Step 2: Details ── */}
                   {step === 2 && (() => {
-                    const L = "mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60";
-                    const I = `w-full rounded-xl bg-white/[0.08] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30`;
-                    const S = `w-full rounded-xl bg-white/[0.12] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white`;
-                    const isResidential = ["apartment","standalone","townhouse","studio","single-room","shared-house","servant-quarters","short-stay"].includes(category);
+                    const L = "mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/40";
+                    const I = `w-full rounded-2xl bg-white/[0.06] px-4 py-3.5 text-sm font-medium text-white placeholder:text-white/30 outline-none transition-all duration-500 focus:bg-white/[0.12] focus:ring-2 focus:ring-gold/30`;
+                    const S = `w-full appearance-none rounded-2xl bg-white/[0.06] px-4 py-3.5 pr-10 text-sm font-medium text-white outline-none transition-all duration-500 focus:bg-white/[0.12] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white`;
+                    const isResidential = ["apartment","standalone","townhouse","duplex","studio","single-room","shared-house","servant-quarters","serviced-apartment","short-stay"].includes(category);
                     const isCommercial = ["office","shop","warehouse"].includes(category);
                     const isLand = category === "land";
                     const showBedrooms = isResidential && category !== "studio";
+
+                    const SectionCard = ({ icon: Icon, accent, title, children }: { icon: React.ElementType; accent: string; title: string; children: React.ReactNode }) => (
+                      <div className="rounded-2xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                        <div className="flex items-center gap-3 px-5 py-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                          <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: `${accent}15` }}>
+                            <Icon size={16} style={{ color: accent }} />
+                          </div>
+                          <p className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: accent }}>{title}</p>
+                        </div>
+                        <div className="space-y-5 px-5 py-5">{children}</div>
+                      </div>
+                    );
+
                     return (
-                    <div className="space-y-8">
+                    <div className="space-y-5">
                       <h2 className="font-display text-2xl font-bold tracking-tighter text-white">Property Details</h2>
 
                       {/* Category indicator */}
                       {category && (
-                        <div className="flex items-center gap-3 rounded-xl bg-orange/10 px-4 py-3">
+                        <div className="flex items-center gap-3 rounded-2xl px-4 py-3" style={{ background: "rgba(212,98,42,0.08)", border: "1px solid rgba(212,98,42,0.15)" }}>
                           <Building2 className="h-4 w-4 text-orange" />
                           <span className="text-sm font-bold text-orange">{CATEGORIES.find((c) => c.id === category)?.label ?? category}</span>
-                          <button type="button" onClick={() => setStep(1)} className="ml-auto text-xs text-white/60 hover:text-white" style={{ transition: `color 500ms ${T}` }}>Change</button>
+                          <button type="button" onClick={() => setStep(1)} className="ml-auto text-[10px] font-bold uppercase tracking-wider text-white/40 hover:text-white" style={{ transition: `color 500ms ${T}` }}>Change</button>
                         </div>
                       )}
 
-                      {/* ── Section: Basic Info ── */}
-                      <div className="space-y-5">
-                        <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Basic Information</p>
-                        <div><label className={L}>Listing Title</label><input type="text" placeholder={isLand ? "e.g. 50x100 Plot in Wakiso" : isCommercial ? "e.g. Office Space on Nakasero Road" : "e.g. Modern 2-Bedroom Apartment in Bukoto"} className={I} style={{ transition: `all 500ms ${T}` }} /></div>
-                        <div className="grid gap-5 sm:grid-cols-2">
-                          <div><label className={L}>{isLand ? "Asking Price (UGX)" : "Monthly Rent (UGX)"}</label><input type="number" placeholder={isLand ? "50,000,000" : "1,500,000"} className={I} style={{ transition: `all 500ms ${T}` }} /></div>
-                          <div><label className={L}>District</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option value="">Select District</option>{DISTRICT_NAMES.map((d) => <option key={d} value={d}>{d}</option>)}</select></div>
-                        </div>
-                        <div className="grid gap-5 sm:grid-cols-2">
-                          <div><label className={L}>Estate / Area</label><div className="relative"><MapPin className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" /><input type="text" list="listing-areas" placeholder="e.g. Bukoto or type new area" className={`${I} pl-11`} style={{ transition: `all 500ms ${T}` }} /><datalist id="listing-areas">{Object.values(DISTRICTS).flat().map((a) => <option key={a} value={a} />)}</datalist></div><p className="mt-1 text-[10px] text-white/40">Pick from the list or type a new area name</p></div>
+                      {/* ── Card: Basic Info ── */}
+                      <SectionCard icon={Home} accent="#d4a853" title="Basic Information">
+                        <div><label className={L}>Listing Title</label><input type="text" placeholder={isLand ? "e.g. 50x100 Plot in Wakiso" : isCommercial ? "e.g. Office Space on Nakasero Road" : "e.g. Modern 2-Bedroom Apartment in Bukoto"} className={I} /></div>
+                        <div className="grid gap-4 sm:grid-cols-2">
+                          <div><label className={L}>{isLand ? "Asking Price (UGX)" : "Monthly Rent (UGX)"}</label><input type="number" placeholder={isLand ? "50,000,000" : "1,500,000"} className={I} /></div>
+                          <div><label className={L}>Available From</label><input type="date" className={I} /></div>
                         </div>
                         <div>
                           <label className={L}>Price Flexibility</label>
-                          <div className="flex gap-3">
-                            <button type="button" className="flex-1 rounded-xl px-4 py-3.5 text-sm font-bold" style={{ background: "rgba(10,147,150,0.12)", border: "2px solid #0A9396", color: "#5EEAD4", transition: `all 500ms ${T}` }}>Negotiable</button>
-                            <button type="button" className="flex-1 rounded-xl px-4 py-3.5 text-sm font-bold" style={{ background: "rgba(255,255,255,0.04)", border: "2px solid transparent", color: "rgba(255,255,255,0.5)", transition: `all 500ms ${T}` }}>Fixed Price</button>
+                          <div className="flex gap-2">
+                            <button type="button" className="flex-1 rounded-2xl px-4 py-3 text-sm font-bold" style={{ background: "rgba(10,147,150,0.1)", border: "1.5px solid rgba(10,147,150,0.3)", color: "#5EEAD4", transition: `all 500ms ${T}` }}>Negotiable</button>
+                            <button type="button" className="flex-1 rounded-2xl px-4 py-3 text-sm font-bold" style={{ background: "rgba(255,255,255,0.03)", border: "1.5px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.4)", transition: `all 500ms ${T}` }}>Fixed Price</button>
                           </div>
-                          <p className="mt-1.5 text-[10px] text-white/40">This label will appear on your listing for tenants to see</p>
                         </div>
-                        <div className="grid gap-5 sm:grid-cols-2">
+                      </SectionCard>
+
+                      {/* ── Card: Location ── */}
+                      <SectionCard icon={MapPin} accent="#0A9396" title="Property Location">
+                        <LocationPicker value={listingLoc} onChange={setListingLoc} />
+                        <div>
+                          <label className={L}>Describe How to Find It</label>
+                          <textarea rows={2} placeholder="e.g. Off Bukoto Street, behind Shell petrol station. Blue gate, 3rd floor." className={`${I} resize-none`} />
+                          <p className="mt-1 text-[9px] text-white/25">Landmarks, gate colour, floor number — helps tenants locate the property</p>
+                        </div>
+                      </SectionCard>
+
+                      {/* ── Card: Payment & Security ── */}
+                      <SectionCard icon={Calendar} accent="#D4622A" title="Deposit & Security">
+                        <div className="grid gap-4 sm:grid-cols-2">
                           <div>
-                            <label className={L}>Upfront Deposit (months)</label>
-                            <select className={S} style={{ transition: `all 500ms ${T}` }}>
+                            <label className={L}>Security Deposit (UGX)</label>
+                            <input type="number" placeholder="e.g. 500000" className={I} />
+                            <p className="mt-1 text-[9px] text-white/25">Refundable amount held in tenant&apos;s wallet</p>
+                          </div>
+                          <div>
+                            <label className={L}>Upfront Rent (months)</label>
+                            <select className={S}>
                               <option>1 month</option>
                               <option>2 months</option>
                               <option>3 months</option>
-                              <option>4 months</option>
                               <option>6 months</option>
                               <option>12 months</option>
                             </select>
-                            <p className="mt-1.5 text-[10px] text-white/40">How many months rent the tenant pays upfront into their pata.ug wallet</p>
                           </div>
-                          <div><label className={L}>Available From</label><input type="date" className={S} style={{ transition: `all 500ms ${T}` }} /></div>
                         </div>
-                      </div>
+                        <div>
+                          <label className={L}>Fencing</label>
+                          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                            {[
+                              { id: "wall", label: "Wall Fence", icon: "🧱" },
+                              { id: "live", label: "Live Fence", icon: "🌿" },
+                              { id: "chain-link", label: "Chain Link", icon: "🔗" },
+                              { id: "no-gate", label: "No Gate", icon: "🚪" },
+                            ].map((f) => (
+                              <label
+                                key={f.id}
+                                className="group flex cursor-pointer items-center gap-2.5 rounded-2xl px-3 py-3 text-sm"
+                                style={{ background: "rgba(255,255,255,0.03)", border: "1.5px solid rgba(255,255,255,0.06)", transition: `all 400ms ${T}` }}
+                                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.06)"; e.currentTarget.style.borderColor = "rgba(212,168,83,0.2)"; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; }}
+                              >
+                                <input type="checkbox" className="h-4 w-4 rounded accent-gold" />
+                                <span className="text-white/50 group-hover:text-white/70">{f.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      </SectionCard>
 
-                      {/* ── Section: Property Specs (residential) ── */}
+                      {/* ── Card: Property Specs ── */}
                       {(isResidential || isCommercial) && (
-                        <div className="space-y-5">
-                          <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Property Specifications</p>
+                        <SectionCard icon={Bed} accent="#0A9396" title="Property Specifications">
                           <div className="grid gap-5 sm:grid-cols-3">
                             {showBedrooms && (
                               <div><label className={L}>Bedrooms</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
@@ -289,13 +338,12 @@ export default function NewListingPage() {
                               <div><label className={L}>Housekeeping</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
                             </div>
                           )}
-                        </div>
+                        </SectionCard>
                       )}
 
-                      {/* ── Section: Land-specific ── */}
+                      {/* ── Card: Land Details ── */}
                       {isLand && (
-                        <div className="space-y-5">
-                          <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Land Details</p>
+                        <SectionCard icon={MapPin} accent="#1F8A44" title="Land Details">
                           <div className="grid gap-5 sm:grid-cols-2">
                             <div><label className={L}>Plot Size</label><input type="text" placeholder="e.g. 50x100 ft or 0.25 acres" className={I} style={{ transition: `all 500ms ${T}` }} /></div>
                             <div><label className={L}>Zoning Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Residential</option><option>Commercial</option><option>Mixed Use</option></select></div>
@@ -304,43 +352,124 @@ export default function NewListingPage() {
                             <div><label className={L}>Title Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Freehold</option><option>Leasehold</option><option>Mailo</option><option>Customary</option></select></div>
                             <div><label className={L}>Road Access</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Tarmac</option><option>Murram</option><option>Footpath</option></select></div>
                           </div>
-                        </div>
+                        </SectionCard>
                       )}
 
-                      {/* ── Section: Amenities (not for land) ── */}
+                      {/* ── Card: Amenities ── */}
                       {!isLand && (
-                      <div className="space-y-5">
-                        <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Amenities and Features</p>
+                      <SectionCard icon={Home} accent="#D4622A" title="Amenities & Features">
                         <div className="grid gap-5 sm:grid-cols-3">
                           {!isCommercial && <div><label className={L}>Furnished</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Unfurnished</option><option>Partially Furnished</option><option>Fully Furnished</option></select></div>}
-                          {category !== "warehouse" && <div><label className={L}>Parking</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No Parking</option><option>1 Space</option><option>2 Spaces</option><option>3+ Spaces</option></select></div>}
+                          {category !== "warehouse" && <div><label className={L}>Parking Spaces</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No Parking</option><option>1 Space</option><option>2 Spaces</option><option>3+ Spaces</option></select></div>}
                           {isResidential && <div><label className={L}>Pet-Friendly</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>}
                         </div>
-                        <div className="grid gap-5 sm:grid-cols-2">
-                          <div><label className={L}>Water Source</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>NWSC Mains</option><option>Borehole</option><option>Rainwater</option><option>Tank</option></select></div>
-                          <div><label className={L}>Utilities Included</label><select multiple className={`${S} min-h-[100px]`} style={{ transition: `all 500ms ${T}` }}><option>Water</option><option>Electricity</option><option>Wi-Fi</option><option>Security</option><option>Garbage Collection</option></select></div>
-                        </div>
-                      </div>
-                      )}
-
-                      {/* ── Section: Land amenities (land-only) ── */}
-                      {isLand && (
-                      <div className="space-y-5">
-                        <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Site Features</p>
+                        {isResidential && (
                         <div className="grid gap-5 sm:grid-cols-3">
-                          <div><label className={L}>Electricity Access</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Nearby</option><option>On-site</option></select></div>
-                          <div><label className={L}>Water Access</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Borehole</option><option>NWSC Nearby</option></select></div>
-                          <div><label className={L}>Fenced</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Partially</option><option>Fully Fenced</option></select></div>
+                          <div><label className={L}>Kitchen Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Modern Open</option><option>Modern Closed</option><option>Basic</option><option>Kitchenette</option><option>None</option></select></div>
+                          <div><label className={L}>Flooring</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Tiles</option><option>Marble</option><option>Terrazzo</option><option>Cement</option><option>Wood</option><option>Vinyl</option></select></div>
+                          <div><label className={L}>Built-in Wardrobes</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
                         </div>
-                      </div>
+                        )}
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div><label className={L}>Water Availability</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>24/7 Supply</option><option>Scheduled</option><option>Unreliable</option></select></div>
+                          <div><label className={L}>Power Reliability</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Reliable</option><option>Backup Available (Generator/Inverter)</option><option>Frequent Outages</option></select></div>
+                        </div>
+                        {isResidential && (
+                        <div className="grid gap-5 sm:grid-cols-3">
+                          {[
+                            { id: "balcony", label: "Balcony" },
+                            { id: "ac", label: "Air Conditioning" },
+                            { id: "bq", label: "Servant Quarters (BQ)" },
+                            { id: "pool", label: "Swimming Pool" },
+                            { id: "gym", label: "Gym" },
+                            { id: "laundry", label: "Laundry Area" },
+                          ].map((a) => (
+                            <label key={a.id} className="group flex cursor-pointer items-center gap-2.5 rounded-2xl px-3 py-3 text-sm" style={{ background: "rgba(255,255,255,0.03)", border: "1.5px solid rgba(255,255,255,0.06)", transition: `all 400ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(212,98,42,0.06)"; e.currentTarget.style.borderColor = "rgba(212,98,42,0.2)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; }}>
+                              <input type="checkbox" className="h-4 w-4 rounded accent-orange" />
+                              <span className="text-white/50 group-hover:text-white/70">{a.label}</span>
+                            </label>
+                          ))}
+                        </div>
+                        )}
+                      </SectionCard>
                       )}
 
-                      {/* ── Section: Description and Contact ── */}
-                      <div className="space-y-5">
-                        <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gold/70">Description and Contact</p>
-                        <div><label className={L}>Description</label><textarea rows={4} placeholder="Describe your property in detail (250-1,500 characters)" className={`${I} resize-none`} style={{ transition: `all 500ms ${T}` }} /><p className="mt-1.5 text-xs text-white/60">Min 250, max 1,500 characters</p></div>
-                        <div><label className={L}>Contact Phone</label><div className="relative"><Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" /><input type="tel" placeholder="+256 700 000 000" className={`${I} pl-11`} style={{ transition: `all 500ms ${T}` }} /></div></div>
-                      </div>
+                      {/* ── Card: Utilities ── */}
+                      {!isLand && (
+                      <SectionCard icon={MapPin} accent="#d4a853" title="Utilities & Services">
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div><label className={L}>Electricity Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>Prepaid (Yaka)</option><option>Postpaid</option><option>Solar</option><option>Generator Backup</option></select></div>
+                          <div><label className={L}>Water Source</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>NWSC Mains</option><option>Borehole</option><option>Rainwater</option><option>Tank</option><option>Well</option></select></div>
+                        </div>
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div><label className={L}>Internet Available</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
+                          <div><label className={L}>Garbage Collection</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes</option></select></div>
+                        </div>
+                      </SectionCard>
+                      )}
+
+                      {/* ── Card: Security ── */}
+                      {!isLand && (
+                      <SectionCard icon={Home} accent="#1F8A44" title="Security Features">
+                        <div className="grid gap-4 sm:grid-cols-3">
+                          {[
+                            { id: "guards", label: "Security Guards" },
+                            { id: "cctv", label: "CCTV Cameras" },
+                            { id: "gated", label: "Gated Community" },
+                            { id: "wall", label: "Perimeter Wall" },
+                            { id: "alarm", label: "Alarm System" },
+                          ].map((s) => (
+                            <label key={s.id} className="group flex cursor-pointer items-center gap-2.5 rounded-2xl px-3 py-3 text-sm" style={{ background: "rgba(255,255,255,0.03)", border: "1.5px solid rgba(255,255,255,0.06)", transition: `all 400ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(31,138,68,0.06)"; e.currentTarget.style.borderColor = "rgba(31,138,68,0.2)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; }}>
+                              <input type="checkbox" className="h-4 w-4 rounded accent-green" />
+                              <span className="text-white/50 group-hover:text-white/70">{s.label}</span>
+                            </label>
+                          ))}
+                        </div>
+                        <div className="grid gap-5 sm:grid-cols-2">
+                          <div><label className={L}>Gate Type</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>None</option><option>Manual</option><option>Automatic</option><option>Sliding</option></select></div>
+                          <div><label className={L}>Compound</label><select className={S} style={{ transition: `all 500ms ${T}` }}><option>No</option><option>Yes, with Garden</option><option>Yes, Paved</option></select></div>
+                        </div>
+                      </SectionCard>
+                      )}
+
+                      {/* ── Card: Lifestyle Tags ── */}
+                      {isResidential && (
+                      <SectionCard icon={Home} accent="#0A9396" title="Lifestyle Tags">
+                        <p className="text-xs text-white/40">Select tags that describe who this property is best suited for. This helps tenants find your listing faster.</p>
+                        <div className="grid gap-4 sm:grid-cols-3">
+                          {[
+                            { id: "family-friendly", label: "Family-Friendly" },
+                            { id: "bachelor-pad", label: "Bachelor Pad" },
+                            { id: "student-friendly", label: "Student-Friendly" },
+                            { id: "luxury", label: "Luxury" },
+                            { id: "budget", label: "Budget" },
+                            { id: "gated-community", label: "Gated Community" },
+                          ].map((tag) => (
+                            <label key={tag.id} className="group flex cursor-pointer items-center gap-2.5 rounded-2xl px-3 py-3 text-sm" style={{ background: "rgba(255,255,255,0.03)", border: "1.5px solid rgba(255,255,255,0.06)", transition: `all 400ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(10,147,150,0.06)"; e.currentTarget.style.borderColor = "rgba(10,147,150,0.2)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; }}>
+                              <input type="checkbox" className="h-4 w-4 rounded accent-teal" />
+                              <span className="text-white/50 group-hover:text-white/70">{tag.label}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </SectionCard>
+                      )}
+
+                      {/* ── Card: Land Site Features ── */}
+                      {isLand && (
+                      <SectionCard icon={MapPin} accent="#d4a853" title="Site Features">
+                        <div className="grid gap-4 sm:grid-cols-3">
+                          <div><label className={L}>Electricity Access</label><select className={S}><option>No</option><option>Nearby</option><option>On-site</option></select></div>
+                          <div><label className={L}>Water Access</label><select className={S}><option>No</option><option>Borehole</option><option>NWSC Nearby</option></select></div>
+                          <div><label className={L}>Fenced</label><select className={S}><option>No</option><option>Partially</option><option>Fully Fenced</option></select></div>
+                        </div>
+                      </SectionCard>
+                      )}
+
+                      {/* ── Card: Description & Contact ── */}
+                      <SectionCard icon={Phone} accent="#d4a853" title="Description & Contact">
+                        <div><label className={L}>Property Description</label><textarea rows={4} placeholder="Describe your property in detail — what makes it special, condition, surroundings..." className={`${I} resize-none`} /><p className="mt-1 text-[9px] text-white/25">250 – 1,500 characters</p></div>
+                        <div><label className={L}>Contact Phone</label><div className="relative"><Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" /><input type="tel" placeholder="+256 700 000 000" className={`${I} pl-11`} /></div></div>
+                      </SectionCard>
                     </div>
                     );
                   })()}
