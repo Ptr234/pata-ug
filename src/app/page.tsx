@@ -199,7 +199,7 @@ export default function HomePage() {
     },
     {
       image: "/property_images/houses/house_2.jpg",
-      title: "DIRECT LANDLORD CONTACT",
+      title: "MANAGED DEAL CLOSURE",
     },
     {
       image: "/property_images/apartments/apartment_1.jpg",
