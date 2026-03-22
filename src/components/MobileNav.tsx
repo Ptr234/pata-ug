@@ -1,8 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, CreditCard, Handshake, User } from "lucide-react";
+import { Search, CreditCard, Handshake, User, Building2, Shield } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 interface NavTab {
@@ -11,15 +12,50 @@ interface NavTab {
   icon: LucideIcon;
 }
 
-const tabs: NavTab[] = [
+const TENANT_TABS: NavTab[] = [
   { label: "Browse", href: "/search", icon: Search },
   { label: "My Pass", href: "/dashboard", icon: CreditCard },
   { label: "Deals", href: "/deals", icon: Handshake },
   { label: "Profile", href: "/account/profile", icon: User },
 ];
 
+const LANDLORD_TABS: NavTab[] = [
+  { label: "Browse", href: "/search", icon: Search },
+  { label: "Listings", href: "/landlord", icon: Building2 },
+  { label: "Deals", href: "/deals", icon: Handshake },
+  { label: "Profile", href: "/account/profile", icon: User },
+];
+
+const ADMIN_TABS: NavTab[] = [
+  { label: "Overview", href: "/admin", icon: Shield },
+  { label: "Listings", href: "/admin/listings", icon: Building2 },
+  { label: "Deals", href: "/admin/deals", icon: Handshake },
+  { label: "Profile", href: "/account/profile", icon: User },
+];
+
+const PUBLIC_TABS: NavTab[] = [
+  { label: "Browse", href: "/search", icon: Search },
+  { label: "Pricing", href: "/pricing", icon: CreditCard },
+  { label: "How It Works", href: "/how-it-works", icon: Handshake },
+  { label: "Log In", href: "/login", icon: User },
+];
+
 export default function MobileNav() {
   const pathname = usePathname();
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("pata-role") : null;
+    setRole(stored);
+  }, [pathname]);
+
+  const tabs = role === "admin"
+    ? ADMIN_TABS
+    : role === "landlord"
+      ? LANDLORD_TABS
+      : role === "tenant"
+        ? TENANT_TABS
+        : PUBLIC_TABS;
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-50 bg-white shadow-elevated md:hidden">
@@ -36,7 +72,6 @@ export default function MobileNav() {
                   isActive ? "text-gold" : "text-text-muted hover:text-text-secondary"
                 }`}
               >
-                {/* Gold dot indicator above icon */}
                 <span
                   className={`mb-0.5 h-1 w-1 rounded-full transition-colors ${
                     isActive ? "bg-gold" : "bg-transparent"

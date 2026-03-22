@@ -90,7 +90,7 @@ export default function LandlordDashboardPage() {
                 <p className="section-label text-orange">Landlord Dashboard</p>
                 <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white sm:text-5xl lg:text-6xl">
                   Welcome <span style={{ color: "#D4622A" }}>back</span>,
-                  <br className="hidden sm:block" />Sarah
+                  <br className="hidden sm:block" />Sarah Namutebi
                 </h1>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
                   Manage your properties, track tenant interest, and close deals across Kampala.
