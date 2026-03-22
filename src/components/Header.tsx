@@ -152,7 +152,7 @@ export default function Header() {
 
       <div className="relative mx-auto flex h-14 max-w-7xl items-center px-4 sm:h-16 lg:h-[72px] lg:px-8">
         {/* ═══ Logo ═══ */}
-        <Link href="/" className="mr-6 shrink-0 lg:mr-12">
+        <Link href="/" className="mr-4 shrink-0 lg:mr-6">
           <Image
             src="/logo/logofordarkbg.png"
             alt="pata.ug"
@@ -175,7 +175,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group relative px-5 py-2.5"
+                className="group relative flex-1 text-center px-2 py-2.5"
               >
                 {/* Hover pill bg */}
                 <span
