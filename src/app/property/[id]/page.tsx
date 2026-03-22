@@ -385,12 +385,13 @@ export default function PropertyDetailPage() {
                 </section>
               </ScrollReveal>
 
-              <ScrollReveal stagger>
+              <ScrollReveal>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {quickFacts.map((fact) => (
+                  {quickFacts.map((fact, i) => (
                     <div
                       key={fact.label}
-                      className="reveal card-surface flex items-center gap-3 p-4 transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+                      className="card-surface flex items-center gap-3 p-4"
+                      style={{ animation: `fadeInUp 600ms cubic-bezier(0.16,1,0.3,1) ${i * 80}ms both` }}
                     >
                       {fact.icon}
                       <div>
