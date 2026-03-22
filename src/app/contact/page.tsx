@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/Img";
 import ScrollReveal from "@/components/ScrollReveal";
 import { Mail, Phone, MapPin, Clock, ArrowRight, MessageSquare, Building2 } from "lucide-react";
 

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/Img";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,

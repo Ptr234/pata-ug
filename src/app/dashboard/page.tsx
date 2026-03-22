@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/Img";
 import ScrollReveal from "@/components/ScrollReveal";
 import { getUserProfile, getFirstName } from "@/lib/user";
 import {

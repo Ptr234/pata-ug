@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/Img";
 import {
   Upload, MapPin, ChevronRight, ChevronLeft, Check,
   ImagePlus, Phone, Building2, ArrowLeft, Home, Bed, Bath, Calendar,

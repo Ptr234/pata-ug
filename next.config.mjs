@@ -5,10 +5,10 @@ const nextConfig = {
   ...(isGitHubPages && {
     output: "export",
     basePath: "/pata-ug",
-    assetPrefix: "/pata-ug/",
   }),
   images: {
     unoptimized: true,
+    ...(isGitHubPages && { loader: "custom", loaderFile: "./image-loader.js" }),
   },
 };
 

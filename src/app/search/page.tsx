@@ -3,7 +3,7 @@
 import { Suspense, useState, useMemo, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/Img";
 import {
   SearchX,
   ChevronDown,
