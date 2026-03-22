@@ -97,6 +97,16 @@ export interface NearbyPlace {
   distance: string; // e.g. "500m", "1.2km"
 }
 
+export type PropertyCondition = "brand-new" | "renovated" | "good";
+
+export interface PropertyReview {
+  id: string;
+  author: string;       // e.g. "John D."
+  rating: number;       // 1–5
+  comment: string;
+  date: string;         // ISO date
+}
+
 export interface Property {
   id: string;
   title: string;
@@ -114,7 +124,7 @@ export interface Property {
   bathrooms: number;
   floorLevel?: string;
   sizeSqm?: number;
-  yearBuilt?: number;
+  condition: PropertyCondition;
   photos: string[];
   videoUrl?: string;
   description: string;
@@ -139,6 +149,8 @@ export interface Property {
   whatsappPhone: string;
   landlordName: string;
   agencyName?: string;
+  landlordRating: number;  // 1–5 average star rating
+  reviews: PropertyReview[];
   viewCount: number;
   createdAt: string;
   location: { lat: number; lng: number };
@@ -249,6 +261,9 @@ export const properties: Property[] = [
     contactPhone: "+256700100100",
     whatsappPhone: "+256700100100",
     landlordName: "James Mukasa",
+    condition: "good",
+    landlordRating: 4.2,
+    reviews: [{ id: "rev-001", author: "Sarah K.", rating: 5, comment: "Clean, well-maintained apartment. Great water supply.", date: "2026-02-15" }, { id: "rev-002", author: "Peter M.", rating: 4, comment: "Nice location but parking can be tight.", date: "2026-01-20" }],
     viewCount: 234,
     createdAt: "2026-03-10T08:30:00Z",
     location: { lat: 0.3476, lng: 32.5953 },
@@ -268,7 +283,9 @@ export const properties: Property[] = [
     bedrooms: 3,
     bathrooms: 2,
     sizeSqm: 220,
-    yearBuilt: 2020,
+    condition: "renovated",
+    landlordRating: 4.8,
+    reviews: [],
     photos: categoryPhotos("standalone", [1, 2, 3, 4]),
     description:
       "Executive standalone house in the prestigious Kololo hill area. Master en‑suite, large living room, mature garden with fruit trees, boys' quarters, and a double garage. Walking distance to international schools and embassies.",
@@ -346,6 +363,9 @@ export const properties: Property[] = [
     contactPhone: "+256701300300",
     whatsappPhone: "+256701300300",
     landlordName: "Peter Ochieng",
+    condition: "good",
+    landlordRating: 3.8,
+    reviews: [{ id: "rev-003", author: "Mary A.", rating: 4, comment: "Affordable and close to campus. Good for students.", date: "2026-02-28" }],
     viewCount: 189,
     createdAt: "2026-03-15T09:45:00Z",
     location: { lat: 0.3342, lng: 32.6025 },
@@ -392,6 +412,9 @@ export const properties: Property[] = [
     contactPhone: "+256753400400",
     whatsappPhone: "+256753400400",
     landlordName: "Fatuma Nabirye",
+    condition: "good",
+    landlordRating: 4.0,
+    reviews: [{ id: "rev-004", author: "David O.", rating: 4, comment: "Decent single room. Quiet neighbourhood.", date: "2026-03-01" }],
     viewCount: 78,
     createdAt: "2026-03-12T17:20:00Z",
     location: { lat: 0.3541, lng: 32.6137 },
@@ -411,7 +434,9 @@ export const properties: Property[] = [
     bedrooms: 3,
     bathrooms: 2,
     sizeSqm: 180,
-    yearBuilt: 2022,
+    condition: "brand-new",
+    landlordRating: 4.1,
+    reviews: [],
     photos: categoryPhotos("townhouse", [5, 6, 7, 8]),
     description:
       "Semi‑detached townhouse perched on Muyenga hill with sweeping views of Lake Victoria. All bedrooms en‑suite, modern finishes, private garden, covered parking for two cars, and 24‑hour security gate.",
@@ -491,6 +516,9 @@ export const properties: Property[] = [
     whatsappPhone: "+256782600600",
     landlordName: "Kampala Commercial Properties Ltd",
     agencyName: "Kampala Commercial Properties Ltd",
+    condition: "renovated",
+    landlordRating: 4.5,
+    reviews: [{ id: "rev-005", author: "Alice N.", rating: 5, comment: "Recently renovated, modern finishes. Love the balcony!", date: "2026-02-10" }, { id: "rev-006", author: "John D.", rating: 4, comment: "Great apartment but slightly pricey for Ntinda.", date: "2026-01-15" }],
     viewCount: 345,
     createdAt: "2026-03-01T10:15:00Z",
     location: { lat: 0.3163, lng: 32.5822 },
@@ -511,7 +539,9 @@ export const properties: Property[] = [
     bathrooms: 2,
     floorLevel: "2nd",
     sizeSqm: 95,
-    yearBuilt: 2019,
+    condition: "good",
+    landlordRating: 3.9,
+    reviews: [],
     photos: categoryPhotos("apartment", [4, 5, 6]),
     description:
       "Well‑finished apartment in a gated compound in Bugolobi flats area. Master en‑suite, spacious lounge, fitted kitchen, water heater in both bathrooms, and a large balcony. Walking distance to Game and Bugolobi Market.",
@@ -586,6 +616,9 @@ export const properties: Property[] = [
     contactPhone: "+256709800800",
     whatsappPhone: "+256709800800",
     landlordName: "Moses Ssempijja",
+    condition: "brand-new",
+    landlordRating: 4.7,
+    reviews: [{ id: "rev-007", author: "Grace W.", rating: 5, comment: "Brand new build, everything works perfectly.", date: "2026-03-05" }],
     viewCount: 45,
     createdAt: "2026-03-18T07:00:00Z",
     location: { lat: 0.3697, lng: 32.5984 },
@@ -605,7 +638,9 @@ export const properties: Property[] = [
     bedrooms: 4,
     bathrooms: 3,
     sizeSqm: 200,
-    yearBuilt: 2025,
+    condition: "brand-new",
+    landlordRating: 4.6,
+    reviews: [],
     photos: categoryPhotos("standalone", [5, 6, 7, 8]),
     description:
       "Brand new duplex in a developing estate in Kyanja. Ground floor features living room, dining area, guest bedroom and washroom; upper floor has three bedrooms (master en‑suite), store room, and balcony. Tarmac access road.",
@@ -681,6 +716,9 @@ export const properties: Property[] = [
     contactPhone: "+256771010101",
     whatsappPhone: "+256771010101",
     landlordName: "Sylvia Namubiru",
+    condition: "good",
+    landlordRating: 3.5,
+    reviews: [{ id: "rev-008", author: "Robert K.", rating: 3, comment: "Basic but functional. Good for the price.", date: "2026-02-20" }],
     viewCount: 156,
     createdAt: "2026-02-20T12:00:00Z",
     location: { lat: 0.3795, lng: 32.6302 },
@@ -729,6 +767,9 @@ export const properties: Property[] = [
     contactPhone: "+256752111111",
     whatsappPhone: "+256752111111",
     landlordName: "Charles Lwanga",
+    condition: "renovated",
+    landlordRating: 4.3,
+    reviews: [{ id: "rev-009", author: "Florence M.", rating: 4, comment: "Well-kept compound. Security is excellent.", date: "2026-01-28" }, { id: "rev-010", author: "Samuel T.", rating: 5, comment: "Best townhouse in Muyenga. Highly recommend.", date: "2026-02-05" }],
     viewCount: 89,
     createdAt: "2026-03-14T10:30:00Z",
     location: { lat: 0.3688, lng: 32.6445 },
@@ -749,7 +790,9 @@ export const properties: Property[] = [
     bathrooms: 1,
     floorLevel: "1st",
     sizeSqm: 90,
-    yearBuilt: 2021,
+    condition: "renovated",
+    landlordRating: 4.4,
+    reviews: [],
     photos: categoryPhotos("apartment", [10, 11, 12, 13]),
     description:
       "Charming apartment minutes from the Entebbe lakefront. Tiled floors, spacious rooms, reliable UMEME power with inverter backup, and a compound with lush tropical landscaping. Great for airport and NGO workers.",

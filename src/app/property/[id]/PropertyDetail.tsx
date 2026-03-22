@@ -164,7 +164,7 @@ export function PropertyDetailPage() {
     bathrooms,
     floorLevel,
     sizeSqm,
-    yearBuilt,
+    condition,
     photos,
     videoUrl,
     description,
@@ -240,13 +240,11 @@ export function PropertyDetailPage() {
       value: floorLevel,
     });
   }
-  if (yearBuilt) {
-    quickFacts.push({
-      icon: <Calendar className="h-5 w-5 text-teal" />,
-      label: "Year Built",
-      value: yearBuilt.toString(),
-    });
-  }
+  quickFacts.push({
+    icon: <Star className="h-5 w-5 text-teal" />,
+    label: "Condition",
+    value: condition === "brand-new" ? "Brand New" : condition === "renovated" ? "Renovated" : "Good",
+  });
 
   quickFacts.push(
     {
@@ -888,8 +886,70 @@ export function PropertyDetailPage() {
                 </ScrollReveal>
               )}
 
+              {/* ── Landlord Rating ── */}
+              <ScrollReveal variant="up" delay={240}>
+                <section className="mt-8">
+                  <p className="section-label mb-3 text-gold">Trust</p>
+                  <h2 className="font-display text-xl tracking-tighter text-navy mb-4">
+                    Landlord Rating
+                  </h2>
+                  <div className="flex items-center gap-3 rounded-xl bg-white px-5 py-4 shadow-soft">
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star
+                          key={s}
+                          className={`h-5 w-5 ${s <= Math.round(property.landlordRating) ? "fill-gold text-gold" : "text-navy/15"}`}
+                        />
+                      ))}
+                    </div>
+                    <span className="font-display text-lg font-bold text-navy">{property.landlordRating.toFixed(1)}</span>
+                    <span className="text-xs text-text-muted">
+                      ({property.reviews.length} review{property.reviews.length !== 1 ? "s" : ""})
+                    </span>
+                  </div>
+                </section>
+              </ScrollReveal>
+
+              {/* ── Tenant Reviews ── */}
+              {property.reviews.length > 0 && (
+                <ScrollReveal variant="up" delay={260}>
+                  <section className="mt-8">
+                    <p className="section-label mb-3 text-gold">Feedback</p>
+                    <h2 className="font-display text-xl tracking-tighter text-navy mb-4">
+                      Tenant Reviews
+                    </h2>
+                    <div className="space-y-3">
+                      {property.reviews.map((review) => (
+                        <div key={review.id} className="rounded-xl bg-white px-5 py-4 shadow-soft">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy/5 text-xs font-bold text-navy">
+                                {review.author.charAt(0)}
+                              </div>
+                              <div>
+                                <p className="text-sm font-bold text-navy">{review.author}</p>
+                                <p className="text-[10px] text-text-muted">{formatDate(review.date)}</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-0.5">
+                              {[1, 2, 3, 4, 5].map((s) => (
+                                <Star
+                                  key={s}
+                                  className={`h-3.5 w-3.5 ${s <= review.rating ? "fill-gold text-gold" : "text-navy/10"}`}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <p className="mt-2.5 text-sm leading-relaxed text-text-secondary">{review.comment}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                </ScrollReveal>
+              )}
+
               {/* ── Status ── */}
-              <ScrollReveal variant="up" delay={250}>
+              <ScrollReveal variant="up" delay={280}>
                 <div className="mt-6">
                   <StatusBadge status={status} />
                 </div>
