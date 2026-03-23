@@ -272,7 +272,7 @@ export default function PropertyCard({
         {securityDeposit && securityDeposit > 0 && (
           <div className="mt-2 flex items-center gap-1 text-[10px] text-white/40">
             <Lock className="h-3 w-3 text-gold/60" />
-            Deposit: UGX {formatPrice(securityDeposit)}
+            Security Deposit: UGX {formatPrice(securityDeposit)}
           </div>
         )}
 
