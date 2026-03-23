@@ -1,18 +1,24 @@
 export const CATEGORIES = [
-  { id: "apartment", label: "Apartment / Flat", icon: "Building2", color: "teal" },
-  { id: "standalone", label: "Standalone House", icon: "Home", color: "teal" },
-  { id: "townhouse", label: "Townhouse / Maisonette", icon: "Castle", color: "orange" },
-  { id: "duplex", label: "Duplex", icon: "Layers", color: "orange" },
-  { id: "studio", label: "Studio", icon: "Square", color: "orange" },
-  { id: "serviced-apartment", label: "Serviced Apartment", icon: "Star", color: "teal" },
-  { id: "single-room", label: "Single Room / Bedsitter", icon: "DoorOpen", color: "amber" },
-  { id: "shared-house", label: "Room in Shared House", icon: "Users", color: "amber" },
-  { id: "servant-quarters", label: "Servant Quarters", icon: "Warehouse", color: "gold" },
-  { id: "office", label: "Commercial - Office", icon: "Briefcase", color: "purple" },
-  { id: "shop", label: "Commercial - Shop / Retail", icon: "Store", color: "purple" },
-  { id: "warehouse", label: "Commercial - Warehouse", icon: "Package", color: "purple" },
-  { id: "short-stay", label: "Short Stay / Serviced", icon: "CalendarDays", color: "green" },
-  { id: "land", label: "Land / Plot", icon: "Map", color: "green" },
+  { id: "apartment", label: "Apartment / Flat", icon: "Building2", color: "teal", group: "residential" },
+  { id: "standalone", label: "Standalone House", icon: "Home", color: "teal", group: "residential" },
+  { id: "townhouse", label: "Townhouse / Maisonette", icon: "Castle", color: "orange", group: "residential" },
+  { id: "duplex", label: "Duplex", icon: "Layers", color: "orange", group: "residential" },
+  { id: "studio", label: "Studio", icon: "Square", color: "orange", group: "residential" },
+  { id: "serviced-apartment", label: "Serviced Apartment", icon: "Star", color: "teal", group: "residential" },
+  { id: "single-room", label: "Single Room / Bedsitter", icon: "DoorOpen", color: "amber", group: "residential" },
+  { id: "shared-house", label: "Room in Shared House", icon: "Users", color: "amber", group: "residential" },
+  { id: "servant-quarters", label: "Servant Quarters", icon: "Warehouse", color: "gold", group: "residential" },
+  { id: "office", label: "Office Space", icon: "Briefcase", color: "purple", group: "commercial" },
+  { id: "shop", label: "Shop / Retail", icon: "Store", color: "purple", group: "commercial" },
+  { id: "warehouse", label: "Warehouse / Storage", icon: "Package", color: "purple", group: "commercial" },
+  { id: "short-stay", label: "Short Stay / Serviced", icon: "CalendarDays", color: "green", group: "residential" },
+  { id: "land", label: "Land / Plot", icon: "Map", color: "green", group: "commercial" },
+] as const;
+
+export const CATEGORY_GROUPS = [
+  { id: "all", label: "All" },
+  { id: "residential", label: "Residential" },
+  { id: "commercial", label: "Commercial" },
 ] as const;
 
 export const LIFESTYLE_TAGS = [

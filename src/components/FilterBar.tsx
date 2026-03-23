@@ -8,7 +8,7 @@ import {
   Check,
   RotateCcw,
 } from "lucide-react";
-import { CATEGORIES, LIFESTYLE_TAGS } from "@/lib/constants";
+import { CATEGORIES, CATEGORY_GROUPS, LIFESTYLE_TAGS } from "@/lib/constants";
 import LocationPicker from "@/components/LocationPicker";
 
 /* ────────────────────────── Types ────────────────────────── */
@@ -156,6 +156,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const [categoryGroup, setCategoryGroup] = useState<string>("all");
   const onChangeRef = useRef(onFilterChange);
   onChangeRef.current = onFilterChange;
 
@@ -258,6 +259,26 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
       {/* 1 ─ Category */}
       <div className="relative">
         <label className={labelClasses}>What are you looking for?</label>
+
+        {/* Residential / Commercial group tabs */}
+        <div className="mb-2 flex gap-1.5">
+          {CATEGORY_GROUPS.map((g) => (
+            <button
+              key={g.id}
+              type="button"
+              onClick={() => setCategoryGroup(g.id)}
+              className="rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all duration-300"
+              style={{
+                background: categoryGroup === g.id ? "rgba(212,168,83,0.15)" : "rgba(255,255,255,0.04)",
+                color: categoryGroup === g.id ? "#d4a853" : "rgba(255,255,255,0.4)",
+                border: categoryGroup === g.id ? "1px solid rgba(212,168,83,0.3)" : "1px solid transparent",
+              }}
+            >
+              {g.label}
+            </button>
+          ))}
+        </div>
+
         <button
           type="button"
           onClick={() => setCategoryOpen((prev) => !prev)}
@@ -284,7 +305,11 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
                 "fadeInDown 300ms cubic-bezier(0.16, 1, 0.3, 1) both",
             }}
           >
-            {CATEGORY_OPTIONS.map((opt) => {
+            {CATEGORY_OPTIONS.filter((opt) =>
+              opt.id === "" || categoryGroup === "all"
+                ? true
+                : CATEGORIES.find((c) => c.id === opt.id)?.group === categoryGroup
+            ).map((opt) => {
               const isSelected =
                 opt.id === ""
                   ? selectedCategories.length === 0
