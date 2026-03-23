@@ -70,6 +70,7 @@ export default function Header() {
     localStorage.removeItem("pata-role");
     setLoggedIn(false);
     setProfileOpen(false);
+    setMobileMenuOpen(false);
     router.push("/login");
   };
 
@@ -358,7 +359,10 @@ export default function Header() {
           <div className="relative" ref={dropdownRef}>
             <button
               type="button"
-              onClick={() => setProfileOpen((prev) => !prev)}
+              onClick={() => {
+                setProfileOpen((prev) => !prev);
+                setMobileMenuOpen(false);
+              }}
               className="group flex items-center gap-2"
             >
               <div className="relative">
@@ -461,7 +465,7 @@ export default function Header() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={() => setProfileOpen(false)}
+                      onClick={() => { setProfileOpen(false); setMobileMenuOpen(false); }}
                       className="flex items-center gap-3 px-5 py-2.5 text-sm text-navy"
                       style={{
                         transition:
@@ -518,7 +522,10 @@ export default function Header() {
           <button
             type="button"
             aria-label="Toggle menu"
-            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            onClick={() => {
+              setMobileMenuOpen((prev) => !prev);
+              setProfileOpen(false);
+            }}
             className="relative flex h-10 w-10 items-center justify-center rounded-xl lg:hidden"
             style={{
               background: mobileMenuOpen
@@ -631,11 +638,33 @@ export default function Header() {
                       }`}
                       style={{ transition: "background 300ms ease, color 300ms ease" }}
                     >
-                      <item.icon size={18} className={isActive ? "text-gold" : "text-white/70"} />
+                      <span
+                        className={`flex h-10 w-10 items-center justify-center rounded-xl ${
+                          isActive ? "bg-gold/15" : "bg-white/[0.04]"
+                        }`}
+                      >
+                        <item.icon size={18} className={isActive ? "text-gold" : "text-white/70"} />
+                      </span>
                       <span className="flex-1 uppercase tracking-wide">{item.label}</span>
+                      {isActive && <ChevronRight className="h-4 w-4 text-gold/60" />}
                     </Link>
                   );
                 })}
+
+                {/* Landlord: List Property CTA in mobile menu */}
+                {userRole === "landlord" && loggedIn && (
+                  <Link
+                    href="/landlord/listings/new"
+                    className="touch-press-sm mt-1 flex items-center gap-3.5 rounded-2xl bg-orange/10 px-5 py-3.5 text-sm font-semibold text-orange active:bg-orange/20"
+                    style={{ transition: "background 300ms ease" }}
+                  >
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange/15">
+                      <Plus size={18} className="text-orange" />
+                    </span>
+                    <span className="flex-1 uppercase tracking-wide">List Property</span>
+                    <ArrowRight className="h-4 w-4 text-orange/60" />
+                  </Link>
+                )}
               </div>
             )}
 
