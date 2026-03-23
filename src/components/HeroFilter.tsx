@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, ChevronDown } from "lucide-react";
-import { CATEGORIES } from "@/lib/constants";
+import { CATEGORIES, CATEGORY_GROUPS } from "@/lib/constants";
 import LocationPicker from "@/components/LocationPicker";
 import type { LocationSelection } from "@/lib/locations";
 
@@ -12,9 +12,14 @@ const BEDROOM_OPTIONS = ["Any", "1", "2", "3", "4", "5+"];
 export default function HeroFilter() {
   const router = useRouter();
   const [category, setCategory] = useState("");
+  const [categoryGroup, setCategoryGroup] = useState("all");
   const [loc, setLoc] = useState<Partial<LocationSelection>>({});
   const [budget, setBudget] = useState("");
   const [bedrooms, setBedrooms] = useState("");
+
+  const filteredCategories = categoryGroup === "all"
+    ? CATEGORIES
+    : CATEGORIES.filter((c) => c.group === categoryGroup);
 
   const handleApply = () => {
     const params = new URLSearchParams();
@@ -51,17 +56,34 @@ export default function HeroFilter() {
       </p>
 
       <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-1">
-        {/* Property Type */}
+        {/* Property Type — with Residential/Commercial tabs */}
         <div>
           <label className={labelBase}>What are you looking for?</label>
+          <div className="mb-2 flex gap-1">
+            {CATEGORY_GROUPS.map((g) => (
+              <button
+                key={g.id}
+                type="button"
+                onClick={() => { setCategoryGroup(g.id); setCategory(""); }}
+                className="rounded-lg px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider transition-all duration-300"
+                style={{
+                  background: categoryGroup === g.id ? "rgba(212,168,83,0.15)" : "rgba(255,255,255,0.04)",
+                  color: categoryGroup === g.id ? "#d4a853" : "rgba(255,255,255,0.35)",
+                  border: categoryGroup === g.id ? "1px solid rgba(212,168,83,0.25)" : "1px solid transparent",
+                }}
+              >
+                {g.label}
+              </button>
+            ))}
+          </div>
           <div className="relative">
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className={selectBase}
             >
-              <option value="">All Types</option>
-              {CATEGORIES.map((c) => (
+              <option value="">{categoryGroup === "all" ? "All Types" : categoryGroup === "residential" ? "All Residential" : "All Commercial"}</option>
+              {filteredCategories.map((c) => (
                 <option key={c.id} value={c.id}>{c.label}</option>
               ))}
             </select>
