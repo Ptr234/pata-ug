@@ -240,7 +240,7 @@ export default function HomePage() {
           }}
         />
 
-        <div className="relative mx-auto grid min-h-[85vh] max-w-7xl items-center gap-8 px-4 pb-16 pt-20 sm:min-h-screen sm:px-6 sm:pb-20 sm:pt-28 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid min-h-0 max-w-7xl items-center gap-8 px-4 pb-16 pt-10 sm:min-h-[85vh] sm:px-6 sm:pb-20 sm:pt-28 lg:min-h-screen lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
             {/* ── LEFT: Hero text content ── */}
             <div className="flex flex-col justify-center">
             {/* Badge */}
@@ -256,7 +256,7 @@ export default function HomePage() {
 
             {/* Heading */}
             <ScrollReveal delay={100}>
-              <h1 className="animate-fade-up delay-100 mt-6 max-w-2xl font-display text-[2.5rem] font-bold uppercase leading-[0.92] tracking-tighter text-white sm:mt-8 sm:text-5xl md:text-7xl lg:text-[5.5rem]">
+              <h1 className="animate-fade-up delay-100 mt-5 max-w-2xl font-display text-3xl font-bold uppercase leading-[0.92] tracking-tighter text-white sm:mt-8 sm:text-5xl md:text-7xl lg:text-[5.5rem]">
                 Find{" "}
                 <br className="hidden sm:block" />
                 Your Next{" "}
@@ -285,7 +285,7 @@ export default function HomePage() {
 
             {/* Subtext */}
             <ScrollReveal delay={200}>
-              <p className="animate-fade-up delay-200 mt-5 max-w-lg text-base leading-relaxed text-white/50 sm:mt-8 sm:text-lg">
+              <p className="animate-fade-up delay-200 mt-4 max-w-lg text-sm leading-relaxed text-white/50 sm:mt-8 sm:text-base md:text-lg">
                 Browse verified rental properties across Kampala.
                 Apartments, houses, rooms, and commercial spaces.
               </p>
@@ -293,7 +293,7 @@ export default function HomePage() {
 
             {/* Search bar */}
             <ScrollReveal delay={300}>
-              <div className="animate-fade-up delay-300 mt-8 max-w-xl">
+              <div className="animate-fade-up delay-300 mt-6 max-w-xl sm:mt-8">
                 <HeroSearchForm />
               </div>
             </ScrollReveal>
@@ -315,14 +315,14 @@ export default function HomePage() {
 
             {/* Stats — horizontal, compact */}
             <ScrollReveal delay={500}>
-              <div className="animate-fade-up delay-500 mt-8 flex gap-6 sm:mt-12 sm:gap-10 lg:gap-14">
+              <div className="animate-fade-up delay-500 mt-6 flex flex-wrap gap-4 sm:mt-12 sm:gap-10 lg:gap-14">
                 {[
                   { value: "2,500+", label: "Listings" },
                   { value: "1,200+", label: "Verified" },
                   { value: "50+", label: "Estates" },
                 ].map((stat, i) => (
                   <div key={stat.label} className="flex items-baseline gap-2">
-                    <span className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
+                    <span className="font-display text-xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
                       {stat.value}
                     </span>
                     <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
@@ -339,7 +339,7 @@ export default function HomePage() {
 
             {/* ── RIGHT: Filter bar ── */}
             <ScrollReveal variant="right" delay={300}>
-              <div className="flex flex-col justify-center lg:pl-4">
+              <div className="hidden flex-col justify-center lg:flex lg:pl-4">
                 <HeroFilter />
               </div>
             </ScrollReveal>
