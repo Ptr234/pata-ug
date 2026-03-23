@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "@/components/Img";
 import ScrollReveal from "@/components/ScrollReveal";
-import { Handshake, ArrowLeft, MapPin, Calendar, Building2, MessageCircle } from "lucide-react";
+import { Handshake, ArrowLeft, MapPin, Calendar, Building2, MessageCircle, Shield } from "lucide-react";
 
 const T = "cubic-bezier(0.16, 1, 0.3, 1)";
 
@@ -25,6 +26,16 @@ function dealStyle(s: string) {
 }
 
 export default function AdminDealsPage() {
+  const [takenOver, setTakenOver] = useState<Set<string>>(new Set());
+
+  const handleTakeOver = (dealId: string) => {
+    if (takenOver.has(dealId)) return;
+    const confirmed = window.confirm(`Take over AI negotiation for this deal? You will replace the AI agent in the chat.`);
+    if (confirmed) {
+      setTakenOver((prev) => new Set(prev).add(dealId));
+    }
+  };
+
   return (
     <main className="min-h-screen">
       <section className="relative overflow-hidden bg-navy">
@@ -66,10 +77,24 @@ export default function AdminDealsPage() {
                       <div className="flex justify-between"><dt className="text-white/50">Rent/mo</dt><dd className="font-bold text-white">{deal.rent}</dd></div>
                       <div className="flex justify-between"><dt className="text-white/50">5% Fee</dt><dd className="font-bold text-gold">{deal.agencyFee}</dd></div>
                     </dl>
-                    <div className="mt-3">
+                    <div className="mt-3 flex items-center gap-2">
                       <Link href={`/admin/deals/deal-00${deal.id}/chat`} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold" style={{ background: "rgba(212,168,83,0.1)" }}>
                         <MessageCircle size={12} /> Chat
                       </Link>
+                      {deal.status !== "closed" && (
+                        <button
+                          type="button"
+                          onClick={() => handleTakeOver(deal.id)}
+                          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider"
+                          style={{
+                            background: takenOver.has(deal.id) ? "rgba(31,138,68,0.15)" : "rgba(192,48,58,0.1)",
+                            color: takenOver.has(deal.id) ? "#1F8A44" : "#C0303A",
+                            transition: `all 500ms ${T}`,
+                          }}
+                        >
+                          <Shield size={12} /> {takenOver.has(deal.id) ? "Taken Over" : "Take Over"}
+                        </button>
+                      )}
                     </div>
                   </div>
                 );
@@ -102,15 +127,33 @@ export default function AdminDealsPage() {
                           <td className="px-5 py-4 font-bold text-gold">{deal.agencyFee}</td>
                           <td className="px-5 py-4"><span className="inline-block rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider" style={{ background: st.bg, color: st.color }}>{st.label}</span></td>
                           <td className="px-5 py-4">
-                            <Link
-                              href={`/admin/deals/deal-00${deal.id}/chat`}
-                              className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold"
-                              style={{ background: "rgba(212,168,83,0.1)", transition: `all 500ms ${T}` }}
-                              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.2)"; }}
-                              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.1)"; }}
-                            >
-                              <MessageCircle size={12} /> Chat
-                            </Link>
+                            <div className="flex items-center gap-2">
+                              <Link
+                                href={`/admin/deals/deal-00${deal.id}/chat`}
+                                className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold"
+                                style={{ background: "rgba(212,168,83,0.1)", transition: `all 500ms ${T}` }}
+                                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.2)"; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.1)"; }}
+                              >
+                                <MessageCircle size={12} /> Chat
+                              </Link>
+                              {deal.status !== "closed" && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleTakeOver(deal.id)}
+                                  className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider"
+                                  style={{
+                                    background: takenOver.has(deal.id) ? "rgba(31,138,68,0.15)" : "rgba(192,48,58,0.1)",
+                                    color: takenOver.has(deal.id) ? "#1F8A44" : "#C0303A",
+                                    transition: `all 500ms ${T}`,
+                                  }}
+                                  onMouseEnter={(e) => { if (!takenOver.has(deal.id)) e.currentTarget.style.background = "rgba(192,48,58,0.2)"; }}
+                                  onMouseLeave={(e) => { if (!takenOver.has(deal.id)) e.currentTarget.style.background = "rgba(192,48,58,0.1)"; }}
+                                >
+                                  <Shield size={12} /> {takenOver.has(deal.id) ? "Taken Over" : "Take Over"}
+                                </button>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       );

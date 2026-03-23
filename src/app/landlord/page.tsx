@@ -10,6 +10,7 @@ import {
   Building2, Eye, Handshake, TrendingUp, Plus, Edit, RefreshCw,
   Shield, ArrowRight, MoreHorizontal, Check, Circle, CheckCircle2,
   FileText, Camera, BadgeCheck, MessageSquare, Wallet, MapPin, Clock, ChevronRight,
+  SlidersHorizontal, X,
 } from "lucide-react";
 import { properties, deals } from "@/lib/mock-data";
 
@@ -82,10 +83,43 @@ function dealLabel(s: string) {
 /* ── Page ── */
 export default function LandlordDashboardPage() {
   const [activeTab, setActiveTab] = useState<ListingTab>("All");
+  const [rulesOpen, setRulesOpen] = useState<string | null>(null);
+  const [minRent, setMinRent] = useState("");
+  const [flexibility, setFlexibility] = useState("");
+  const [autoAccept, setAutoAccept] = useState(false);
+  const [rulesNotes, setRulesNotes] = useState("");
+
   const selectedStatus = tabToStatus(activeTab);
   const filtered = selectedStatus ? landlordListings.filter((l) => l.status === selectedStatus) : landlordListings;
   const incoming = deals.filter((d) => d.status !== "closed" && d.status !== "commission_paid"); // commission_paid kept for legacy compat
   const doneCount = checklist.filter((c) => c.done).length;
+
+  const rulesListing = landlordListings.find((l) => l.id === rulesOpen);
+
+  function openRulesModal(listingId: string) {
+    const saved = localStorage.getItem(`pata-ai-rules-${listingId}`);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setMinRent(parsed.minRent || "");
+      setFlexibility(parsed.flexibility || "");
+      setAutoAccept(parsed.autoAccept || false);
+      setRulesNotes(parsed.notes || "");
+    } else {
+      setMinRent("");
+      setFlexibility("");
+      setAutoAccept(false);
+      setRulesNotes("");
+    }
+    setRulesOpen(listingId);
+  }
+
+  function saveRules() {
+    if (!rulesOpen) return;
+    localStorage.setItem(`pata-ai-rules-${rulesOpen}`, JSON.stringify({
+      minRent, flexibility, autoAccept, notes: rulesNotes,
+    }));
+    setRulesOpen(null);
+  }
 
   return (
     <main className="min-h-screen">
@@ -186,6 +220,16 @@ export default function LandlordDashboardPage() {
                       <Link href={`/property/${listing.id}`} className="inline-flex items-center gap-1 rounded-lg bg-white/[0.06] px-3 py-1.5 text-[11px] font-bold text-white/70" style={{ transition: `all 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(212,98,42,0.15)"; e.currentTarget.style.color = "#D4622A"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}>
                         <Edit className="h-3 w-3" /> Edit
                       </Link>
+                      <button
+                        type="button"
+                        onClick={() => openRulesModal(listing.id)}
+                        className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-[11px] font-bold"
+                        style={{ background: "rgba(212,168,83,0.15)", color: "#d4a853", transition: `all 500ms ${T}` }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.3)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(212,168,83,0.15)"; }}
+                      >
+                        <SlidersHorizontal className="h-3 w-3" /> AI Rules
+                      </button>
                       {listing.status === "expired" && (
                         <button className="inline-flex items-center gap-1 rounded-lg bg-orange/15 px-3 py-1.5 text-[11px] font-bold text-orange" style={{ transition: `all 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(212,98,42,0.3)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(212,98,42,0.15)"; }}>
                           <RefreshCw className="h-3 w-3" /> Reactivate
@@ -345,6 +389,154 @@ export default function LandlordDashboardPage() {
           </div>
         </div>
       </section>
+      {/* ═══ AI RULES MODAL ═══ */}
+      {rulesOpen && rulesListing && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-navy/90 backdrop-blur-md"
+          onClick={() => setRulesOpen(null)}
+        >
+          <div
+            className="mx-4 w-full max-w-md overflow-hidden rounded-3xl bg-navy"
+            style={{ boxShadow: "0 32px 64px rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 pt-6">
+              {/* Header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15">
+                    <SlidersHorizontal size={18} className="text-gold" />
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-black uppercase tracking-wider text-gold/70">Pata AI</p>
+                    <p className="text-sm font-bold text-white">Negotiation Rules</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setRulesOpen(null)}
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.06] text-white/40"
+                  style={{ transition: `all 400ms ${T}` }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.color = "#fff"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "rgba(255,255,255,0.4)"; }}
+                >
+                  <X size={14} />
+                </button>
+              </div>
+
+              <p className="mt-2 text-xs text-white/40 truncate">
+                {rulesListing.title} &mdash; {rulesListing.estate}
+              </p>
+
+              {/* Min Acceptable Rent */}
+              <div className="mt-5">
+                <label className="mb-1.5 block text-[9px] font-black uppercase tracking-wider text-white/30">
+                  Min Acceptable Rent
+                </label>
+                <div className="flex items-center overflow-hidden rounded-xl bg-white/[0.06]">
+                  <span className="bg-white/[0.04] px-3 py-3 text-xs font-bold text-white/40">UGX</span>
+                  <input
+                    type="number"
+                    placeholder="e.g. 1500000"
+                    value={minRent}
+                    onChange={(e) => setMinRent(e.target.value)}
+                    className="flex-1 bg-transparent px-3 py-3 text-sm font-bold text-white outline-none placeholder:text-white/20"
+                  />
+                </div>
+              </div>
+
+              {/* Flexibility % */}
+              <div className="mt-4">
+                <label className="mb-1.5 block text-[9px] font-black uppercase tracking-wider text-white/30">
+                  Flexibility % <span className="text-white/15">(0 - 30)</span>
+                </label>
+                <div className="flex items-center overflow-hidden rounded-xl bg-white/[0.06]">
+                  <span className="bg-white/[0.04] px-3 py-3 text-xs font-bold text-white/40">%</span>
+                  <input
+                    type="number"
+                    min={0}
+                    max={30}
+                    placeholder="e.g. 10"
+                    value={flexibility}
+                    onChange={(e) => setFlexibility(e.target.value)}
+                    className="flex-1 bg-transparent px-3 py-3 text-sm font-bold text-white outline-none placeholder:text-white/20"
+                  />
+                </div>
+              </div>
+
+              {/* Auto-Accept Toggle */}
+              <div className="mt-4 flex items-center justify-between rounded-xl bg-white/[0.06] px-4 py-3">
+                <div>
+                  <p className="text-sm font-bold text-white">Auto-Accept</p>
+                  <p className="text-[10px] text-white/40">Automatically accept offers within your range</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setAutoAccept(!autoAccept)}
+                  className="relative h-6 w-11 shrink-0 rounded-full"
+                  style={{
+                    background: autoAccept ? "linear-gradient(135deg, #d4a853, #B8903D)" : "rgba(255,255,255,0.1)",
+                    transition: `all 400ms ${T}`,
+                  }}
+                >
+                  <span
+                    className="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-md"
+                    style={{
+                      transform: autoAccept ? "translateX(20px)" : "translateX(0)",
+                      transition: `transform 400ms ${T}`,
+                    }}
+                  />
+                </button>
+              </div>
+
+              {/* Notes */}
+              <div className="mt-4">
+                <label className="mb-1.5 block text-[9px] font-black uppercase tracking-wider text-white/30">
+                  Notes <span className="text-white/15">(optional)</span>
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="Any specific instructions for the AI negotiator..."
+                  value={rulesNotes}
+                  onChange={(e) => setRulesNotes(e.target.value)}
+                  className="w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm text-white outline-none placeholder:text-white/20 resize-none transition-all duration-300 focus:bg-white/[0.1] focus:ring-2 focus:ring-gold/30"
+                />
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="mt-5 space-y-2 px-6">
+              <button
+                type="button"
+                onClick={saveRules}
+                className="flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-white"
+                style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)", boxShadow: "0 4px 16px rgba(212,168,83,0.25)", transition: `all 500ms ${T}` }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+              >
+                <Check className="h-4 w-4" /> Save Rules
+              </button>
+            </div>
+
+            {/* Footer */}
+            <div className="mt-4 px-6 pb-6 text-center">
+              <button
+                type="button"
+                onClick={() => setRulesOpen(null)}
+                className="text-xs text-white/30"
+                style={{ transition: `color 400ms ${T}` }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.3)"; }}
+              >
+                Cancel
+              </button>
+              <p className="mt-2 text-[9px] text-white/20">
+                Rules are stored locally and applied when Pata AI negotiates on your behalf
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

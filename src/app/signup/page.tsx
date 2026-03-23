@@ -15,6 +15,7 @@ import {
   Shield,
   Check,
   AlertCircle,
+  Lock,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 
@@ -35,13 +36,14 @@ export default function SignupPage() {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [nationalId, setNationalId] = useState("");
   const [idPhoto, setIdPhoto] = useState<string | null>(null);
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const canProceedStep1 = role !== "";
-  const canProceedStep2 = fullName.trim().length >= 3 && phone.trim().length >= 9;
+  const canProceedStep2 = fullName.trim().length >= 3 && phone.trim().length >= 9 && password.trim().length >= 6;
   const canSubmit = nationalId.trim().length >= 6 && agreed;
 
   const handleSubmit = () => {
@@ -52,6 +54,7 @@ export default function SignupPage() {
       fullName,
       phone: `+256${phone.replace(/^0/, "")}`,
       email,
+      password,
       nationalId,
       role,
       verificationStatus: "pending" as const, // pending → verified by admin
@@ -324,6 +327,20 @@ export default function SignupPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         className={inputCls}
                       />
+                    </div>
+
+                    <div>
+                      <label className={labelCls}>Password</label>
+                      <div className="relative">
+                        <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+                        <input
+                          type="password"
+                          placeholder="Min 6 characters"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          className={`${inputCls} pl-11`}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

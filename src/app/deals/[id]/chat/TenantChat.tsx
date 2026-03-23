@@ -12,6 +12,7 @@ import {
   Building2,
   CreditCard,
   Paperclip,
+  Bot,
 } from "lucide-react";
 import { chatMessages, type ChatMessage } from "@/lib/mock-data";
 
@@ -160,16 +161,24 @@ export function TenantChatPage() {
                   const isMe = msg.from === "tenant";
                   return (
                     <div key={msg.id} className={`flex items-end gap-2 ${isMe ? "flex-row-reverse" : ""}`}>
-                      <div
-                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[9px] font-bold text-white"
-                        style={{
-                          background: isMe
-                            ? "linear-gradient(135deg, #0A9396, #077B7E)"
-                            : "linear-gradient(135deg, #d4a853, #B8903D)",
-                        }}
-                      >
-                        {isMe ? "Y" : "P"}
-                      </div>
+                      {isMe ? (
+                        <div
+                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[9px] font-bold text-white"
+                          style={{ background: "linear-gradient(135deg, #0A9396, #077B7E)" }}
+                        >
+                          Y
+                        </div>
+                      ) : (
+                        <div className="flex shrink-0 flex-col items-center">
+                          <div
+                            className="flex h-7 w-7 items-center justify-center rounded-lg text-[9px] font-bold text-white"
+                            style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)" }}
+                          >
+                            <span className="flex items-center gap-px">P<Bot size={7} className="opacity-70" /></span>
+                          </div>
+                          <span className="mt-0.5 text-[7px] font-bold text-gold/60">AI</span>
+                        </div>
+                      )}
                       <div
                         className="max-w-[85%] rounded-2xl px-3 py-2.5 sm:max-w-[75%] sm:px-4 sm:py-3"
                         style={{

@@ -15,6 +15,7 @@ import {
   Handshake,
   Check,
   Phone,
+  Bot,
 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { chatMessages, deals, type ChatMessage, type ChatSide } from "@/lib/mock-data";
@@ -87,12 +88,24 @@ function Bubble({ msg, side }: { msg: ChatMessage; side: "left" | "right" }) {
   return (
     <div className={`flex items-end gap-2 ${side === "right" ? "flex-row-reverse" : ""}`}>
       {/* Avatar */}
-      <div
-        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[8px] font-bold text-white"
-        style={{ background: gradient }}
-      >
-        {initial}
-      </div>
+      {isAdmin ? (
+        <div className="flex shrink-0 flex-col items-center">
+          <div
+            className="flex h-6 w-6 items-center justify-center rounded-lg text-[8px] font-bold text-white"
+            style={{ background: gradient }}
+          >
+            <span className="flex items-center gap-px">P<Bot size={6} className="opacity-70" /></span>
+          </div>
+          <span className="mt-0.5 text-[7px] font-bold text-gold/60">AI</span>
+        </div>
+      ) : (
+        <div
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[8px] font-bold text-white"
+          style={{ background: gradient }}
+        >
+          {initial}
+        </div>
+      )}
       {/* Bubble */}
       <div
         className="max-w-[90%] rounded-2xl px-3.5 py-2.5 sm:max-w-[80%] lg:max-w-[75%]"
@@ -239,6 +252,7 @@ export function AdminDealChatPage() {
   const info = DEAL_INFO[dealId];
 
   const [dealStatus, setDealStatus] = useState<"negotiating" | "agreed" | "payment_confirmed" | "closed">("negotiating");
+  const [aiManaged, setAiManaged] = useState(true);
 
   // Local message state (seeded from mock)
   const [messages, setMessages] = useState<ChatMessage[]>(
@@ -337,6 +351,29 @@ export function AdminDealChatPage() {
                 <span className="text-xs font-bold text-gold">pata.ug</span>
                 <span className="text-[9px] text-white/40">Mediator</span>
               </div>
+            </div>
+
+            {/* AI Management indicator */}
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              {aiManaged ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider" style={{ background: "rgba(10,147,150,0.15)", color: "#0A9396" }}>
+                  <Bot size={12} /> Managed by Pata AI
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider" style={{ background: "rgba(212,98,42,0.15)", color: "#D4622A" }}>
+                  <User size={12} /> Human Managed
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={() => setAiManaged(!aiManaged)}
+                className="rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-white/40"
+                style={{ background: "rgba(255,255,255,0.06)", transition: `all 400ms ${T}` }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "rgba(255,255,255,0.4)"; }}
+              >
+                {aiManaged ? "Take Over" : "Switch to AI"}
+              </button>
             </div>
           </ScrollReveal>
         </div>
