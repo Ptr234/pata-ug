@@ -601,25 +601,29 @@ export function PropertyDetailPage() {
                 </div>
               </ScrollReveal>
 
-              {/* Location — full hierarchy */}
+              {/* Location — show estate + district only (exact location locked until deal close) */}
               <ScrollReveal variant="up" delay={100}>
                 <div className="mt-3 flex items-start gap-1.5 text-text-secondary">
                   <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-teal" />
                   <div>
-                    <span className="font-medium">{property.loc?.village || estate}, {property.loc?.parish || ""}</span>
-                    <p className="mt-0.5 text-xs text-text-muted">
-                      {[property.loc?.subcounty, property.loc?.county, property.loc?.district, property.loc?.region].filter(Boolean).join(" · ")}
+                    <span className="font-medium">{estate}, {district}</span>
+                    <p className="mt-0.5 flex items-center gap-1 text-xs text-text-muted">
+                      <Lock className="h-3 w-3 text-gold/60" />
+                      Exact location shared after deal closes
                     </p>
                   </div>
                 </div>
               </ScrollReveal>
 
-              {/* Location description */}
+              {/* Location description — locked until deal closed */}
               {locationDesc && (
                 <ScrollReveal variant="up" delay={120}>
                   <div className="mt-2 rounded-xl bg-smoke px-4 py-2.5">
                     <p className="text-[9px] font-black uppercase tracking-wider text-text-muted">How to Find It</p>
-                    <p className="mt-1 text-sm leading-relaxed text-navy/80">{locationDesc}</p>
+                    <div className="mt-1 flex items-center gap-2 text-sm text-navy/50">
+                      <Lock className="h-3.5 w-3.5 shrink-0 text-gold" />
+                      <span>Directions shared after deal is closed</span>
+                    </div>
                   </div>
                 </ScrollReveal>
               )}
