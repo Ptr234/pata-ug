@@ -104,6 +104,28 @@ export default function Header() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileMenuOpen]);
+
+  // Close on Escape key
+  useEffect(() => {
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false);
+        setProfileOpen(false);
+      }
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, []);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
     const el = headerRef.current;
     if (!el) return;
@@ -581,21 +603,70 @@ export default function Header() {
               })}
             </nav>
 
+            {/* Role-specific links when logged in */}
+            {isLoggedInRoute && (
+              <div
+                className="mt-4 border-t border-white/[0.06] pt-4"
+                style={{ animation: `fadeInUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 250ms both` }}
+              >
+                <p className="mb-2 px-5 text-[9px] font-black uppercase tracking-[0.18em] text-white/30">
+                  Account
+                </p>
+                {[
+                  {
+                    href: userRole === "admin" ? "/admin" : userRole === "landlord" ? "/landlord" : "/dashboard",
+                    icon: LayoutDashboard,
+                    label: "Dashboard",
+                  },
+                  { href: "/account/profile", icon: User, label: "Profile" },
+                  { href: "/notifications", icon: Bell, label: "Notifications" },
+                ].map((item) => {
+                  const isActive = pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`touch-press-sm flex items-center gap-3.5 rounded-2xl px-5 py-3.5 text-sm font-semibold ${
+                        isActive ? "bg-gold/10 text-gold" : "text-white/55 active:bg-white/[0.06]"
+                      }`}
+                      style={{ transition: "background 300ms ease, color 300ms ease" }}
+                    >
+                      <item.icon size={18} className={isActive ? "text-gold" : "text-white/70"} />
+                      <span className="flex-1 uppercase tracking-wide">{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+
             {/* Spacer */}
             <div className="flex-1" />
 
-            {/* CTA */}
-            <Link
-              href="/login"
-              className="btn-gold mt-6 w-full justify-center py-4 text-sm"
-              style={{
-                animation:
-                  "fadeInUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both",
-              }}
-            >
-              Get Started
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            {/* CTA / Logout */}
+            {isLoggedInRoute ? (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-white/[0.04] py-4 text-sm font-bold text-red active:bg-white/[0.08]"
+                style={{
+                  animation: "fadeInUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both",
+                }}
+              >
+                <LogOut size={16} />
+                Log Out
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                className="btn-gold mt-6 w-full justify-center py-4 text-sm"
+                style={{
+                  animation: "fadeInUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both",
+                }}
+              >
+                Get Started
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
           </div>
         </div>
       )}

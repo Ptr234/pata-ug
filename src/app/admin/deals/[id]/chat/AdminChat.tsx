@@ -148,7 +148,7 @@ function ChatColumn({
 
   return (
     <div
-      className="flex flex-1 flex-col overflow-hidden rounded-3xl"
+      className="flex min-h-[350px] flex-1 flex-col overflow-hidden rounded-2xl sm:rounded-3xl lg:min-h-0"
       style={{
         background: "rgba(11,25,41,0.5)",
         border: "1px solid rgba(255,255,255,0.06)",
@@ -182,7 +182,7 @@ function ChatColumn({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 space-y-2.5 overflow-y-auto px-4 py-4" style={{ maxHeight: "420px" }}>
+      <div className="flex-1 space-y-2.5 overflow-y-auto px-4 py-4">
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12">
             <Icon size={24} style={{ color: `${accent}30` }} />
@@ -290,7 +290,7 @@ export function AdminDealChatPage() {
         <Image src={info.photo} alt={info.property} fill sizes="100vw" className="object-cover opacity-15" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/90 to-navy/80" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
-        <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-5 sm:px-6 sm:py-10 lg:px-8">
           <ScrollReveal>
             <Link
               href="/admin/deals"
@@ -307,15 +307,15 @@ export function AdminDealChatPage() {
               <div className="relative hidden h-16 w-16 shrink-0 overflow-hidden rounded-2xl sm:block">
                 <Image src={info.photo} alt={info.property} fill sizes="64px" className="object-cover" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="section-label text-gold">Mediation Room</p>
-                <h1 className="mt-1 font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-2xl md:text-3xl">
+                <h1 className="mt-1 truncate font-display text-lg font-bold uppercase tracking-tighter text-white sm:text-2xl md:text-3xl">
                   {info.property}
                 </h1>
-                <p className="mt-1 flex items-center gap-2 text-sm text-white/50">
-                  <MapPin size={12} className="text-gold" /> {info.estate}, {info.district}
-                  <span className="text-white/20">|</span>
-                  {info.rent}/mo
+                <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-white/50 sm:text-sm">
+                  <span className="flex items-center gap-1"><MapPin size={12} className="text-gold" /> {info.estate}, {info.district}</span>
+                  <span className="hidden text-white/20 sm:inline">|</span>
+                  <span>{info.rent}/mo</span>
                 </p>
               </div>
             </div>
@@ -482,7 +482,7 @@ export function AdminDealChatPage() {
           </div>
 
           {/* Tip */}
-          <div className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-white/[0.02] px-4 py-2.5">
+          <div className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-white/[0.02] px-4 py-2.5 safe-bottom">
             <Shield size={12} className="text-white/20" />
             <p className="text-[10px] text-white/30">
               Each side only sees their conversation with pata.ug

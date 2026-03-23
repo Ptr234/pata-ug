@@ -113,10 +113,10 @@ export function TenantChatPage() {
 
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-bold text-white">{info.property}</p>
-                <div className="flex items-center gap-2 text-[10px] text-white/40">
-                  <span className="flex items-center gap-1"><MapPin size={10} className="text-teal" />{info.estate}, {info.district}</span>
-                  <span className="text-white/15">|</span>
-                  <span>{info.rent}/mo</span>
+                <div className="flex items-center gap-2 truncate text-[10px] text-white/40">
+                  <span className="flex shrink-0 items-center gap-1"><MapPin size={10} className="text-teal" />{info.estate}</span>
+                  <span className="hidden text-white/15 xs:inline">|</span>
+                  <span className="hidden xs:inline">{info.rent}/mo</span>
                 </div>
               </div>
 
@@ -204,8 +204,8 @@ export function TenantChatPage() {
       </div>
 
       {/* ═══ FIXED INPUT BAR ═══ */}
-      <div className="shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="mx-auto flex max-w-3xl items-center gap-2 px-3 py-2.5 sm:gap-2.5 sm:px-6 sm:py-3">
+      <div className="shrink-0 safe-bottom" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="mx-auto flex max-w-3xl items-center gap-2 px-3 py-2.5 pb-3 sm:gap-2.5 sm:px-6 sm:py-3">
           <button
             type="button"
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.04] text-white/25"
