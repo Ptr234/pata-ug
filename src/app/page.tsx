@@ -339,7 +339,7 @@ export default function HomePage() {
 
             {/* ── RIGHT: Filter bar ── */}
             <ScrollReveal variant="right" delay={300}>
-              <div className="hidden flex-col justify-center lg:flex lg:pl-4">
+              <div className="hidden flex-col justify-center lg:flex lg:pl-4 lg:-mt-16">
                 <HeroFilter />
               </div>
             </ScrollReveal>
