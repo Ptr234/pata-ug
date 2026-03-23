@@ -100,7 +100,7 @@ function HeroSearchForm() {
     <div className="relative w-full max-w-2xl">
       <form action="/search" method="GET">
         <div
-          className="flex items-center rounded-full bg-white/95 backdrop-blur-sm"
+          className="flex items-center rounded-full bg-white/95 backdrop-blur-sm text-[13px] sm:text-sm"
           style={{
             boxShadow: focused
               ? "0 0 0 3px rgba(212,168,83,0.2), 0 16px 48px rgba(11,25,41,0.15)"
@@ -116,13 +116,13 @@ function HeroSearchForm() {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setFocused(true)}
             onBlur={() => setTimeout(() => setFocused(false), 200)}
-            placeholder="Search estate, area, type..."
+            placeholder="Search estate, area..."
             autoComplete="off"
-            className="flex-1 rounded-l-full bg-transparent px-4 py-3 text-sm text-navy outline-none placeholder:text-text-muted sm:px-6 sm:py-4 md:py-5 md:text-base"
+            className="flex-1 rounded-l-full bg-transparent px-3 py-2.5 text-[13px] text-navy outline-none placeholder:text-text-muted sm:px-6 sm:py-4 sm:text-sm md:py-5 md:text-base"
           />
           <button
             type="submit"
-            className="mr-1.5 flex items-center gap-1.5 rounded-full bg-gold px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-gold/30 sm:gap-2 sm:px-6 sm:py-3 md:px-8 md:py-3.5 md:text-base"
+            className="mr-1 flex items-center gap-1 rounded-full bg-gold px-3 py-2 text-[13px] font-bold text-white shadow-lg shadow-gold/30 sm:mr-1.5 sm:gap-2 sm:px-6 sm:py-3 sm:text-sm md:px-8 md:py-3.5 md:text-base"
             style={{
               transition: "all 400ms cubic-bezier(0.16, 1, 0.3, 1)",
             }}
@@ -285,7 +285,7 @@ export default function HomePage() {
 
             {/* Subtext */}
             <ScrollReveal delay={200}>
-              <p className="animate-fade-up delay-200 mt-4 max-w-lg text-sm leading-relaxed text-white/50 sm:mt-8 sm:text-base md:text-lg">
+              <p className="animate-fade-up delay-200 mt-3 max-w-lg text-xs leading-relaxed text-white/50 sm:mt-8 sm:text-base md:text-lg">
                 Browse verified rental properties across Kampala.
                 Apartments, houses, rooms, and commercial spaces.
               </p>
