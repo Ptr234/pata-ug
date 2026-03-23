@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import {
   SlidersHorizontal,
   X,
@@ -159,6 +159,16 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
   const onChangeRef = useRef(onFilterChange);
   onChangeRef.current = onFilterChange;
 
+  // Lock body scroll when mobile filter is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   const updateFilter = useCallback(
     <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
       setFilters((prev) => {
@@ -199,6 +209,24 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
     filters.nearSchool ||
     filters.nearHospital ||
     filters.nearShopping;
+
+  const activeFilterCount = [
+    filters.category !== "",
+    filters.minPrice > 0 || filters.maxPrice > 0,
+    filters.region !== "" || filters.district !== "",
+    filters.bedrooms !== "",
+    filters.bathrooms !== "",
+    filters.furnished !== "",
+    filters.fencing !== "",
+    filters.parking,
+    filters.petFriendly,
+    filters.verified,
+    filters.lifestyleTag !== "",
+    filters.featured,
+    filters.nearSchool,
+    filters.nearHospital,
+    filters.nearShopping,
+  ].filter(Boolean).length;
 
   const selectedCategories = filters.category
     ? filters.category.split(",").filter(Boolean)
@@ -556,67 +584,96 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         </div>
       </div>
 
-      {/* ──── Mobile: collapsible with premium feel ──── */}
+      {/* ──── Mobile: full-screen overlay ──── */}
       <div className="lg:hidden">
         <button
           type="button"
-          onClick={() => setMobileOpen((prev) => !prev)}
+          onClick={() => setMobileOpen(true)}
           className="touch-press-sm flex w-full items-center justify-center gap-2.5 rounded-2xl px-5 py-3.5 text-sm font-bold"
           style={{
-            background: mobileOpen
+            background: hasActiveFilters
               ? "linear-gradient(135deg, #d4a853, #B8903D)"
               : "rgba(11, 25, 41, 0.95)",
-            color: mobileOpen ? "#fff" : "rgba(255,255,255,0.7)",
-            boxShadow: mobileOpen
+            color: hasActiveFilters ? "#fff" : "rgba(255,255,255,0.7)",
+            boxShadow: hasActiveFilters
               ? "0 8px 24px rgba(212, 168, 83, 0.25)"
               : "0 4px 20px rgba(11, 25, 41, 0.08)",
             transition: "all 500ms cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         >
-          {mobileOpen ? (
-            <>
-              <X size={16} />
-              Close Filters
-            </>
-          ) : (
-            <>
-              <SlidersHorizontal size={16} />
-              Filters
-              {hasActiveFilters && (
-                <span
-                  className="flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-black text-navy"
-                  style={{
-                    background: "linear-gradient(135deg, #d4a853, #f0d89f)",
-                  }}
-                >
-                  !
-                </span>
-              )}
-            </>
+          <SlidersHorizontal size={16} />
+          Filters
+          {hasActiveFilters && (
+            <span
+              className="flex h-5 min-w-[20px] items-center justify-center rounded-full px-1 text-[10px] font-black text-navy"
+              style={{
+                background: "linear-gradient(135deg, #fff, #f0d89f)",
+              }}
+            >
+              {activeFilterCount}
+            </span>
           )}
         </button>
 
+        {/* Full-screen overlay */}
         {mobileOpen && (
           <div
-            className="mt-3 rounded-2xl p-4 sm:p-5"
+            className="fixed inset-0 z-50 flex flex-col"
             style={{
-              background: "rgba(11, 25, 41, 0.97)",
+              background: "rgba(11, 25, 41, 0.98)",
               backdropFilter: "blur(24px) saturate(180%)",
               WebkitBackdropFilter: "blur(24px) saturate(180%)",
-              boxShadow: "0 12px 48px rgba(11, 25, 41, 0.2)",
-              border: "1px solid rgba(255,255,255,0.04)",
-              animation:
-                "fadeInDown 350ms cubic-bezier(0.16, 1, 0.3, 1) both",
+              animation: "fadeInDown 300ms cubic-bezier(0.16, 1, 0.3, 1) both",
             }}
           >
-            {/* Drag handle indicator */}
-            <div className="mb-4 flex justify-center">
-              <div className="h-1 w-8 rounded-full bg-white/10" />
+            {/* Header */}
+            <div className="flex shrink-0 items-center justify-between px-5 pb-3 pt-[max(1rem,env(safe-area-inset-top))]" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <div>
+                <h2 className="font-display text-lg font-bold tracking-tight text-white">Filters</h2>
+                {hasActiveFilters && (
+                  <p className="mt-0.5 text-[10px] text-gold">{activeFilterCount} filter{activeFilterCount !== 1 ? "s" : ""} active</p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileOpen(false)}
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] text-white/60 active:bg-white/[0.12]"
+              >
+                <X size={20} />
+              </button>
             </div>
-            <div className="max-h-[70vh] overflow-y-auto hide-scrollbar sm:max-h-[60vh]">
+
+            {/* Scrollable filter content */}
+            <div className="flex-1 overflow-y-auto px-5 py-5">
               {filterPanel}
             </div>
-            {actionBar}
+
+            {/* Sticky bottom actions */}
+            <div className="shrink-0 safe-bottom px-5 pb-4 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(11, 25, 41, 0.95)" }}>
+              <div className="flex gap-3">
+                {hasActiveFilters && (
+                  <button
+                    type="button"
+                    onClick={handleClear}
+                    className="flex items-center justify-center gap-1.5 rounded-xl bg-white/[0.06] px-4 py-3.5 text-xs font-bold text-white/60 active:bg-white/[0.1]"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5" />
+                    Clear
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-black uppercase tracking-wider text-white"
+                  style={{
+                    background: "linear-gradient(135deg, #d4a853, #B8903D)",
+                    boxShadow: "0 4px 16px rgba(212,168,83,0.25)",
+                  }}
+                >
+                  Show Results
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
