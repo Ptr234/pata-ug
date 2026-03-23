@@ -116,13 +116,13 @@ function HeroSearchForm() {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setFocused(true)}
             onBlur={() => setTimeout(() => setFocused(false), 200)}
-            placeholder="Search by estate, area, or property type..."
+            placeholder="Search estate, area, type..."
             autoComplete="off"
-            className="flex-1 rounded-l-full bg-transparent px-6 py-4 text-sm text-navy outline-none placeholder:text-text-muted md:py-5 md:text-base"
+            className="flex-1 rounded-l-full bg-transparent px-4 py-3 text-sm text-navy outline-none placeholder:text-text-muted sm:px-6 sm:py-4 md:py-5 md:text-base"
           />
           <button
             type="submit"
-            className="mr-1.5 flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-bold text-white shadow-lg shadow-gold/30 md:px-8 md:py-3.5 md:text-base"
+            className="mr-1.5 flex items-center gap-1.5 rounded-full bg-gold px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-gold/30 sm:gap-2 sm:px-6 sm:py-3 md:px-8 md:py-3.5 md:text-base"
             style={{
               transition: "all 400ms cubic-bezier(0.16, 1, 0.3, 1)",
             }}
@@ -215,7 +215,7 @@ export default function HomePage() {
   return (
     <>
       {/* ═══ SECTION 1: HERO — Full-bleed background image ═══ */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative overflow-hidden lg:min-h-screen">
         {/* ── Full-bleed background image ── */}
         <Image
           src="/property_images/houses/house_12.jpg"
@@ -227,7 +227,7 @@ export default function HomePage() {
         />
 
         {/* ── Dark overlay for text readability ── */}
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/75 to-navy/50" />
+        <div className="absolute inset-0 bg-navy/85 sm:bg-transparent sm:bg-gradient-to-r sm:from-navy/90 sm:via-navy/75 sm:to-navy/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/40" />
 
         {/* ── Grid pattern overlay ── */}
@@ -240,13 +240,13 @@ export default function HomePage() {
           }}
         />
 
-        <div className="relative mx-auto grid min-h-0 max-w-7xl items-center gap-8 px-4 pb-16 pt-10 sm:min-h-[85vh] sm:px-6 sm:pb-20 sm:pt-28 lg:min-h-screen lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-4 pb-12 pt-6 sm:min-h-[85vh] sm:px-6 sm:pb-20 sm:pt-28 lg:min-h-screen lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
             {/* ── LEFT: Hero text content ── */}
             <div className="flex flex-col justify-center">
             {/* Badge */}
             <ScrollReveal delay={0}>
-              <div className="animate-fade-up inline-flex w-fit items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-gold">
-                <span className="flex h-1.5 w-1.5">
+              <div className="animate-fade-up inline-flex w-fit items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.07] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-gold sm:px-4 sm:py-2 sm:text-xs">
+                <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-1.5 w-1.5 animate-ping rounded-full bg-gold opacity-50" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
                 </span>
@@ -256,7 +256,7 @@ export default function HomePage() {
 
             {/* Heading */}
             <ScrollReveal delay={100}>
-              <h1 className="animate-fade-up delay-100 mt-5 max-w-2xl font-display text-3xl font-bold uppercase leading-[0.92] tracking-tighter text-white sm:mt-8 sm:text-5xl md:text-7xl lg:text-[5.5rem]">
+              <h1 className="animate-fade-up delay-100 mt-4 max-w-2xl font-display text-[1.75rem] font-bold uppercase leading-[0.92] tracking-tighter text-white sm:mt-8 sm:text-5xl md:text-7xl lg:text-[5.5rem]">
                 Find{" "}
                 <br className="hidden sm:block" />
                 Your Next{" "}
@@ -300,12 +300,12 @@ export default function HomePage() {
 
             {/* Quick filter chips */}
             <ScrollReveal delay={400}>
-              <nav aria-label="Quick filters" className="animate-fade-up delay-400 -mx-4 mt-5 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 scroll-snap-x hide-scrollbar">
+              <nav aria-label="Quick filters" className="animate-fade-up delay-400 -mx-4 mt-4 flex gap-1.5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:mt-5 sm:gap-2 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 scroll-snap-x hide-scrollbar">
                 {quickFilters.map((f) => (
                   <Link
                     key={f.category}
                     href={`/search?category=${f.category}`}
-                    className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-white/60 transition-all duration-400 hover:border-gold/30 hover:bg-gold/10 hover:text-gold active:bg-gold/15 active:text-gold"
+                    className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/60 transition-all duration-400 hover:border-gold/30 hover:bg-gold/10 hover:text-gold active:bg-gold/15 active:text-gold sm:px-4 sm:py-2 sm:text-sm"
                   >
                     {f.label}
                   </Link>
@@ -315,7 +315,7 @@ export default function HomePage() {
 
             {/* Stats — horizontal, compact */}
             <ScrollReveal delay={500}>
-              <div className="animate-fade-up delay-500 mt-6 flex flex-wrap gap-4 sm:mt-12 sm:gap-10 lg:gap-14">
+              <div className="animate-fade-up delay-500 mt-5 flex flex-wrap gap-4 sm:mt-12 sm:gap-10 lg:gap-14">
                 {[
                   { value: "2,500+", label: "Listings" },
                   { value: "1,200+", label: "Verified" },
