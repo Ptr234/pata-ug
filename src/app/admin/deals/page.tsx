@@ -49,7 +49,35 @@ export default function AdminDealsPage() {
       <section className="bg-smoke">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <div className="overflow-hidden rounded-2xl bg-navy">
+            {/* Mobile card view */}
+            <div className="space-y-3 md:hidden">
+              {DEALS.map((deal) => {
+                const st = dealStyle(deal.status);
+                return (
+                  <div key={deal.id} className="rounded-2xl border border-gold/20 bg-navy p-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="font-medium text-white">{deal.property}</p>
+                      <span className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold" style={{ background: st.bg, color: st.color }}>{st.label}</span>
+                    </div>
+                    <p className="mt-1 flex items-center gap-1 text-[11px] text-white/50"><MapPin className="h-3 w-3 text-gold" />{deal.estate}</p>
+                    <dl className="mt-3 space-y-1.5 border-t border-white/[0.06] pt-3 text-sm">
+                      <div className="flex justify-between"><dt className="text-white/50">Tenant</dt><dd className="text-white">{deal.tenant}</dd></div>
+                      <div className="flex justify-between"><dt className="text-white/50">Landlord</dt><dd className="text-white">{deal.landlord}</dd></div>
+                      <div className="flex justify-between"><dt className="text-white/50">Rent/mo</dt><dd className="font-bold text-white">{deal.rent}</dd></div>
+                      <div className="flex justify-between"><dt className="text-white/50">5% Fee</dt><dd className="font-bold text-gold">{deal.agencyFee}</dd></div>
+                    </dl>
+                    <div className="mt-3">
+                      <Link href={`/admin/deals/deal-00${deal.id}/chat`} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold" style={{ background: "rgba(212,168,83,0.1)" }}>
+                        <MessageCircle size={12} /> Chat
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop table */}
+            <div className="hidden overflow-hidden rounded-2xl bg-navy md:block">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[800px] text-left text-sm">
                   <thead>

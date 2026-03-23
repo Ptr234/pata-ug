@@ -85,7 +85,7 @@ const labelClasses =
 
 
 const selectClasses =
-  "w-full appearance-none rounded-xl bg-white/[0.12] px-3.5 py-2.5 pr-9 text-sm font-medium text-white outline-none transition-all duration-500 focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white [&>option]:py-2";
+  "w-full appearance-none rounded-xl bg-white/[0.12] px-3.5 py-3 pr-9 text-sm font-medium text-white outline-none transition-all duration-500 focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 min-h-[44px] [&>option]:bg-navy [&>option]:text-white [&>option]:py-2";
 
 /* ────────────────────────── Toggle ───────────────────────── */
 
@@ -556,12 +556,12 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         </div>
       </div>
 
-      {/* ──── Mobile: collapsible ──── */}
+      {/* ──── Mobile: collapsible with premium feel ──── */}
       <div className="lg:hidden">
         <button
           type="button"
           onClick={() => setMobileOpen((prev) => !prev)}
-          className="flex w-full items-center justify-center gap-2.5 rounded-2xl px-5 py-3.5 text-sm font-bold"
+          className="touch-press-sm flex w-full items-center justify-center gap-2.5 rounded-2xl px-5 py-3.5 text-sm font-bold"
           style={{
             background: mobileOpen
               ? "linear-gradient(135deg, #d4a853, #B8903D)"
@@ -598,16 +598,24 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
 
         {mobileOpen && (
           <div
-            className="mt-3 rounded-2xl p-5"
+            className="mt-3 rounded-2xl p-4 sm:p-5"
             style={{
-              background: "rgba(11, 25, 41, 0.95)",
-              backdropFilter: "blur(20px)",
-              boxShadow: "0 8px 40px rgba(11, 25, 41, 0.15)",
+              background: "rgba(11, 25, 41, 0.97)",
+              backdropFilter: "blur(24px) saturate(180%)",
+              WebkitBackdropFilter: "blur(24px) saturate(180%)",
+              boxShadow: "0 12px 48px rgba(11, 25, 41, 0.2)",
+              border: "1px solid rgba(255,255,255,0.04)",
               animation:
-                "fadeInDown 400ms cubic-bezier(0.16, 1, 0.3, 1) both",
+                "fadeInDown 350ms cubic-bezier(0.16, 1, 0.3, 1) both",
             }}
           >
-            {filterPanel}
+            {/* Drag handle indicator */}
+            <div className="mb-4 flex justify-center">
+              <div className="h-1 w-8 rounded-full bg-white/10" />
+            </div>
+            <div className="max-h-[70vh] overflow-y-auto hide-scrollbar sm:max-h-[60vh]">
+              {filterPanel}
+            </div>
             {actionBar}
           </div>
         )}

@@ -173,7 +173,7 @@ export default function DealsPage() {
             </nav>
 
             <p className="section-label text-teal">Transactions</p>
-            <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white sm:text-5xl">
+            <h1 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl">
               MY DEALS
             </h1>
             <p className="mt-3 max-w-lg text-base leading-relaxed text-white/70">
@@ -186,9 +186,9 @@ export default function DealsPage() {
 
       {/* ═══ STATS STRIP ═══ */}
       <section className="bg-navy" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 sm:py-5 lg:px-8">
           <ScrollReveal>
-            <div className="flex flex-wrap items-center gap-8 sm:gap-12">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-8 lg:gap-12">
               {STATS.map((stat) => (
                 <div
                   key={stat.label}
@@ -207,7 +207,7 @@ export default function DealsPage() {
                   }}
                 >
                   <span
-                    className="font-display text-3xl font-bold tracking-tighter"
+                    className="font-display text-xl font-bold tracking-tighter sm:text-3xl"
                     style={{ color: stat.accent }}
                   >
                     {stat.value}
@@ -224,10 +224,50 @@ export default function DealsPage() {
 
       {/* ═══ TABLE ═══ */}
       <section className="min-h-[50vh] bg-smoke">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
           {deals.length > 0 ? (
             <ScrollReveal>
-              <div className="overflow-hidden rounded-2xl bg-navy shadow-elevated">
+              {/* Mobile card view */}
+              <div className="space-y-3 md:hidden">
+                {dealList.map((deal) => {
+                  const style = STATUS_STYLES[deal.status];
+                  return (
+                    <div key={deal.id} className="rounded-2xl border border-gold/20 bg-navy p-4">
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="font-semibold text-white">{deal.propertyTitle}</p>
+                        <span className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold" style={{ backgroundColor: style.bg, color: style.text }}>
+                          {style.label}
+                        </span>
+                      </div>
+                      <p className="mt-1.5 flex items-center gap-1 text-xs text-white/50"><MapPin className="h-3 w-3 text-teal/60" />{deal.estate}</p>
+                      <div className="mt-3 flex items-center justify-between border-t border-white/[0.06] pt-3">
+                        <span className="font-display text-sm font-bold text-white">{formatUGX(deal.agreedRent)}</span>
+                        <span className="flex items-center gap-1 text-[10px] text-white/40"><Calendar className="h-3 w-3" />{deal.date}</span>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {deal.status !== "closed" && (
+                          <Link href={`/deals/${deal.id}/chat`} className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-bold text-teal" style={{ background: "rgba(10,147,150,0.1)" }}>
+                            <MessageCircle size={11} /> Chat
+                          </Link>
+                        )}
+                        {deal.status === "agreed" && (
+                          <button type="button" onClick={() => setPayingDealId(deal.id)} className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-bold text-white" style={{ background: "linear-gradient(135deg, #d4a853, #B8903D)" }}>
+                            <CreditCard size={11} /> Pay Deposit
+                          </button>
+                        )}
+                        {deal.status === "closed" && (
+                          <Link href={`/deals/${deal.id}/chat`} className="inline-flex items-center gap-1 rounded-lg bg-teal/10 px-2.5 py-1.5 text-[10px] font-bold text-teal">
+                            <Phone size={11} /> View Contacts
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Desktop table */}
+              <div className="hidden overflow-hidden rounded-xl bg-navy shadow-elevated sm:rounded-2xl md:block">
                 <div className="overflow-x-auto">
                   <table className="w-full min-w-[720px] text-left text-sm">
                     <thead>
@@ -442,7 +482,7 @@ export default function DealsPage() {
             </ScrollReveal>
           ) : (
             <ScrollReveal variant="scale">
-              <div className="flex flex-col items-center justify-center rounded-3xl bg-navy px-6 py-20 text-center shadow-elevated">
+              <div className="flex flex-col items-center justify-center rounded-xl bg-navy px-4 py-12 text-center shadow-elevated sm:rounded-3xl sm:px-6 sm:py-20">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-teal/15">
                   <SearchX className="h-8 w-8 text-teal" />
                 </div>
@@ -491,19 +531,19 @@ export default function DealsPage() {
             onClick={() => setPayingDealId(null)}
           >
             <div
-              className="mx-4 w-full max-w-md overflow-hidden rounded-3xl bg-navy"
+              className="mx-4 w-full max-w-md overflow-hidden rounded-xl bg-navy sm:rounded-3xl"
               style={{ boxShadow: "0 32px 64px rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.06)" }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="px-6 pt-6 sm:px-8 sm:pt-8">
+              <div className="px-4 pt-4 sm:px-8 sm:pt-8">
                 <p className="text-[10px] font-black uppercase tracking-[0.18em] text-gold/70">Deposit Payment</p>
                 <h3 className="mt-2 font-display text-xl font-bold tracking-tighter text-white">{deal.propertyTitle}</h3>
                 <p className="mt-1 text-xs text-white/50">{deal.estate}</p>
               </div>
 
               {/* Wallet balance */}
-              <div className="mt-4 mx-6 sm:mx-8 flex items-center justify-between rounded-xl bg-white/[0.04] px-4 py-3">
+              <div className="mt-4 mx-4 sm:mx-8 flex items-center justify-between rounded-xl bg-white/[0.04] px-4 py-3">
                 <div className="flex items-center gap-2">
                   <CreditCard size={14} className="text-gold" />
                   <span className="text-xs font-bold text-white/50">Wallet Balance</span>
@@ -514,7 +554,7 @@ export default function DealsPage() {
               </div>
 
               {/* Breakdown */}
-              <div className="mt-3 mx-6 sm:mx-8 rounded-xl bg-white/[0.04] p-4">
+              <div className="mt-3 mx-4 sm:mx-8 rounded-xl bg-white/[0.04] p-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-white/50">Agreed Monthly Rent</span>
@@ -567,7 +607,7 @@ export default function DealsPage() {
               </div>
 
               {/* Actions */}
-              <div className="mt-5 space-y-2.5 px-6 sm:px-8">
+              <div className="mt-5 space-y-2.5 px-4 sm:px-8">
                 {hasEnough ? (
                   /* Wallet has enough — pay directly */
                   <button
@@ -628,7 +668,7 @@ export default function DealsPage() {
               </div>
 
               {/* Footer */}
-              <div className="mt-4 px-6 pb-6 sm:px-8 sm:pb-8 text-center">
+              <div className="mt-4 px-4 pb-4 sm:px-8 sm:pb-8 text-center">
                 <button
                   type="button"
                   onClick={() => setPayingDealId(null)}

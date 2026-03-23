@@ -377,7 +377,7 @@ export default function AboutPage() {
             </div>
           </ScrollReveal>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-6 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-1 gap-3 xs:grid-cols-2 sm:mt-14 sm:gap-6 lg:grid-cols-4">
             {STATS.map((s, i) => {
               const Icon = s.icon;
               return (

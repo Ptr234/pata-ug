@@ -60,7 +60,7 @@ export default function PlanCard({
         />
       )}
 
-      <div className="flex flex-1 flex-col p-8">
+      <div className="flex flex-1 flex-col p-5 sm:p-8">
         {/* Badge */}
         {popular && (
           <span

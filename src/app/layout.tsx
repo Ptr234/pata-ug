@@ -46,11 +46,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#0B1929" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      </head>
       <body
         className={`${playfair.variable} ${lato.variable} font-sans antialiased`}
       >
         <Header />
-        <main className="min-h-screen pb-16 md:pb-0">{children}</main>
+        <main className="min-h-screen pb-20 md:pb-0">{children}</main>
         <Footer />
         <MobileNav />
       </body>

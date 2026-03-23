@@ -220,7 +220,7 @@ function SearchPageContent() {
   return (
     <main className="min-h-screen bg-smoke">
       {/* ═══ Bold Hero Header — R/NESS style ═══ */}
-      <section className="relative overflow-hidden bg-navy">
+      <section className="relative overflow-hidden bg-navy pt-0">
         <Image
           src="/property_images/apartments/apartment_7.jpg"
           alt="Browse properties in Kampala"
@@ -250,9 +250,9 @@ function SearchPageContent() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-12 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 pb-6 pt-6 sm:px-6 sm:pb-10 sm:pt-12 lg:px-8">
           {/* Breadcrumb */}
-          <nav className="mb-6 flex items-center gap-2 text-xs text-white/60">
+          <nav className="mb-4 flex items-center gap-2 text-xs text-white/60 sm:mb-6">
             <Link
               href="/"
               className="transition-colors duration-500 hover:text-gold"
@@ -272,7 +272,7 @@ function SearchPageContent() {
           {/* Heading row */}
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h1 className="font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+              <h1 className="font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 {activeCatLabel || "Browse"}{" "}
                 <span className="text-gradient-gold">Properties</span>
               </h1>
@@ -284,12 +284,12 @@ function SearchPageContent() {
             </div>
 
             {/* Quick category pills — horizontal on desktop */}
-            <div className="flex flex-wrap gap-2">
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0 md:pb-0 hide-scrollbar">
               {CATEGORIES.slice(0, 5).map((cat) => (
                 <Link
                   key={cat.id}
                   href={`/search?category=${cat.id}`}
-                  className={`rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all duration-500 ${
+                  className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-500 ${
                     activeCategory === cat.id
                       ? "bg-gold text-white shadow-gold"
                       : "bg-white/[0.06] text-white/50 hover:bg-white/10 hover:text-white"
@@ -305,7 +305,7 @@ function SearchPageContent() {
 
       {/* ═══ Toolbar — Sort + View toggle ═══ */}
       <div
-        className="sticky top-[72px] z-30 bg-white/80 backdrop-blur-xl"
+        className="sticky top-14 z-30 bg-white/80 backdrop-blur-xl sm:top-16 lg:top-[72px]"
         style={{
           boxShadow: "0 1px 0 rgba(11, 25, 41, 0.04)",
         }}
@@ -459,19 +459,19 @@ function SearchPageContent() {
       </div>
 
       {/* ═══ Content area ═══ */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-8 lg:px-8">
+        {/* Mobile filter (shown above grid on small screens) */}
+        <div className="mb-4 lg:hidden">
+          <FilterBar onFilterChange={handleFilterChange} />
+        </div>
+
         <div className="flex gap-6 lg:gap-8">
           {/* ═══ LEFT SIDEBAR — Filter (sticky) ═══ */}
-          <aside className="hidden w-72 shrink-0 lg:block xl:w-80">
-            <div className="sticky top-[90px]">
+          <aside className="hidden w-64 shrink-0 lg:block xl:w-72">
+            <div className="sticky top-[130px]">
               <FilterBar onFilterChange={handleFilterChange} />
             </div>
           </aside>
-
-          {/* Mobile filter (shown inline on small screens) */}
-          <div className="mb-4 lg:hidden">
-            <FilterBar onFilterChange={handleFilterChange} />
-          </div>
 
           {/* ═══ RIGHT — Property Grid ═══ */}
           <div className="min-w-0 flex-1">
@@ -480,7 +480,7 @@ function SearchPageContent() {
             <div
               className={
                 viewMode === "grid"
-                  ? "grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3"
+                  ? "grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2 lg:gap-6 xl:grid-cols-3"
                   : "flex flex-col gap-4"
               }
             >
@@ -519,13 +519,13 @@ function SearchPageContent() {
                   <Link
                     key={property.id}
                     href={`/property/${property.id}`}
-                    className="group flex gap-5 rounded-2xl bg-white p-4 shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-card"
+                    className="group flex gap-3 rounded-2xl bg-white p-3 shadow-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-card sm:gap-5 sm:p-4"
                     style={{
                       animation: `fadeInUp 600ms cubic-bezier(0.16, 1, 0.3, 1) ${i * 40}ms both`,
                     }}
                   >
                     {/* Photo */}
-                    <div className="img-zoom relative h-28 w-40 flex-shrink-0 overflow-hidden rounded-xl sm:h-32 sm:w-48">
+                    <div className="img-zoom relative h-24 w-28 flex-shrink-0 overflow-hidden rounded-xl sm:h-32 sm:w-48">
                       <Image
                         src={property.photos[0]}
                         alt={property.title}

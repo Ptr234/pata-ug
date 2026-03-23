@@ -240,7 +240,7 @@ export default function HomePage() {
           }}
         />
 
-        <div className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-10 px-4 pb-20 pt-28 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid min-h-[85vh] max-w-7xl items-center gap-8 px-4 pb-16 pt-20 sm:min-h-screen sm:px-6 sm:pb-20 sm:pt-28 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-24">
             {/* ── LEFT: Hero text content ── */}
             <div className="flex flex-col justify-center">
             {/* Badge */}
@@ -256,7 +256,7 @@ export default function HomePage() {
 
             {/* Heading */}
             <ScrollReveal delay={100}>
-              <h1 className="animate-fade-up delay-100 mt-8 max-w-2xl font-display text-5xl font-bold uppercase leading-[0.92] tracking-tighter text-white sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+              <h1 className="animate-fade-up delay-100 mt-6 max-w-2xl font-display text-[2.5rem] font-bold uppercase leading-[0.92] tracking-tighter text-white sm:mt-8 sm:text-5xl md:text-7xl lg:text-[5.5rem]">
                 Find{" "}
                 <br className="hidden sm:block" />
                 Your Next{" "}
@@ -285,7 +285,7 @@ export default function HomePage() {
 
             {/* Subtext */}
             <ScrollReveal delay={200}>
-              <p className="animate-fade-up delay-200 mt-8 max-w-lg text-lg leading-relaxed text-white/50">
+              <p className="animate-fade-up delay-200 mt-5 max-w-lg text-base leading-relaxed text-white/50 sm:mt-8 sm:text-lg">
                 Browse verified rental properties across Kampala.
                 Apartments, houses, rooms, and commercial spaces.
               </p>
@@ -300,12 +300,12 @@ export default function HomePage() {
 
             {/* Quick filter chips */}
             <ScrollReveal delay={400}>
-              <nav aria-label="Quick filters" className="animate-fade-up delay-400 mt-5 flex flex-wrap gap-2">
+              <nav aria-label="Quick filters" className="animate-fade-up delay-400 -mx-4 mt-5 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 scroll-snap-x hide-scrollbar">
                 {quickFilters.map((f) => (
                   <Link
                     key={f.category}
                     href={`/search?category=${f.category}`}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-sm font-medium text-white/60 transition-all duration-400 hover:border-gold/30 hover:bg-gold/10 hover:text-gold"
+                    className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-white/60 transition-all duration-400 hover:border-gold/30 hover:bg-gold/10 hover:text-gold active:bg-gold/15 active:text-gold"
                   >
                     {f.label}
                   </Link>
@@ -315,14 +315,14 @@ export default function HomePage() {
 
             {/* Stats — horizontal, compact */}
             <ScrollReveal delay={500}>
-              <div className="animate-fade-up delay-500 mt-12 flex gap-10 lg:gap-14">
+              <div className="animate-fade-up delay-500 mt-8 flex gap-6 sm:mt-12 sm:gap-10 lg:gap-14">
                 {[
                   { value: "2,500+", label: "Listings" },
                   { value: "1,200+", label: "Verified" },
                   { value: "50+", label: "Estates" },
                 ].map((stat, i) => (
                   <div key={stat.label} className="flex items-baseline gap-2">
-                    <span className="font-display text-3xl font-bold tracking-tight text-white md:text-4xl">
+                    <span className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
                       {stat.value}
                     </span>
                     <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50">
@@ -380,12 +380,12 @@ export default function HomePage() {
 
       {/* ═══ SECTION 2: FEATURED VERIFIED PROPERTIES — White bg ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
           <ScrollReveal>
             <header className="flex items-end justify-between">
               <div>
                 <p className="section-label text-gold">HAND-PICKED</p>
-                <h2 className="mt-2 font-display text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
+                <h2 className="mt-2 font-display text-2xl font-bold text-navy sm:text-3xl md:text-4xl lg:text-5xl">
                   Featured Verified Properties
                 </h2>
               </div>
@@ -447,18 +447,18 @@ export default function HomePage() {
           className="object-cover opacity-20"
         />
         <div className="absolute inset-0 bg-navy/80" />
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
           <ScrollReveal>
-            <h2 className="text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl xl:text-7xl">
+            <h2 className="text-center font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
               The Pata.ug Difference
             </h2>
           </ScrollReveal>
 
-          <ScrollReveal stagger className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ScrollReveal stagger className="mt-10 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-4 lg:grid-cols-4">
             {differenceCards.map((card) => (
               <div
                 key={card.title}
-                className="img-zoom img-reveal reveal group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl"
+                className="img-zoom img-reveal reveal group relative aspect-square cursor-pointer overflow-hidden rounded-xl sm:aspect-[3/4] sm:rounded-2xl"
               >
                 <Image
                   src={card.image}
@@ -470,8 +470,8 @@ export default function HomePage() {
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/40 to-transparent" />
                 {/* Text overlay */}
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <p className="font-display text-lg font-bold uppercase tracking-wide text-white md:text-xl">
+                <div className="absolute inset-x-0 bottom-0 p-3 sm:p-6">
+                  <p className="font-display text-sm font-bold uppercase tracking-wide text-white sm:text-lg md:text-xl">
                     {card.title}
                   </p>
                 </div>
@@ -482,13 +482,13 @@ export default function HomePage() {
       </section>
 
       {/* ═══ SECTION 4: EXPLORE OUR CATEGORIES — Split-screen ═══ */}
-      <section className="grid min-h-[600px] lg:grid-cols-2">
+      <section className="grid lg:grid-cols-2">
         {/* Left half */}
         <ScrollReveal
           variant="left"
-          className="flex flex-col justify-center bg-navy px-8 py-20 sm:px-12 lg:px-16 xl:px-24"
+          className="flex flex-col justify-center bg-navy px-4 py-14 sm:px-8 sm:py-20 lg:px-16 xl:px-24"
         >
-          <h2 className="font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+          <h2 className="font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
             Explore Our Categories
           </h2>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-white/60">
@@ -505,7 +505,7 @@ export default function HomePage() {
         </ScrollReveal>
 
         {/* Right half */}
-        <ScrollReveal variant="right" className="relative min-h-[400px] lg:min-h-0">
+        <ScrollReveal variant="right" className="relative min-h-[280px] sm:min-h-[400px] lg:min-h-0">
           <Image
             src="/property_images/houses/house_4.jpg"
             alt="Kampala property neighbourhood"
@@ -523,10 +523,10 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-navy/95 via-navy/90 to-navy/95" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-28 lg:px-8">
           <ScrollReveal>
             <p className="section-label text-center text-gold">Simple process</p>
-            <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-7xl">
+            <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-7xl">
               How It{" "}
               <span className="text-gradient-gold">Works</span>
             </h2>
@@ -550,13 +550,13 @@ export default function HomePage() {
                 <Image src="/property_images/apartments/apartment_3.jpg" alt="Tenant properties" fill sizes="50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/85 to-navy/60" />
 
-                <div className="relative p-8 sm:p-10">
+                <div className="relative p-5 sm:p-8 lg:p-10">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-teal px-5 py-2 text-xs font-black uppercase tracking-[0.15em] text-white shadow-lg shadow-teal/25">
-                      <Eye className="h-3.5 w-3.5" />
+                    <span className="inline-flex items-center gap-2 rounded-full bg-teal px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.15em] text-white shadow-lg shadow-teal/25 sm:px-5 sm:py-2 sm:text-xs">
+                      <Eye className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                       For Tenants
                     </span>
-                    <span className="font-display text-6xl font-bold text-white/[0.06]">01</span>
+                    <span className="font-display text-4xl font-bold text-white/[0.06] sm:text-6xl">01</span>
                   </div>
 
                   <ol className="mt-10 space-y-0">
@@ -601,13 +601,13 @@ export default function HomePage() {
                 <Image src="/property_images/houses/house_5.jpg" alt="Landlord properties" fill sizes="50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/85 to-navy/60" />
 
-                <div className="relative p-8 sm:p-10">
+                <div className="relative p-5 sm:p-8 lg:p-10">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-orange px-5 py-2 text-xs font-black uppercase tracking-[0.15em] text-white shadow-lg shadow-orange/25">
-                      <Building2 className="h-3.5 w-3.5" />
+                    <span className="inline-flex items-center gap-2 rounded-full bg-orange px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.15em] text-white shadow-lg shadow-orange/25 sm:px-5 sm:py-2 sm:text-xs">
+                      <Building2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                       For Landlords
                     </span>
-                    <span className="font-display text-6xl font-bold text-white/[0.06]">02</span>
+                    <span className="font-display text-4xl font-bold text-white/[0.06] sm:text-6xl">02</span>
                   </div>
 
                   <ol className="mt-10 space-y-0">
@@ -658,10 +658,10 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-navy/95 via-navy/92 to-navy/95" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-28 lg:px-8">
           <ScrollReveal>
             <p className="section-label text-center text-gold">12 categories</p>
-            <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-7xl">
+            <h2 className="mx-auto mt-3 max-w-3xl text-center font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-7xl">
               Find Your <span className="text-gradient-gold">Perfect</span> Space
             </h2>
             <p className="mx-auto mt-5 max-w-lg text-center text-base leading-relaxed text-white/60">
@@ -670,7 +670,7 @@ export default function HomePage() {
           </ScrollReveal>
 
           {/* All 12 categories in a uniform grid with property bg images */}
-          <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-2 gap-2.5 sm:mt-16 sm:gap-3 lg:grid-cols-4">
             {CATEGORIES.map((cat, i) => {
               const Icon = ICON_MAP[cat.icon];
               const images = [
@@ -686,7 +686,7 @@ export default function HomePage() {
                 <ScrollReveal key={cat.id} variant="scale" delay={i * 60}>
                   <Link
                     href={`/search?category=${cat.id}`}
-                    className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-2xl"
+                    className="group relative flex min-h-[180px] flex-col justify-end overflow-hidden rounded-xl sm:min-h-[220px] sm:rounded-2xl"
                     style={{ transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)" }}
                     onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 20px 48px rgba(11,25,41,0.3)"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
@@ -696,17 +696,17 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/70 to-navy/30" />
 
                     {/* Ghost number */}
-                    <span className="absolute right-3 top-3 font-display text-4xl font-bold text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.12]">
+                    <span className="absolute right-2 top-2 font-display text-3xl font-bold text-white/[0.06] transition-all duration-700 group-hover:text-white/[0.12] sm:right-3 sm:top-3 sm:text-4xl">
                       {String(i + 1).padStart(2, "0")}
                     </span>
 
                     {/* Content at bottom */}
-                    <div className="relative p-5">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white backdrop-blur-sm transition-all duration-500 group-hover:bg-teal group-hover:shadow-lg group-hover:shadow-teal/20">
-                        {Icon ? <Icon className="h-5 w-5" /> : <Building2 className="h-5 w-5" />}
+                    <div className="relative p-3 sm:p-5">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-white backdrop-blur-sm transition-all duration-500 group-hover:bg-teal group-hover:shadow-lg group-hover:shadow-teal/20 sm:h-10 sm:w-10 sm:rounded-xl">
+                        {Icon ? <Icon className="h-4 w-4 sm:h-5 sm:w-5" /> : <Building2 className="h-4 w-4 sm:h-5 sm:w-5" />}
                       </div>
-                      <p className="mt-3 font-display text-base font-bold tracking-tight text-white">{cat.label}</p>
-                      <p className="mt-1 text-xs leading-relaxed text-white/60">{CATEGORY_DESCRIPTIONS[cat.id] ?? "Browse properties"}</p>
+                      <p className="mt-2 font-display text-sm font-bold tracking-tight text-white sm:mt-3 sm:text-base">{cat.label}</p>
+                      <p className="mt-0.5 hidden text-xs leading-relaxed text-white/60 sm:block">{CATEGORY_DESCRIPTIONS[cat.id] ?? "Browse properties"}</p>
 
                       {/* Explore — slides in on hover */}
                       <div className="mt-3 flex items-center gap-1.5 text-xs font-bold text-gold opacity-0 transition-all duration-500 group-hover:opacity-100">
@@ -732,13 +732,13 @@ export default function HomePage() {
 
       {/* ═══ SECTION 7: PRICING — Split layout with image ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-28 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             {/* Left: Pricing content */}
             <ScrollReveal variant="left">
               <div>
                 <p className="section-label text-gold">Pricing</p>
-                <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-navy md:text-5xl">
+                <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl">
                   Simple <span className="text-gradient-gold">Pricing</span>
                 </h2>
                 <p className="mt-5 max-w-md leading-relaxed text-text-muted">
@@ -803,16 +803,16 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-navy/95 via-navy/90 to-navy/95" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-28 lg:px-8">
           <ScrollReveal>
             <p className="section-label text-center text-gold">Why choose us</p>
-            <h2 className="mt-3 text-center font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+            <h2 className="mt-3 text-center font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
               Why <span className="text-gradient-gold">Pata.ug</span>?
             </h2>
           </ScrollReveal>
 
           {/* 3 trust cards */}
-          <div className="mt-16 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:mt-16 sm:gap-5 md:grid-cols-3">
             {[
               { icon: Shield, title: "Verified Properties", desc: "Every listing can earn a Verified badge through our on-ground inspection team. Real photos, real properties.", accent: "#0A9396" },
               { icon: CreditCard, title: "Transparent Pricing", desc: "No hidden fees or broker agency fees. Pay via MTN MoMo or Airtel Money — instant and secure.", accent: "#d4a853" },
@@ -853,18 +853,18 @@ export default function HomePage() {
 
           {/* Final CTA */}
           <ScrollReveal delay={500}>
-            <div className="mt-20 rounded-3xl bg-white/[0.04] p-10 text-center backdrop-blur-sm md:p-16">
-              <h3 className="font-display text-3xl font-bold uppercase tracking-tighter text-white md:text-4xl lg:text-5xl">
+            <div className="mt-12 rounded-2xl bg-white/[0.04] p-6 text-center backdrop-blur-sm sm:mt-20 sm:rounded-3xl sm:p-10 md:p-16">
+              <h3 className="font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-4xl lg:text-5xl">
                 Ready to <span className="text-gradient-gold">Start</span>?
               </h3>
               <p className="mx-auto mt-4 max-w-md text-base text-white/60">
                 Join thousands of tenants and landlords already using pata.ug
               </p>
-              <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                <Link href="/search" className="btn-gold-lg">Browse Properties <ArrowRight className="h-4 w-4" /></Link>
-                <Link href="/login" className="btn-outline-white px-8 py-4 text-base">Get Started <ArrowRight className="h-4 w-4" /></Link>
+              <div className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:justify-center sm:gap-4">
+                <Link href="/search" className="btn-gold w-full justify-center sm:w-auto sm:px-8 sm:py-4 sm:text-base">Browse Properties <ArrowRight className="h-4 w-4" /></Link>
+                <Link href="/login" className="btn-outline-white w-full justify-center sm:w-auto sm:px-8 sm:py-4 sm:text-base">Get Started <ArrowRight className="h-4 w-4" /></Link>
               </div>
-              <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-white/60">
+              <div className="mt-6 flex flex-col items-center gap-3 text-xs text-white/60 sm:mt-8 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6">
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-green" /> No signup required to browse</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-green" /> Pay via MoMo or Airtel</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-4 w-4 text-green" /> Cancel anytime</span>

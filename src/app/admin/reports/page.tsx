@@ -132,7 +132,26 @@ export default function AdminReportsPage() {
           </ScrollReveal>
 
           <ScrollReveal delay={150}>
-            <div className="mt-8 overflow-hidden rounded-2xl bg-navy">
+            {/* Mobile card view */}
+            <div className="mt-8 space-y-3 md:hidden">
+              {MONTHLY_DATA.map((row) => (
+                <div key={row.month} className="rounded-2xl border border-gold/20 bg-navy p-4">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-white">{row.month}</span>
+                    <span className="font-display text-sm font-bold text-gold">{row.total}</span>
+                  </div>
+                  <dl className="mt-2 space-y-1 text-xs">
+                    <div className="flex justify-between"><dt className="text-white/50">Listing Fees</dt><dd className="text-white/70">{row.listings}</dd></div>
+                    <div className="flex justify-between"><dt className="text-white/50">Agency Fees</dt><dd className="text-white/70">{row.agencyFees}</dd></div>
+                    <div className="flex justify-between"><dt className="text-white/50">Day Passes</dt><dd className="text-white/70">{row.dayPasses}</dd></div>
+                    <div className="flex justify-between"><dt className="text-white/50">Annual Subs</dt><dd className="text-white/70">{row.annualSubs}</dd></div>
+                  </dl>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop table */}
+            <div className="mt-8 hidden overflow-hidden rounded-2xl bg-navy md:block">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[700px] text-left text-sm">
                   <thead>

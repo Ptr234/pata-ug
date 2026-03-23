@@ -383,7 +383,7 @@ export default function Header() {
 
             {profileOpen && (
               <div
-                className="absolute right-0 top-full mt-3 w-60 overflow-hidden rounded-2xl bg-white"
+                className="absolute right-0 top-full mt-3 w-60 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl bg-white"
                 style={{
                   boxShadow:
                     "0 24px 80px rgba(11, 25, 41, 0.18), 0 0 1px rgba(11, 25, 41, 0.1)",
@@ -540,7 +540,7 @@ export default function Header() {
               "fadeInDown 350ms cubic-bezier(0.16, 1, 0.3, 1) both",
           }}
         >
-          <div className="flex h-full flex-col px-5 pb-24 pt-6 overflow-y-auto">
+          <div className="flex h-full flex-col px-5 pb-32 pt-6 overflow-y-auto safe-bottom">
             {/* Nav links with icons */}
             <nav className="flex flex-col gap-1.5">
               {NAV_LINKS.map((link, i) => {

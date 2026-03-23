@@ -5,7 +5,7 @@ import { FOOTER_LINKS } from "@/lib/constants";
 export default function Footer() {
   return (
     <footer className="bg-navy text-white">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-16">
+      <div className="mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 sm:py-16 md:pb-16">
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-3">
           {/* Brand */}
           <div>

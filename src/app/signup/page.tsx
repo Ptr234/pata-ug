@@ -98,7 +98,7 @@ export default function SignupPage() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,rgba(212,168,83,0.08),transparent_60%)]"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-xl px-4 py-16 sm:px-6">
+      <div className="relative z-10 mx-auto w-full max-w-xl px-4 py-8 sm:px-6 sm:py-16">
         <ScrollReveal variant="scale">
           {/* Logo */}
           <div className="mb-8 text-center">
@@ -307,7 +307,7 @@ export default function SignupPage() {
                           placeholder="700 000 000"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          className={`${inputCls} pl-[5.5rem]`}
+                          className={`${inputCls} pl-[4.5rem] sm:pl-[5.5rem]`}
                         />
                       </div>
                     </div>

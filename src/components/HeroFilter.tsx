@@ -31,7 +31,7 @@ export default function HeroFilter() {
   };
 
   const selectBase =
-    "w-full appearance-none rounded-xl bg-white/[0.08] px-3 py-2.5 text-sm font-medium text-white outline-none transition-all duration-300 focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white";
+    "w-full appearance-none rounded-xl bg-white/[0.08] px-3 py-3 text-sm font-medium text-white outline-none transition-all duration-300 focus:bg-white/[0.14] focus:ring-2 focus:ring-gold/30 [&>option]:bg-navy [&>option]:text-white";
 
   const labelBase =
     "block text-[9px] font-black uppercase tracking-[0.15em] text-white/40 mb-1.5";

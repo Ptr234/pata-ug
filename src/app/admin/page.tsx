@@ -154,7 +154,7 @@ export default function AdminDashboardPage() {
       {/* ═══ STATS ═══ */}
       <section className="bg-smoke">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 xs:grid-cols-2 lg:grid-cols-3">
             {STATS.map((stat, i) => {
               const Icon = stat.icon;
               return (
@@ -169,7 +169,7 @@ export default function AdminDashboardPage() {
                       <Icon className="h-6 w-6" style={{ color: stat.accent }} />
                     </div>
                     <div>
-                      <p className="font-display text-2xl font-bold tracking-tighter text-white">{stat.value}</p>
+                      <p className="font-display text-lg font-bold tracking-tighter text-white sm:text-2xl">{stat.value}</p>
                       <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/60">{stat.label}</p>
                     </div>
                   </div>
@@ -220,9 +220,36 @@ export default function AdminDashboardPage() {
             {/* Right: table */}
             <div className="lg:col-span-3">
               <ScrollReveal variant="right">
-                <div className="overflow-hidden rounded-2xl bg-navy">
+                {/* Mobile card view */}
+                <div className="space-y-3 md:hidden">
+                  {REVIEWS.map((row) => {
+                    const st = reviewStyles(row.status);
+                    return (
+                      <div key={row.id} className="rounded-2xl border border-gold/20 bg-navy p-4">
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <p className="font-medium text-white">{row.property}</p>
+                            <p className="mt-1 flex items-center gap-1 text-[11px] text-white/50"><MapPin className="h-3 w-3 text-gold" />{row.estate}</p>
+                          </div>
+                          <span className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold" style={{ background: st.bg, color: st.color }}>{st.label}</span>
+                        </div>
+                        <div className="mt-3 flex items-center justify-between border-t border-white/[0.06] pt-3">
+                          <span className="text-xs text-white/50">{row.landlord}</span>
+                          <span className="font-display text-sm font-bold text-white">{row.rent}</span>
+                        </div>
+                        <div className="mt-3 flex gap-1.5">
+                          <button className="rounded-lg px-2.5 py-1.5 text-[11px] font-bold" style={{ background: "rgba(31,138,68,0.15)", color: "#1F8A44" }}><Check className="inline h-3.5 w-3.5" /> Approve</button>
+                          <button className="rounded-lg px-2.5 py-1.5 text-[11px] font-bold" style={{ background: "rgba(192,48,58,0.12)", color: "#C0303A" }}><X className="inline h-3.5 w-3.5" /> Reject</button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Desktop table */}
+                <div className="hidden overflow-hidden rounded-2xl bg-navy md:block">
                   <div className="overflow-x-auto">
-                    <table className="w-full min-w-[600px] text-left text-sm">
+                    <table className="w-full text-left text-sm">
                       <thead>
                         <tr>
                           {["Property", "Landlord", "Rent", "Status", "Action"].map((h) => (

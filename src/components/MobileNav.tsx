@@ -58,27 +58,66 @@ export default function MobileNav() {
         : PUBLIC_TABS;
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 bg-white shadow-elevated md:hidden">
-      <ul className="flex h-16 items-center justify-around">
+    <nav
+      className="fixed inset-x-0 bottom-0 z-50 md:hidden safe-bottom"
+      style={{
+        background: "rgba(255, 255, 255, 0.92)",
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        borderTop: "1px solid rgba(11, 25, 41, 0.06)",
+        boxShadow: "0 -4px 24px rgba(11, 25, 41, 0.06)",
+      }}
+    >
+      <ul className="flex items-stretch justify-around px-1">
         {tabs.map(({ label, href, icon: Icon }) => {
           const isActive =
             pathname === href || pathname.startsWith(href + "/");
 
           return (
-            <li key={href}>
+            <li key={href} className="flex-1">
               <Link
                 href={href}
-                className={`flex flex-col items-center gap-0.5 px-4 py-1.5 transition-colors ${
-                  isActive ? "text-gold" : "text-text-muted hover:text-text-secondary"
-                }`}
+                className="touch-press-sm relative flex flex-col items-center gap-0.5 py-3 pt-3"
               >
+                {/* Active pill background */}
+                {isActive && (
+                  <span
+                    className="absolute inset-x-2 top-1 bottom-1 rounded-2xl"
+                    style={{
+                      background: "rgba(212, 168, 83, 0.08)",
+                      animation: "scaleIn 250ms cubic-bezier(0.16, 1, 0.3, 1)",
+                    }}
+                  />
+                )}
+
+                {/* Active top indicator bar */}
                 <span
-                  className={`mb-0.5 h-1 w-1 rounded-full transition-colors ${
-                    isActive ? "bg-gold" : "bg-transparent"
-                  }`}
+                  className="absolute inset-x-4 top-0 h-[2.5px] rounded-full"
+                  style={{
+                    background: isActive
+                      ? "linear-gradient(90deg, transparent, #d4a853, transparent)"
+                      : "transparent",
+                    transition: "all 400ms cubic-bezier(0.16, 1, 0.3, 1)",
+                    transform: isActive ? "scaleX(1)" : "scaleX(0)",
+                  }}
                 />
-                <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
-                <span className="text-[11px] font-medium leading-tight">
+
+                <span className="relative">
+                  <Icon
+                    size={22}
+                    strokeWidth={isActive ? 2.5 : 1.8}
+                    className="transition-colors duration-300"
+                    style={{
+                      color: isActive ? "#d4a853" : "#8896A4",
+                    }}
+                  />
+                </span>
+                <span
+                  className="relative text-[10px] font-semibold leading-tight transition-colors duration-300"
+                  style={{
+                    color: isActive ? "#B8903D" : "#8896A4",
+                  }}
+                >
                   {label}
                 </span>
               </Link>

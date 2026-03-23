@@ -80,7 +80,7 @@ export default function LoginPage() {
         }}
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-2xl px-4 py-20 sm:px-6">
+      <div className="relative z-10 mx-auto w-full max-w-2xl px-4 py-10 sm:px-6 sm:py-20">
         <ScrollReveal variant="scale">
           {/* Logo */}
           <div className="mb-12 text-center">
@@ -101,7 +101,7 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={() => handleLogin(role)}
-                    className="group relative flex w-full flex-col items-center overflow-hidden rounded-3xl bg-white/[0.04] p-8 text-center backdrop-blur-sm sm:p-10"
+                    className="group relative flex w-full flex-col items-center overflow-hidden rounded-3xl bg-white/[0.04] p-5 text-center backdrop-blur-sm sm:p-8 md:p-10"
                     style={{
                       transition: `all 600ms ${T}`,
                     }}

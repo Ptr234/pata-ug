@@ -96,7 +96,7 @@ export default function PropertyCard({
   return (
     <Link
       href={`/property/${id}`}
-      className="group relative block overflow-hidden rounded-2xl bg-navy"
+      className="touch-press-sm group relative block overflow-hidden rounded-xl bg-navy sm:rounded-2xl"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -108,7 +108,7 @@ export default function PropertyCard({
       }}
     >
       {/* ── Photo section ── */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[4/3]">
         <Image
           src={photo}
           alt={title}
@@ -163,8 +163,8 @@ export default function PropertyCard({
         </span>
 
         {/* Price + negotiable label — overlaid at bottom of photo */}
-        <div className="absolute inset-x-0 bottom-0 px-4 pb-4">
-          <p className="font-display text-2xl font-bold tracking-tight text-white">
+        <div className="absolute inset-x-0 bottom-0 px-3 pb-3 sm:px-4 sm:pb-4">
+          <p className="font-display text-base font-bold tracking-tight text-white sm:text-xl md:text-2xl">
             UGX {formatPrice(price)}
             <span className="ml-1 text-xs font-normal text-white/50">
               /mo
@@ -208,7 +208,7 @@ export default function PropertyCard({
       </div>
 
       {/* ── Card body ── */}
-      <div className="relative px-4 pb-5 pt-4">
+      <div className="relative px-3 pb-4 pt-3 sm:px-4 sm:pb-5 sm:pt-4">
         {/* Title */}
         <p className="truncate font-display text-sm font-bold tracking-tight text-white">
           {title}
@@ -278,7 +278,7 @@ export default function PropertyCard({
 
         {/* CTA section */}
         {isGuest ? (
-          <div className="mt-4 flex items-center justify-between rounded-xl bg-white/[0.04] px-3.5 py-3">
+          <div className="mt-3 flex items-center justify-between rounded-xl bg-white/[0.04] px-3 py-2.5 sm:mt-4 sm:px-3.5 sm:py-3">
             <div className="flex items-center gap-2">
               <Lock className="h-3.5 w-3.5 text-gold" />
               <span className="text-[11px] font-medium text-white/70">
@@ -305,7 +305,7 @@ export default function PropertyCard({
               e.preventDefault();
               e.stopPropagation();
             }}
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-green py-3 text-[11px] font-black uppercase tracking-wider text-white"
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-green py-2.5 text-[11px] font-black uppercase tracking-wider text-white sm:mt-4 sm:py-3"
             style={{
               transition: "all 400ms cubic-bezier(0.16, 1, 0.3, 1)",
               boxShadow: "0 2px 8px rgba(31, 138, 68, 0.25)",

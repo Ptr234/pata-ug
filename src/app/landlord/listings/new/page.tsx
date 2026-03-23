@@ -53,7 +53,7 @@ export default function NewListingPage() {
               </div>
 
               {/* Progress cards */}
-              <div className="hidden grid-cols-4 gap-3 lg:grid">
+              <div className="hidden grid-cols-4 gap-3 md:grid">
                 {STEPS.map((s, i) => (
                   <div
                     key={s.number}

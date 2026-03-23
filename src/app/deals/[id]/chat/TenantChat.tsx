@@ -95,8 +95,8 @@ export function TenantChatPage() {
           <Image src={info.photo} alt={info.property} fill sizes="100vw" className="object-cover opacity-15" />
           <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/90 to-navy/80" />
 
-          <div className="relative mx-auto max-w-3xl px-4 py-4 sm:px-6">
-            <div className="flex items-center gap-4">
+          <div className="relative mx-auto max-w-3xl px-3 py-3 sm:px-6 sm:py-4">
+            <div className="flex items-center gap-2.5 sm:gap-4">
               <Link
                 href="/deals"
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-white/50"
@@ -107,7 +107,7 @@ export function TenantChatPage() {
                 <ArrowLeft className="h-4 w-4" />
               </Link>
 
-              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl">
+              <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg sm:h-11 sm:w-11 sm:rounded-xl">
                 <Image src={info.photo} alt={info.property} fill sizes="44px" className="object-cover" />
               </div>
 
@@ -132,7 +132,7 @@ export function TenantChatPage() {
 
         {/* Safety strip */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-          <div className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-2 sm:px-6">
+          <div className="mx-auto flex max-w-3xl items-center gap-2 px-3 py-2 sm:px-6">
             <Shield size={11} className="shrink-0 text-teal/60" />
             <p className="text-[9px] text-white/30">
               Chatting with <span className="font-bold text-teal/50">pata.ug</span> — we negotiate on your behalf
@@ -143,7 +143,7 @@ export function TenantChatPage() {
 
       {/* ═══ SCROLLABLE MESSAGES — fills remaining space ═══ */}
       <div className="flex-1 overflow-y-auto" id="chat-messages">
-        <div className="mx-auto max-w-3xl px-4 py-4 sm:px-6">
+        <div className="mx-auto max-w-3xl px-3 py-3 sm:px-6 sm:py-4">
           {grouped.map((group) => (
             <div key={group.day}>
               {/* Day separator */}
@@ -171,7 +171,7 @@ export function TenantChatPage() {
                         {isMe ? "Y" : "P"}
                       </div>
                       <div
-                        className="max-w-[75%] rounded-2xl px-4 py-3"
+                        className="max-w-[85%] rounded-2xl px-3 py-2.5 sm:max-w-[75%] sm:px-4 sm:py-3"
                         style={{
                           background: isMe
                             ? "rgba(10,147,150,0.1)"
@@ -205,7 +205,7 @@ export function TenantChatPage() {
 
       {/* ═══ FIXED INPUT BAR ═══ */}
       <div className="shrink-0" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="mx-auto flex max-w-3xl items-center gap-2.5 px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-3xl items-center gap-2 px-3 py-2.5 sm:gap-2.5 sm:px-6 sm:py-3">
           <button
             type="button"
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.04] text-white/25"

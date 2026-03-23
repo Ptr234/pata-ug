@@ -123,7 +123,7 @@ export default function ProfilePage() {
         />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid min-h-[420px] items-center gap-12 py-16 lg:grid-cols-2 lg:gap-16 lg:py-20">
+          <div className="grid min-h-[420px] items-center gap-8 py-8 sm:gap-12 sm:py-16 lg:grid-cols-2 lg:gap-16 lg:py-20">
             {/* LEFT — Profile card */}
             <ScrollReveal variant="left">
               <Link
@@ -161,7 +161,7 @@ export default function ProfilePage() {
 
                 {/* Name + role */}
                 <div>
-                  <h1 className="font-display text-3xl font-bold tracking-tighter text-white sm:text-4xl">
+                  <h1 className="font-display text-2xl font-bold tracking-tighter text-white sm:text-3xl md:text-4xl">
                     {name}
                   </h1>
                   <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -183,7 +183,7 @@ export default function ProfilePage() {
               </div>
 
               {/* Quick stats */}
-              <div className="mt-8 grid grid-cols-3 gap-3">
+              <div className="mt-6 grid grid-cols-1 gap-3 xs:grid-cols-2 sm:mt-8 sm:grid-cols-3">
                 {[
                   { icon: Eye, value: profile.role === "landlord" ? "1,247" : "47", label: profile.role === "landlord" ? "Total Views" : "Properties Viewed" },
                   { icon: Handshake, value: profile.role === "admin" ? "23" : "3", label: "Active Deals" },
@@ -240,13 +240,13 @@ export default function ProfilePage() {
           CONTENT — Two-column: form left, sidebar right
       ════════════════════════════════════════════════════════════════ */}
       <section className="bg-smoke">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-3">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+          <div className="grid gap-4 sm:gap-8 lg:grid-cols-3">
             {/* LEFT — Form (2/3) */}
             <div className="lg:col-span-2">
               <ScrollReveal>
                 <div
-                  className="rounded-3xl p-6 sm:p-8"
+                  className="rounded-xl p-4 sm:rounded-2xl sm:p-6 lg:rounded-3xl lg:p-8"
                   style={{
                     background: "#0B1929",
                     boxShadow: "0 8px 40px rgba(11,25,41,0.2)",
@@ -361,11 +361,11 @@ export default function ProfilePage() {
             </div>
 
             {/* RIGHT — Sidebar (1/3) */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Verification card */}
               <ScrollReveal variant="right">
                 <div
-                  className="rounded-3xl p-6"
+                  className="rounded-xl p-4 sm:rounded-2xl sm:p-6 lg:rounded-3xl"
                   style={{
                     background: "#0B1929",
                     boxShadow: "0 8px 40px rgba(11,25,41,0.2)",
@@ -408,7 +408,7 @@ export default function ProfilePage() {
               {/* Account info card */}
               <ScrollReveal variant="right" delay={100}>
                 <div
-                  className="rounded-3xl p-6"
+                  className="rounded-xl p-4 sm:rounded-2xl sm:p-6 lg:rounded-3xl"
                   style={{
                     background: "#0B1929",
                     boxShadow: "0 8px 40px rgba(11,25,41,0.2)",
@@ -448,7 +448,7 @@ export default function ProfilePage() {
               {/* Quick links */}
               <ScrollReveal variant="right" delay={200}>
                 <div
-                  className="rounded-3xl p-6"
+                  className="rounded-xl p-4 sm:rounded-2xl sm:p-6 lg:rounded-3xl"
                   style={{
                     background: "#0B1929",
                     boxShadow: "0 8px 40px rgba(11,25,41,0.2)",

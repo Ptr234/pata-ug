@@ -80,7 +80,7 @@ export default function VerifiedPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-20 sm:px-6 lg:px-8 lg:pb-32 lg:pt-28">
+        <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-12 sm:px-6 sm:pb-24 sm:pt-20 lg:px-8 lg:pb-32 lg:pt-28">
           <ScrollReveal>
             <div className="flex flex-col items-center text-center">
               {/* Animated shield icon */}
@@ -99,7 +99,7 @@ export default function VerifiedPage() {
                 Verification Programme
               </div>
 
-              <h1 className="mx-auto mt-8 max-w-4xl font-display text-5xl font-bold uppercase tracking-tighter text-white md:text-6xl lg:text-7xl xl:text-8xl">
+              <h1 className="mx-auto mt-8 max-w-4xl font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
                 The{" "}
                 <span className="text-gradient-gold">Verified</span>{" "}
                 Badge
@@ -116,24 +116,24 @@ export default function VerifiedPage() {
 
       {/* ═══ WHAT WE CHECK — Dark cards on white ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <header className="text-center">
               <p className="section-label text-teal">What We Verify</p>
-              <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tighter text-navy md:text-5xl">
+              <h2 className="mt-4 font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl">
                 What Our Agents{" "}
                 <span className="text-gradient-teal">Check</span>
               </h2>
             </header>
           </ScrollReveal>
 
-          <ScrollReveal stagger className="mx-auto mt-16 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ScrollReveal stagger className="mx-auto mt-8 grid max-w-5xl gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {CHECKS.map((item) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className="reveal group relative overflow-hidden rounded-2xl bg-navy p-7"
+                  className="reveal group relative overflow-hidden rounded-xl bg-navy p-4 sm:rounded-2xl sm:p-6 lg:p-7"
                   style={{ transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)" }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = "translateY(-8px)";
@@ -181,8 +181,8 @@ export default function VerifiedPage() {
       <section className="relative overflow-hidden bg-navy">
         <div aria-hidden="true" className="pointer-events-none absolute -right-40 top-1/4 h-96 w-96 rounded-full bg-orange/[0.05] blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
-          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
+          <div className="grid gap-8 sm:gap-16 lg:grid-cols-2 lg:items-center">
             {/* Left: heading + image */}
             <ScrollReveal variant="left">
               <div>
@@ -190,7 +190,7 @@ export default function VerifiedPage() {
                   <FileText className="h-3.5 w-3.5" />
                   6 Steps
                 </span>
-                <h2 className="mt-6 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+                <h2 className="mt-6 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
                   How to Get{" "}
                   <span className="text-gradient-gold">Verified</span>
                 </h2>
@@ -199,7 +199,7 @@ export default function VerifiedPage() {
                   accepting the SMS invite.
                 </p>
 
-                <div className="img-zoom relative mt-10 aspect-[16/10] overflow-hidden rounded-3xl">
+                <div className="img-zoom relative mt-10 aspect-[16/10] overflow-hidden rounded-xl sm:rounded-3xl">
                   <Image
                     src="/property_images/houses/house_6.jpg"
                     alt="Property verification in progress"
@@ -269,11 +269,11 @@ export default function VerifiedPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <header className="text-center">
               <p className="section-label text-gold">Lifecycle</p>
-              <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+              <h2 className="mt-4 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Badge{" "}
                 <span className="text-gradient-gold">Lifecycle</span>
               </h2>
@@ -410,22 +410,22 @@ export default function VerifiedPage() {
       <section className="relative overflow-hidden bg-navy">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(10,147,150,0.05),transparent_50%)]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <header className="text-center">
               <p className="section-label text-teal">FAQ</p>
-              <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl">
+              <h2 className="mt-4 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl">
                 Common{" "}
                 <span className="text-gradient-teal">Questions</span>
               </h2>
             </header>
           </ScrollReveal>
 
-          <div className="mx-auto mt-16 max-w-3xl space-y-4">
+          <div className="mx-auto mt-8 max-w-3xl space-y-3 sm:mt-16 sm:space-y-4">
             {FAQS.map((faq, i) => (
               <ScrollReveal key={faq.q} delay={i * 80}>
                 <div
-                  className="group rounded-2xl bg-white/[0.04] p-6 backdrop-blur-sm"
+                  className="group rounded-xl bg-white/[0.04] p-4 backdrop-blur-sm sm:rounded-2xl sm:p-6"
                   style={{ transition: "all 500ms cubic-bezier(0.16, 1, 0.3, 1)" }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = "rgba(255,255,255,0.06)";
@@ -476,7 +476,7 @@ export default function VerifiedPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 text-center sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <div
               className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl"
@@ -488,7 +488,7 @@ export default function VerifiedPage() {
               <ShieldCheck className="h-10 w-10 text-gold" />
             </div>
 
-            <h2 className="mt-8 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+            <h2 className="mt-8 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
               Build{" "}
               <span className="text-gradient-gold">Trust</span>{" "}
               with Tenants

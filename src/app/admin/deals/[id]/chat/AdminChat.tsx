@@ -95,7 +95,7 @@ function Bubble({ msg, side }: { msg: ChatMessage; side: "left" | "right" }) {
       </div>
       {/* Bubble */}
       <div
-        className="max-w-[80%] rounded-2xl px-3.5 py-2.5"
+        className="max-w-[90%] rounded-2xl px-3.5 py-2.5 sm:max-w-[80%] lg:max-w-[75%]"
         style={{
           background: isAdmin
             ? "linear-gradient(135deg, rgba(212,168,83,0.12), rgba(212,168,83,0.06))"

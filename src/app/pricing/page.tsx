@@ -120,7 +120,7 @@ export default function PricingPage() {
         />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid min-h-[540px] items-center gap-12 py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
+          <div className="grid min-h-0 items-center gap-12 py-12 sm:min-h-[540px] sm:py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
 
             {/* LEFT — Content */}
             <ScrollReveal variant="left">
@@ -220,7 +220,7 @@ export default function PricingPage() {
                 </p>
               </ScrollReveal>
 
-              <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
                 {CLIENT_PLANS.map((plan, i) => (
                   <ScrollReveal key={plan.name} variant="scale" delay={i * 120}>
                     <PlanCard
@@ -382,7 +382,7 @@ export default function PricingPage() {
                 </p>
               </ScrollReveal>
 
-              <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
                 {LANDLORD_PLANS.map((plan, i) => (
                   <ScrollReveal key={plan.name} variant="scale" delay={i * 120}>
                     <PlanCard
@@ -455,14 +455,14 @@ export default function PricingPage() {
                   }}
                 >
                   <div className="overflow-x-auto">
-                    <table className="w-full min-w-[440px] text-left text-sm">
+                    <table className="w-full text-left text-sm">
                       <thead>
                         <tr>
                           {["Agreed Monthly Rent", "5% Agency Fee", "You Receive"].map(
                             (h) => (
                               <th
                                 key={h}
-                                className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.18em] text-gold"
+                                className="px-3 py-5 text-[10px] font-black uppercase tracking-[0.18em] text-gold sm:px-6"
                               >
                                 {h}
                               </th>
@@ -492,13 +492,13 @@ export default function PricingPage() {
                                   : "transparent";
                             }}
                           >
-                            <td className="px-6 py-4 font-display text-base font-bold text-white">
+                            <td className="px-3 py-4 font-display text-sm font-bold text-white sm:px-6 sm:text-base">
                               {formatUGX(tier.rent)}
                             </td>
-                            <td className="px-6 py-4 font-bold text-orange">
+                            <td className="px-3 py-4 text-sm font-bold text-orange sm:px-6">
                               {formatUGX(tier.agencyFee)}
                             </td>
-                            <td className="px-6 py-4 font-bold text-green">
+                            <td className="px-3 py-4 text-sm font-bold text-green sm:px-6">
                               {formatUGX(tier.net)}
                             </td>
                           </tr>

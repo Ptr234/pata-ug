@@ -78,7 +78,7 @@ export default function HowItWorksPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-20 text-center sm:px-6 lg:px-8 lg:pb-32 lg:pt-28">
+        <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-12 text-center sm:px-6 sm:pb-24 sm:pt-20 lg:px-8 lg:pb-32 lg:pt-28">
           <ScrollReveal>
             <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-gold">
               <ArrowRight className="h-3.5 w-3.5" />
@@ -87,7 +87,7 @@ export default function HowItWorksPage() {
           </ScrollReveal>
 
           <ScrollReveal delay={100}>
-            <h1 className="mx-auto mt-8 max-w-5xl font-display text-5xl font-bold uppercase tracking-tighter text-white md:text-6xl lg:text-7xl xl:text-8xl">
+            <h1 className="mx-auto mt-8 max-w-5xl font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl">
               How{" "}
               <span className="text-gradient-gold">Pata.ug</span>{" "}
               Works
@@ -115,14 +115,14 @@ export default function HowItWorksPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy/95 via-navy/90 to-navy/95" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
-            <div className="mb-16 max-w-2xl">
+            <div className="mb-8 max-w-2xl sm:mb-16">
               <span className="inline-flex items-center gap-2 rounded-full bg-teal/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.15em] text-teal">
                 <Search className="h-3.5 w-3.5" />
                 For Tenants
               </span>
-              <h2 className="mt-6 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+              <h2 className="mt-6 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Find Your Next{" "}
                 <span className="text-gradient-teal">Home</span>
               </h2>
@@ -134,11 +134,11 @@ export default function HowItWorksPage() {
           </ScrollReveal>
 
           {/* Step cards grid */}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {TENANT_STEPS.map((step, i) => (
               <ScrollReveal key={step.title} variant="scale" delay={i * 100}>
                 <div
-                  className="group relative overflow-hidden rounded-3xl bg-white/[0.05] p-7 backdrop-blur-sm"
+                  className="group relative overflow-hidden rounded-xl bg-white/[0.05] p-4 backdrop-blur-sm sm:rounded-2xl sm:p-6 lg:rounded-3xl lg:p-7"
                   style={{
                     transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
@@ -198,14 +198,14 @@ export default function HowItWorksPage() {
 
       {/* ═══ FOR LANDLORDS — White bg + dark card grid ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
-            <div className="mb-16 max-w-2xl">
+            <div className="mb-8 max-w-2xl sm:mb-16">
               <span className="inline-flex items-center gap-2 rounded-full bg-orange/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.15em] text-orange">
                 <Megaphone className="h-3.5 w-3.5" />
                 For Landlords
               </span>
-              <h2 className="mt-6 font-display text-4xl font-bold uppercase tracking-tighter text-navy md:text-5xl lg:text-6xl">
+              <h2 className="mt-6 font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl lg:text-6xl">
                 List Your{" "}
                 <span style={{ color: "#D4622A" }}>Property</span>
               </h2>
@@ -217,11 +217,11 @@ export default function HowItWorksPage() {
           </ScrollReveal>
 
           {/* Step cards — 3x2 grid of dark navy cards */}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {LANDLORD_STEPS.map((step, i) => (
               <ScrollReveal key={step.title} variant="scale" delay={i * 80}>
                 <div
-                  className="group relative overflow-hidden rounded-3xl bg-navy p-7"
+                  className="group relative overflow-hidden rounded-xl bg-navy p-4 sm:rounded-2xl sm:p-6 lg:rounded-3xl lg:p-7"
                   style={{
                     transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
@@ -273,7 +273,7 @@ export default function HowItWorksPage() {
 
           {/* Image strip below */}
           <ScrollReveal delay={600}>
-            <div className="img-zoom relative mt-14 aspect-[21/6] overflow-hidden rounded-3xl">
+            <div className="img-zoom relative mt-8 aspect-[16/9] overflow-hidden rounded-xl sm:mt-14 sm:aspect-[21/9] sm:rounded-3xl md:aspect-[21/6]">
               <Image
                 src="/property_images/houses/house_5.jpg"
                 alt="Properties across Kampala"
@@ -283,7 +283,7 @@ export default function HowItWorksPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-navy/60 via-transparent to-navy/60" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <p className="font-display text-2xl font-bold uppercase tracking-tighter text-white md:text-3xl lg:text-4xl">
+                <p className="font-display text-lg font-bold uppercase tracking-tighter text-white sm:text-2xl md:text-3xl lg:text-4xl">
                   Your property, live in 24 hours
                 </p>
               </div>
@@ -296,11 +296,11 @@ export default function HowItWorksPage() {
       <section className="relative overflow-hidden bg-navy">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,168,83,0.05),transparent_50%)]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <header className="text-center">
               <p className="section-label text-gold">Deal Flow</p>
-              <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+              <h2 className="mt-4 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 How Deals{" "}
                 <span className="text-gradient-gold">Close</span>
               </h2>
@@ -397,11 +397,11 @@ export default function HowItWorksPage() {
 
       {/* ═══ VERIFIED BADGE — White editorial ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <header className="text-center">
               <p className="section-label text-gold">Trust &amp; Safety</p>
-              <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tighter text-navy md:text-5xl">
+              <h2 className="mt-4 font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl">
                 The{" "}
                 <span className="text-gradient-gold">Verified</span>{" "}
                 Badge
@@ -413,13 +413,13 @@ export default function HowItWorksPage() {
             </header>
           </ScrollReveal>
 
-          <ScrollReveal stagger className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ScrollReveal stagger className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {VERIFIED_FLOW.map((item) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.step}
-                  className="reveal group relative overflow-hidden rounded-2xl bg-navy p-6"
+                  className="reveal group relative overflow-hidden rounded-xl bg-navy p-4 sm:rounded-2xl sm:p-6"
                   style={{
                     transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
@@ -504,13 +504,13 @@ export default function HowItWorksPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 text-center sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-gold/10">
               <Shield className="h-8 w-8 text-gold" />
             </div>
 
-            <h2 className="mt-8 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl">
+            <h2 className="mt-8 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl">
               Ready to{" "}
               <span className="text-gradient-gold">Start</span>?
             </h2>

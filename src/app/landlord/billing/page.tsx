@@ -95,7 +95,7 @@ export default function BillingPage() {
 
             <p className="section-label mb-2 text-orange">Financials</p>
 
-            <h1 className="font-display text-3xl tracking-tighter text-white">
+            <h1 className="font-display text-xl tracking-tighter text-white sm:text-2xl md:text-3xl">
               Billing &amp; Agency Fees
             </h1>
             <p className="mt-1 text-sm text-white/70">
@@ -230,7 +230,23 @@ export default function BillingPage() {
                   Transaction History
                 </h2>
               </div>
-              <div className="overflow-x-auto">
+              {/* Mobile card view */}
+              <div className="space-y-3 px-4 pb-4 sm:hidden">
+                {TRANSACTIONS.map((tx, i) => (
+                  <div key={i} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-sm text-white/80">{tx.desc}</p>
+                      <span className="shrink-0 font-display text-sm font-bold text-orange">{formatUGX(tx.amount)}</span>
+                    </div>
+                    <div className="mt-2 flex items-center gap-3 text-[10px] text-white/40">
+                      <span className="flex items-center gap-1"><Calendar className="h-3 w-3" />{tx.date}</span>
+                      <span>{tx.method}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Desktop table */}
+              <div className="hidden overflow-x-auto sm:block">
                 <table className="w-full min-w-[540px] text-left text-sm">
                   <thead>
                     <tr className="bg-white/[0.04]">

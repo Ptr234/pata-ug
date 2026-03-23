@@ -114,11 +114,11 @@ export default function NotificationsPage() {
               <span className="font-medium text-white/70">Notifications</span>
             </nav>
 
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <p className="section-label text-teal">Alerts</p>
                 <div className="mt-3 flex items-center gap-3">
-                  <h1 className="font-display text-4xl font-bold uppercase tracking-tighter text-white sm:text-5xl">
+                  <h1 className="font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl">
                     NOTIFICATIONS
                   </h1>
                   {unreadCount > 0 && (
@@ -162,7 +162,7 @@ export default function NotificationsPage() {
 
       {/* ═══ NOTIFICATION LIST ═══ */}
       <section className="min-h-[50vh] bg-smoke">
-        <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
           {notifications.length > 0 ? (
             <ScrollReveal>
               <div className="space-y-3">
@@ -172,7 +172,7 @@ export default function NotificationsPage() {
                   return (
                     <article
                       key={notif.id}
-                      className="flex items-start gap-4 rounded-2xl bg-navy p-5 shadow-card"
+                      className="flex items-start gap-3 rounded-xl bg-navy p-4 shadow-card sm:gap-4 sm:rounded-2xl sm:p-5"
                       style={{
                         borderLeft: !notif.read
                           ? "3px solid #d4a853"
@@ -261,7 +261,7 @@ export default function NotificationsPage() {
             </ScrollReveal>
           ) : (
             <ScrollReveal variant="scale">
-              <div className="flex flex-col items-center justify-center rounded-3xl bg-navy px-6 py-20 text-center shadow-elevated">
+              <div className="flex flex-col items-center justify-center rounded-xl bg-navy px-4 py-12 text-center shadow-elevated sm:rounded-3xl sm:px-6 sm:py-20">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-teal/15 animate-float">
                   <BellOff className="h-8 w-8 text-teal" />
                 </div>

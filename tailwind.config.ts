@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "320px",
+      },
       colors: {
         navy: {
           DEFAULT: "#0B1929",

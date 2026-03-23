@@ -135,13 +135,13 @@ export default function DashboardPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-5 lg:items-center">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+          <div className="grid gap-6 sm:gap-8 lg:grid-cols-5 lg:items-center">
             {/* Left col (3/5) */}
             <div className="lg:col-span-3">
               <ScrollReveal>
                 <p className="section-label text-teal">Tenant Dashboard</p>
-                <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white sm:text-5xl lg:text-6xl">
+                <h1 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
                   Welcome{" "}
                   <span className="text-gradient-teal">back</span>,{" "}
                   <br className="hidden sm:block" />
@@ -153,7 +153,7 @@ export default function DashboardPage() {
                 </p>
 
                 {/* Quick action links */}
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-6 flex gap-2 overflow-x-auto pb-1 sm:mt-8 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:pb-0 hide-scrollbar">
                   <Link
                     href="/search"
                     className="inline-flex items-center gap-2 rounded-xl bg-white/[0.05] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white/60"
@@ -316,14 +316,14 @@ export default function DashboardPage() {
 
       {/* ═══ STATS — Inline on dark strip ═══ */}
       <section className="bg-navy" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 sm:py-8 lg:px-8">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
             {STATS.map((stat, i) => {
               const Icon = stat.icon;
               return (
                 <ScrollReveal key={stat.label} variant="scale" delay={i * 80}>
                   <div
-                    className="group flex items-center gap-4 rounded-2xl bg-white/[0.03] px-5 py-4"
+                    className="group flex items-center gap-3 rounded-xl bg-white/[0.03] px-3 py-3 sm:gap-4 sm:rounded-2xl sm:px-5 sm:py-4"
                     style={{ transition: `all 500ms ${T}` }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = "rgba(255,255,255,0.06)";
@@ -335,16 +335,16 @@ export default function DashboardPage() {
                     }}
                   >
                     <div
-                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg sm:h-11 sm:w-11 sm:rounded-xl"
                       style={{ background: `${stat.accent}15` }}
                     >
-                      <Icon className="h-5 w-5" style={{ color: stat.accent }} />
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5" style={{ color: stat.accent }} />
                     </div>
-                    <div>
-                      <p className="font-display text-2xl font-bold tracking-tighter text-white">
+                    <div className="min-w-0">
+                      <p className="font-display text-lg font-bold tracking-tighter text-white sm:text-2xl">
                         {stat.value}
                       </p>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/60">
+                      <p className="truncate text-[9px] font-bold uppercase tracking-[0.12em] text-white/60 sm:text-[10px]">
                         {stat.label}
                       </p>
                     </div>
@@ -358,12 +358,12 @@ export default function DashboardPage() {
 
       {/* ═══ CHECKLIST + RECENTLY VIEWED — Split layout ═══ */}
       <section className="bg-smoke">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <div className="grid gap-8 lg:grid-cols-5">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-14 lg:px-8">
+          <div className="grid gap-6 sm:gap-8 lg:grid-cols-5">
             {/* Left: Checklist (3/5) */}
             <div className="lg:col-span-3">
               <ScrollReveal>
-                <div className="rounded-3xl bg-navy p-6 sm:p-8">
+                <div className="rounded-2xl bg-navy p-4 sm:rounded-3xl sm:p-6 lg:p-8">
                   <div className="mb-6 flex items-center justify-between">
                     <div>
                       <p className="section-label text-teal">Getting Started</p>
@@ -392,7 +392,7 @@ export default function DashboardPage() {
                     {CHECKLIST.map((item) => (
                       <li
                         key={item.id}
-                        className="flex items-center gap-4 rounded-xl px-4 py-3"
+                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 sm:gap-4 sm:px-4 sm:py-3"
                         style={{
                           background: "rgba(255,255,255,0.03)",
                           transition: `background 500ms ${T}`,
@@ -538,9 +538,32 @@ export default function DashboardPage() {
               </Link>
             </div>
 
-            <div className="overflow-hidden rounded-2xl bg-navy">
+            {/* Mobile card view */}
+            <div className="space-y-3 md:hidden">
+              {deals.map((deal) => {
+                const st = getDealStatusStyle(deal.status);
+                return (
+                  <div key={deal.id} className="rounded-2xl border border-gold/20 bg-navy p-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="font-medium text-white">{deal.propertyTitle}</p>
+                      <span className="shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold" style={{ background: st.bg, color: st.text }}>
+                        {formatDealStatus(deal.status)}
+                      </span>
+                    </div>
+                    <p className="mt-1.5 flex items-center gap-1 text-xs text-white/50"><MapPin className="h-3 w-3 text-teal/50" />{deal.estate}</p>
+                    <div className="mt-3 flex items-center justify-between border-t border-white/[0.06] pt-3">
+                      <span className="font-display text-sm font-bold text-white">UGX {formatUGX(deal.agreedRent)}</span>
+                      <span className="flex items-center gap-1 text-[10px] text-white/40"><Calendar className="h-3 w-3" />{deal.date}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop table */}
+            <div className="hidden overflow-hidden rounded-2xl bg-navy md:block">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[640px] text-left text-sm">
+                <table className="w-full text-left text-sm">
                   <thead>
                     <tr>
                       {["Property", "Estate", "Agreed Rent", "Status", "Date"].map((h) => (

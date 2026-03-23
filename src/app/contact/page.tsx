@@ -16,10 +16,10 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/75" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-20 text-center sm:px-6 lg:px-8 lg:pb-32 lg:pt-28">
+        <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-12 text-center sm:px-6 sm:pb-24 sm:pt-20 lg:px-8 lg:pb-32 lg:pt-28">
           <ScrollReveal>
             <p className="section-label text-gold">Get in Touch</p>
-            <h1 className="mx-auto mt-4 max-w-3xl font-display text-5xl font-bold uppercase tracking-tighter text-white md:text-6xl lg:text-7xl">
+            <h1 className="mx-auto mt-4 max-w-3xl font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl">
               Contact <span className="text-gradient-gold">Us</span>
             </h1>
             <p className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-white/60">
@@ -31,13 +31,13 @@ export default function ContactPage() {
 
       {/* ═══ CONTACT INFO + FORM — Split ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+          <div className="grid gap-8 sm:gap-12 lg:grid-cols-2">
             {/* Left: Contact details */}
             <ScrollReveal variant="left">
               <div>
                 <p className="section-label text-teal">Reach Us</p>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl">
+                <h2 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl">
                   Get in <span className="text-gradient-gold">Touch</span>
                 </h2>
                 <p className="mt-5 max-w-md leading-relaxed text-text-muted">
@@ -53,7 +53,7 @@ export default function ContactPage() {
                   ].map((item) => {
                     const Icon = item.icon;
                     const content = (
-                      <div className="flex items-center gap-4 rounded-2xl bg-navy p-5" style={{ transition: `all 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = `0 12px 32px ${item.accent}15`; }} onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
+                      <div className="flex items-center gap-4 rounded-xl bg-navy p-4 sm:rounded-2xl sm:p-5" style={{ transition: `all 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = `0 12px 32px ${item.accent}15`; }} onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
                         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" style={{ background: `${item.accent}15` }}>
                           <Icon className="h-6 w-6" style={{ color: item.accent }} />
                         </div>
@@ -75,7 +75,7 @@ export default function ContactPage() {
 
             {/* Right: Contact form */}
             <ScrollReveal variant="right">
-              <div className="rounded-3xl bg-navy p-8 sm:p-10">
+              <div className="rounded-xl bg-navy p-4 sm:rounded-2xl sm:p-6 lg:rounded-3xl lg:p-10">
                 <h3 className="font-display text-2xl font-bold tracking-tighter text-white">Send a Message</h3>
                 <p className="mt-2 text-sm text-white/60">We typically respond within 24 hours</p>
 
@@ -124,9 +124,9 @@ export default function ContactPage() {
       <section className="relative overflow-hidden bg-navy">
         <Image src="/property_images/houses/house_4.jpg" alt="Properties in Kampala" fill sizes="100vw" className="object-cover opacity-10" />
         <div className="absolute inset-0 bg-navy/85" />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8 lg:py-20">
           <ScrollReveal>
-            <h2 className="font-display text-3xl font-bold uppercase tracking-tighter text-white md:text-4xl">
+            <h2 className="font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-4xl">
               Ready to <span className="text-gradient-gold">Start</span>?
             </h2>
             <p className="mx-auto mt-4 max-w-md text-white/60">
