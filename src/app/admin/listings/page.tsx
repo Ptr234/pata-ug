@@ -216,7 +216,7 @@ export default function AdminListingsPage() {
               <ArrowLeft className="h-4 w-4" /> Back to Admin
             </Link>
             <p className="section-label text-gold">Moderation</p>
-            <h1 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl">
+            <h1 className="mt-2 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl">
               Listing <span className="text-gradient-gold">Review</span>
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">

@@ -101,14 +101,14 @@ export default function LandlordDashboardPage() {
             <div className="grid items-center gap-8 lg:grid-cols-5">
               <div className="lg:col-span-3">
                 <p className="section-label text-orange">Landlord Dashboard</p>
-                <h1 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                <h1 className="mt-2 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl lg:text-6xl">
                   Welcome <span style={{ color: "#D4622A" }}>back</span>,
                   <br className="hidden sm:block" />{getUserProfile().fullName}
                 </h1>
-                <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
+                <p className="mt-3 max-w-md text-sm leading-relaxed text-white/60 sm:text-base">
                   Manage your properties, track tenant interest, and close deals across Kampala.
                 </p>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-5 flex flex-wrap gap-2 sm:mt-8 sm:gap-3">
                   <Link href="/landlord/listings/new" className="btn-gold">
                     <Plus className="h-4 w-4" /> List New Property
                   </Link>
@@ -144,7 +144,7 @@ export default function LandlordDashboardPage() {
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="section-label text-orange">Property Portfolio</p>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl">My Listings</h2>
+                <h2 className="mt-3 font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl">My Listings</h2>
               </div>
               {/* Filter tabs */}
               <nav className="hide-scrollbar flex overflow-x-auto gap-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible" aria-label="Listing filters">
@@ -220,7 +220,7 @@ export default function LandlordDashboardPage() {
                   <div className="mb-6 flex items-center justify-between">
                     <div>
                       <p className="section-label text-orange">Getting Started</p>
-                      <h2 className="mt-2 font-display text-2xl font-bold tracking-tighter text-white">Landlord Checklist</h2>
+                      <h2 className="mt-2 font-display text-lg font-bold tracking-tighter text-white sm:text-2xl">Landlord Checklist</h2>
                     </div>
                     <div className="relative flex h-14 w-14 items-center justify-center">
                       <svg className="h-14 w-14 -rotate-90" viewBox="0 0 56 56"><circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="4" /><circle cx="28" cy="28" r="24" fill="none" stroke="#D4622A" strokeWidth="4" strokeLinecap="round" strokeDasharray={`${(doneCount / checklist.length) * 150.8} 150.8`} /></svg>
@@ -266,7 +266,7 @@ export default function LandlordDashboardPage() {
                       </div>
                       <p className="mt-1.5 flex items-center gap-2 text-xs text-white/60"><MapPin className="h-3 w-3 text-orange" />{deal.estate} <span className="text-white/70">/ {deal.date}</span></p>
                       <div className="mt-3 flex items-center justify-between">
-                        <p className="font-display text-lg font-bold tracking-tighter text-white">{formatUGX(deal.agreedRent)}<span className="text-xs font-normal text-white/60">/mo</span></p>
+                        <p className="font-display text-base font-bold tracking-tighter text-white sm:text-lg">{formatUGX(deal.agreedRent)}<span className="text-xs font-normal text-white/60">/mo</span></p>
                         <ChevronRight className="h-4 w-4 text-white/60 transition-all duration-500 group-hover:translate-x-1 group-hover:text-orange" />
                       </div>
                     </div>

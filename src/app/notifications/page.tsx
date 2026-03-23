@@ -118,7 +118,7 @@ export default function NotificationsPage() {
               <div>
                 <p className="section-label text-teal">Alerts</p>
                 <div className="mt-3 flex items-center gap-3">
-                  <h1 className="font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl">
+                  <h1 className="font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl">
                     NOTIFICATIONS
                   </h1>
                   {unreadCount > 0 && (

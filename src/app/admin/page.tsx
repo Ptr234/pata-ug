@@ -169,7 +169,7 @@ export default function AdminDashboardPage() {
                       <Icon className="h-6 w-6" style={{ color: stat.accent }} />
                     </div>
                     <div>
-                      <p className="font-display text-lg font-bold tracking-tighter text-white sm:text-2xl">{stat.value}</p>
+                      <p className="font-display text-base font-bold tracking-tighter text-white sm:text-lg md:text-2xl">{stat.value}</p>
                       <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/60">{stat.label}</p>
                     </div>
                   </div>

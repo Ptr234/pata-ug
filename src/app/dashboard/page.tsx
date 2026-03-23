@@ -141,19 +141,19 @@ export default function DashboardPage() {
             <div className="lg:col-span-3">
               <ScrollReveal>
                 <p className="section-label text-teal">Tenant Dashboard</p>
-                <h1 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
+                <h1 className="mt-2 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl lg:text-6xl">
                   Welcome{" "}
                   <span className="text-gradient-teal">back</span>,{" "}
                   <br className="hidden sm:block" />
                   {getFirstName(getUserProfile())}
                 </h1>
-                <p className="mt-4 max-w-md text-base leading-relaxed text-white/70">
+                <p className="mt-3 max-w-md text-sm leading-relaxed text-white/70 sm:text-base">
                   Track your property search progress, manage deals, and stay on
                   top of your rental journey across Kampala.
                 </p>
 
                 {/* Quick action links */}
-                <div className="mt-6 flex gap-2 overflow-x-auto pb-1 sm:mt-8 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:pb-0 hide-scrollbar">
+                <div className="mt-4 flex gap-2 overflow-x-auto pb-1 sm:mt-8 sm:flex-wrap sm:gap-3 sm:overflow-visible sm:pb-0 hide-scrollbar">
                   <Link
                     href="/search"
                     className="inline-flex items-center gap-2 rounded-xl bg-white/[0.05] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white/60"
@@ -207,7 +207,7 @@ export default function DashboardPage() {
                 {/* Wallet — compact inline card */}
                 <div
                   className="mt-6 flex items-center gap-3 rounded-2xl bg-white/[0.04] px-4 py-3"
-                  style={{ transition: `all 500ms ${T}`, maxWidth: "320px" }}
+                  style={{ transition: `all 500ms ${T}`, maxWidth: "100%" }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
                 >
@@ -341,7 +341,7 @@ export default function DashboardPage() {
                       <Icon className="h-4 w-4 sm:h-5 sm:w-5" style={{ color: stat.accent }} />
                     </div>
                     <div className="min-w-0">
-                      <p className="font-display text-lg font-bold tracking-tighter text-white sm:text-2xl">
+                      <p className="font-display text-base font-bold tracking-tighter text-white sm:text-xl md:text-2xl">
                         {stat.value}
                       </p>
                       <p className="truncate text-[9px] font-bold uppercase tracking-[0.12em] text-white/60 sm:text-[10px]">
@@ -367,7 +367,7 @@ export default function DashboardPage() {
                   <div className="mb-6 flex items-center justify-between">
                     <div>
                       <p className="section-label text-teal">Getting Started</p>
-                      <h2 className="mt-2 font-display text-2xl font-bold tracking-tighter text-white">
+                      <h2 className="mt-2 font-display text-lg font-bold tracking-tighter text-white sm:text-2xl">
                         Property Search Checklist
                       </h2>
                     </div>
@@ -627,7 +627,7 @@ export default function DashboardPage() {
       <section className="relative overflow-hidden bg-navy">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_right,rgba(212,168,83,0.06),transparent_50%)]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
           <ScrollReveal variant="left">
             <div className="grid items-center gap-8 lg:grid-cols-5">
               <div className="lg:col-span-3">
@@ -637,7 +637,7 @@ export default function DashboardPage() {
                   </div>
                   <p className="section-label text-gold">Save More</p>
                 </div>
-                <h2 className="mt-4 font-display text-3xl font-bold tracking-tighter text-white sm:text-4xl">
+                <h2 className="mt-4 font-display text-xl font-bold tracking-tighter text-white sm:text-3xl md:text-4xl">
                   Save UGX 40,000 with Annual
                 </h2>
                 <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/70">
@@ -651,7 +651,7 @@ export default function DashboardPage() {
                   <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/70">
                     Annual price
                   </p>
-                  <p className="mt-1 font-display text-3xl font-bold tracking-tighter text-white">
+                  <p className="mt-1 font-display text-2xl font-bold tracking-tighter text-white sm:text-3xl">
                     UGX 120,000
                     <span className="text-sm font-normal text-white/70">/yr</span>
                   </p>
