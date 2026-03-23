@@ -379,7 +379,7 @@ export default function DealsPage() {
                                 {deal.estate}
                               </span>
                             </td>
-                            <td className="px-6 py-4 font-display text-lg font-bold tracking-tighter text-white">
+                            <td className="px-6 py-4 font-display text-base font-bold tracking-tighter text-white sm:text-lg">
                               {formatUGX(deal.agreedRent)}
                             </td>
                             <td className="px-6 py-4">

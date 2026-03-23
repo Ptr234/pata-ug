@@ -35,7 +35,7 @@ export default function NewListingPage() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(212,98,42,0.1),transparent_60%)]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8 lg:py-20">
           <ScrollReveal>
             <Link href="/landlord" className="mb-8 inline-flex items-center gap-2 text-sm text-white/60" style={{ transition: `color 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.color = "#d4a853"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}>
               <ArrowLeft className="h-4 w-4" /> Back to Dashboard
@@ -44,7 +44,7 @@ export default function NewListingPage() {
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
                 <p className="section-label text-orange">Listing Wizard</p>
-                <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+                <h1 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl lg:text-6xl">
                   List a New <span style={{ color: "#D4622A" }}>Property</span>
                 </h1>
                 <p className="mt-5 max-w-md text-base leading-relaxed text-white/60">
@@ -506,9 +506,9 @@ export default function NewListingPage() {
                       <h2 className="font-display text-2xl font-bold tracking-tighter text-white">Review and Pay</h2>
                       <p className="mt-3 text-sm text-white/60">Pay UGX 30,000 to submit your listing for admin review.</p>
 
-                      <div className="mx-auto mt-8 max-w-sm rounded-2xl bg-white/[0.04] p-8 backdrop-blur-sm">
+                      <div className="mx-auto mt-8 max-w-sm rounded-2xl bg-white/[0.04] p-5 sm:p-8 backdrop-blur-sm">
                         <p className="section-label text-gold">Listing Fee</p>
-                        <p className="mt-3 font-display text-5xl font-bold tracking-tighter text-white">UGX 30,000</p>
+                        <p className="mt-3 font-display text-2xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl">UGX 30,000</p>
                         <p className="mt-2 text-xs text-white/60">Live for 30 days. Reactivate at same price.</p>
 
                         <div className="mt-8 space-y-3">

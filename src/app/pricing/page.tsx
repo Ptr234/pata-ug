@@ -133,11 +133,11 @@ export default function PricingPage() {
                 No Hidden Fees
               </div>
 
-              <h1 className="mt-8 font-display text-5xl font-bold uppercase tracking-tighter text-white md:text-6xl lg:text-7xl">
+              <h1 className="mt-6 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl">
                 Simple{" "}
                 <span className="text-gradient-gold">Pricing</span>
               </h1>
-              <p className="mt-6 max-w-md text-lg leading-relaxed text-white/70">
+              <p className="mt-6 max-w-md text-sm leading-relaxed text-white/70 sm:text-lg">
                 Choose the plan that works for you. Pay via MTN MoMo or Airtel
                 Money — instant, secure, no card required.
               </p>
@@ -212,7 +212,7 @@ export default function PricingPage() {
             <div>
               <ScrollReveal variant="left">
                 <p className="section-label text-teal">For Tenants</p>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl lg:text-5xl">
+                <h2 className="mt-3 font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl lg:text-5xl">
                   Tenant &amp; Home Seeker Plans
                 </h2>
                 <p className="mt-5 max-w-lg leading-relaxed text-text-muted">
@@ -374,7 +374,7 @@ export default function PricingPage() {
             <div>
               <ScrollReveal variant="right">
                 <p className="section-label text-orange">For Landlords</p>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-white md:text-4xl lg:text-5xl">
+                <h2 className="mt-3 font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-4xl lg:text-5xl">
                   Property <span className="text-gradient-gold">Owner</span> Plans
                 </h2>
                 <p className="mt-5 max-w-lg leading-relaxed text-white/70">
@@ -436,7 +436,7 @@ export default function PricingPage() {
             <div>
               <ScrollReveal variant="left">
                 <p className="section-label text-gold">Agency Fee</p>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl lg:text-5xl">
+                <h2 className="mt-3 font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl lg:text-5xl">
                   5% Deal <span className="text-gradient-gold">Agency Fee</span>
                 </h2>
                 <p className="mt-5 max-w-lg leading-relaxed text-text-muted">
@@ -567,11 +567,11 @@ export default function PricingPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:py-28 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <header className="mb-16 text-center">
+            <header className="mb-8 text-center sm:mb-16">
               <p className="section-label text-gold">Not sure?</p>
-              <h2 className="mx-auto mt-4 max-w-3xl font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl lg:text-6xl">
+              <h2 className="mx-auto mt-4 max-w-3xl font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl lg:text-6xl">
                 Which Plan Is{" "}
                 <span className="text-gradient-gold">Right</span> for You?
               </h2>
@@ -690,7 +690,7 @@ export default function PricingPage() {
         <div className="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8">
           <ScrollReveal variant="scale">
             <div
-              className="mx-auto inline-flex max-w-lg flex-col items-center gap-5 rounded-3xl px-10 py-8 sm:flex-row"
+              className="mx-auto inline-flex max-w-lg flex-col items-center gap-5 rounded-3xl px-5 py-6 sm:px-10 sm:py-8 sm:flex-row"
               style={{
                 background: "#0B1929",
                 boxShadow: "0 12px 40px rgba(11,25,41,0.15)",
@@ -746,7 +746,7 @@ export default function PricingPage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-28 text-center sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-14 text-center sm:py-28 sm:px-6 lg:px-8">
           <ScrollReveal>
             {/* Shield icon in frosted square */}
             <div
@@ -755,7 +755,7 @@ export default function PricingPage() {
             >
               <Shield className="h-8 w-8 text-gold" />
             </div>
-            <h2 className="mt-8 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl">
+            <h2 className="mt-8 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl">
               Ready to <span className="text-gradient-gold">Start</span>?
             </h2>
             <p className="mx-auto mt-5 max-w-md leading-relaxed text-white/70">

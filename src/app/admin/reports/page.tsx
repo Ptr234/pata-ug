@@ -79,13 +79,13 @@ export default function AdminReportsPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/75" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <ScrollReveal>
             <Link href="/admin" className="mb-6 inline-flex items-center gap-2 text-sm text-white/60" style={{ transition: `color 500ms ${T}` }} onMouseEnter={(e) => { e.currentTarget.style.color = "#d4a853"; }} onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}>
               <ArrowLeft className="h-4 w-4" /> Back to Admin
             </Link>
             <p className="section-label text-gold">Financials &amp; Analytics</p>
-            <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl">
+            <h1 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl">
               Platform <span className="text-gradient-gold">Reports</span>
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
@@ -125,10 +125,10 @@ export default function AdminReportsPage() {
 
       {/* Revenue Table — expanded */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <ScrollReveal>
             <p className="section-label text-gold">Revenue Breakdown</p>
-            <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy">Monthly Revenue</h2>
+            <h2 className="mt-3 font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl">Monthly Revenue</h2>
           </ScrollReveal>
 
           <ScrollReveal delay={150}>
@@ -184,7 +184,7 @@ export default function AdminReportsPage() {
       <section className="relative overflow-hidden bg-navy">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "80px 80px" }} />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Subscriptions */}
             <ScrollReveal variant="left">
@@ -255,7 +255,7 @@ export default function AdminReportsPage() {
 
       {/* Top Areas + Top Landlords */}
       <section className="bg-smoke">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Top Areas */}
             <ScrollReveal variant="left">

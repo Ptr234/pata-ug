@@ -19,10 +19,10 @@ export default function ContactPage() {
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-12 text-center sm:px-6 sm:pb-24 sm:pt-20 lg:px-8 lg:pb-32 lg:pt-28">
           <ScrollReveal>
             <p className="section-label text-gold">Get in Touch</p>
-            <h1 className="mx-auto mt-4 max-w-3xl font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="mx-auto mt-4 max-w-3xl font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-7xl">
               Contact <span className="text-gradient-gold">Us</span>
             </h1>
-            <p className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-white/60">
+            <p className="mx-auto mt-6 max-w-lg text-sm leading-relaxed text-white/60 sm:text-lg">
               Have a question about listings, verification, or partnerships? We are here to help.
             </p>
           </ScrollReveal>

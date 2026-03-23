@@ -95,7 +95,7 @@ export default function HowItWorksPage() {
           </ScrollReveal>
 
           <ScrollReveal delay={200}>
-            <p className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-white/70">
+            <p className="mx-auto mt-6 max-w-lg text-sm leading-relaxed text-white/70 sm:text-lg">
               Everything you need to know about finding a home or listing
               your property — in simple steps.
             </p>
@@ -122,7 +122,7 @@ export default function HowItWorksPage() {
                 <Search className="h-3.5 w-3.5" />
                 For Tenants
               </span>
-              <h2 className="mt-6 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              <h2 className="mt-6 font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-4xl lg:text-5xl">
                 Find Your Next{" "}
                 <span className="text-gradient-teal">Home</span>
               </h2>
@@ -168,7 +168,7 @@ export default function HowItWorksPage() {
                       >
                         <step.icon size={24} />
                       </div>
-                      <span className="font-display text-5xl font-bold text-white/[0.06]">
+                      <span className="font-display text-3xl font-bold text-white/[0.06] sm:text-5xl">
                         0{i + 1}
                       </span>
                     </div>
@@ -205,7 +205,7 @@ export default function HowItWorksPage() {
                 <Megaphone className="h-3.5 w-3.5" />
                 For Landlords
               </span>
-              <h2 className="mt-6 font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl lg:text-6xl">
+              <h2 className="mt-6 font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl lg:text-5xl">
                 List Your{" "}
                 <span style={{ color: "#D4622A" }}>Property</span>
               </h2>
@@ -248,7 +248,7 @@ export default function HowItWorksPage() {
                       >
                         <step.icon size={24} />
                       </div>
-                      <span className="font-display text-5xl font-bold text-white/[0.06]">
+                      <span className="font-display text-3xl font-bold text-white/[0.06] sm:text-5xl">
                         0{i + 1}
                       </span>
                     </div>
@@ -300,7 +300,7 @@ export default function HowItWorksPage() {
           <ScrollReveal>
             <header className="text-center">
               <p className="section-label text-gold">Deal Flow</p>
-              <h2 className="mt-4 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              <h2 className="mt-4 font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-4xl lg:text-5xl">
                 How Deals{" "}
                 <span className="text-gradient-gold">Close</span>
               </h2>
@@ -510,7 +510,7 @@ export default function HowItWorksPage() {
               <Shield className="h-8 w-8 text-gold" />
             </div>
 
-            <h2 className="mt-8 font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl">
+            <h2 className="mt-8 font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-4xl lg:text-5xl">
               Ready to{" "}
               <span className="text-gradient-gold">Start</span>?
             </h2>

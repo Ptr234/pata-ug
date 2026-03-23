@@ -85,7 +85,7 @@ export default function VerifiedPage() {
             <div className="flex flex-col items-center text-center">
               {/* Animated shield icon */}
               <div
-                className="flex h-24 w-24 items-center justify-center rounded-3xl"
+                className="flex h-16 w-16 items-center justify-center rounded-2xl sm:h-24 sm:w-24 sm:rounded-3xl"
                 style={{
                   background: "linear-gradient(135deg, rgba(212,168,83,0.15), rgba(212,168,83,0.05))",
                   boxShadow: "0 8px 32px rgba(212,168,83,0.1)",
@@ -99,13 +99,13 @@ export default function VerifiedPage() {
                 Verification Programme
               </div>
 
-              <h1 className="mx-auto mt-8 max-w-4xl font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+              <h1 className="mx-auto mt-8 max-w-4xl font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl">
                 The{" "}
                 <span className="text-gradient-gold">Verified</span>{" "}
                 Badge
               </h1>
 
-              <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/70">
+              <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-white/70 sm:text-lg">
                 Our on-ground verification programme builds trust between tenants
                 and landlords through physical property inspection.
               </p>
@@ -157,7 +157,7 @@ export default function VerifiedPage() {
                       <Icon className="h-7 w-7 text-gold" />
                     </span>
 
-                    <h3 className="mt-5 font-display text-lg font-bold tracking-tight text-white">
+                    <h3 className="mt-4 font-display text-base font-bold tracking-tight text-white sm:mt-5 sm:text-lg">
                       {item.title}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-white/70">
@@ -348,7 +348,7 @@ export default function VerifiedPage() {
           </div>
 
           {/* ── Mobile/Tablet: Vertical timeline ── */}
-          <div className="mx-auto mt-16 max-w-lg lg:hidden">
+          <div className="mx-auto mt-8 max-w-lg sm:mt-16 lg:hidden">
             {BADGE_STATES.map((badge, i) => {
               const Icon = badge.icon;
               return (
@@ -479,7 +479,7 @@ export default function VerifiedPage() {
         <div className="relative mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 sm:py-16 lg:px-8 lg:py-28">
           <ScrollReveal>
             <div
-              className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl"
+              className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl sm:h-20 sm:w-20 sm:rounded-3xl"
               style={{
                 background: "linear-gradient(135deg, rgba(212,168,83,0.15), rgba(212,168,83,0.05))",
                 boxShadow: "0 8px 32px rgba(212,168,83,0.1)",

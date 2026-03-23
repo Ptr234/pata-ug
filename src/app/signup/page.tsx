@@ -374,7 +374,7 @@ export default function SignupPage() {
                         <span className="text-white/30">(front side)</span>
                       </label>
                       <div
-                        className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8"
+                        className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-5 sm:p-8"
                         style={{
                           borderColor: idPhoto
                             ? "rgba(212,168,83,0.5)"

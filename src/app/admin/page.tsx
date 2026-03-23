@@ -114,12 +114,12 @@ export default function AdminDashboardPage() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.02]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "64px 64px" }} />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,rgba(212,168,83,0.12),transparent_60%)]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8 lg:py-20">
           <ScrollReveal>
             <div className="grid items-center gap-8 lg:grid-cols-5">
               <div className="lg:col-span-3">
                 <p className="section-label text-gold">Internal Dashboard</p>
-                <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white sm:text-5xl lg:text-6xl">
+                <h1 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
                   Admin <span className="text-gradient-gold">Overview</span>
                 </h1>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">
@@ -182,13 +182,13 @@ export default function AdminDashboardPage() {
 
       {/* ═══ LISTING REVIEW QUEUE — Split layout ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-5">
             {/* Left: header + image */}
             <div className="lg:col-span-2">
               <ScrollReveal variant="left">
                 <p className="section-label text-gold">Moderation</p>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl">
+                <h2 className="mt-3 font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl">
                   Listing <span className="text-gradient-gold">Review</span>
                 </h2>
                 <p className="mt-4 leading-relaxed text-text-muted">
@@ -307,11 +307,11 @@ export default function AdminDashboardPage() {
         <Image src="/property_images/houses/house_6.jpg" alt="Field verification" fill sizes="100vw" className="object-cover opacity-10" />
         <div className="absolute inset-0 bg-navy/85" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="mb-8">
               <p className="section-label text-gold">Field Operations</p>
-              <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-white md:text-4xl">
+              <h2 className="mt-3 font-display text-xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-4xl">
                 Verification <span className="text-gradient-gold">Schedule</span>
               </h2>
             </div>
@@ -357,10 +357,10 @@ export default function AdminDashboardPage() {
 
       {/* ═══ REVENUE — Split layout ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <ScrollReveal>
             <p className="section-label text-gold">Financials</p>
-            <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-tighter text-navy md:text-4xl">
+            <h2 className="mt-3 font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl">
               Revenue <span className="text-gradient-gold">Overview</span>
             </h2>
           </ScrollReveal>
@@ -368,7 +368,7 @@ export default function AdminDashboardPage() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2">
             {/* This Month */}
               <div
-                className="rounded-3xl bg-navy p-8"
+                className="rounded-3xl bg-navy p-5 sm:p-8"
                 style={{ transition: `all 500ms ${T}`, animation: `fadeInUp 600ms ${T} 100ms both` }}
                 onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 20px 48px rgba(11,25,41,0.25)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
@@ -400,7 +400,7 @@ export default function AdminDashboardPage() {
 
             {/* Subscriptions */}
               <div
-                className="rounded-3xl bg-navy p-8"
+                className="rounded-3xl bg-navy p-5 sm:p-8"
                 style={{ transition: `all 500ms ${T}`, animation: `fadeInUp 600ms ${T} 200ms both` }}
                 onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 20px 48px rgba(11,25,41,0.25)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
@@ -436,7 +436,7 @@ export default function AdminDashboardPage() {
       <section className="relative overflow-hidden bg-navy">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,168,83,0.06),transparent_50%)]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <ScrollReveal>
             <p className="section-label text-gold">Navigation</p>
             <h2 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-white md:text-3xl">

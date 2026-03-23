@@ -486,12 +486,12 @@ export default function HomePage() {
         {/* Left half */}
         <ScrollReveal
           variant="left"
-          className="flex flex-col justify-center bg-navy px-4 py-14 sm:px-8 sm:py-20 lg:px-16 xl:px-24"
+          className="flex flex-col justify-center bg-navy px-4 py-8 sm:py-14 sm:px-8 sm:py-20 lg:px-16 xl:px-24"
         >
           <h2 className="font-display text-3xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
             Explore Our Categories
           </h2>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-white/60">
+          <p className="mt-6 max-w-md text-sm leading-relaxed text-white/60 sm:text-lg">
             From affordable single rooms to luxury standalone homes and
             commercial spaces — find exactly what you need across 12
             property categories in Kampala.
@@ -733,7 +733,7 @@ export default function HomePage() {
       {/* ═══ SECTION 7: PRICING — Split layout with image ═══ */}
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-28 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="grid items-center gap-6 sm:gap-12 lg:grid-cols-2">
             {/* Left: Pricing content */}
             <ScrollReveal variant="left">
               <div>

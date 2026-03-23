@@ -199,7 +199,7 @@ export default function ProfilePage() {
                       onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
                     >
                       <SIcon size={16} className="mx-auto" style={{ color: rc.accent }} />
-                      <p className="mt-2 font-display text-lg font-bold tracking-tight text-white">
+                      <p className="mt-2 font-display text-base font-bold tracking-tight text-white sm:text-lg">
                         {stat.value}
                       </p>
                       <p className="mt-0.5 text-[9px] font-bold uppercase tracking-wider text-white/40">

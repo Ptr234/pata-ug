@@ -150,10 +150,10 @@ export default function PropertyCard({
           className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[9px] font-black uppercase tracking-wider text-white"
           style={{
             background: isVerified
-              ? "linear-gradient(135deg, #22C55E, #16A34A)"
+              ? "linear-gradient(135deg, #d4a853, #B8903D)"
               : "rgba(255,255,255,0.15)",
             boxShadow: isVerified
-              ? "0 2px 8px rgba(34, 197, 94, 0.3)"
+              ? "0 2px 8px rgba(212, 168, 83, 0.35)"
               : "none",
             backdropFilter: isVerified ? "none" : "blur(8px)",
           }}

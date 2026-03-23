@@ -547,7 +547,7 @@ function SearchPageContent() {
                         <span className="text-[10px] font-bold uppercase tracking-widest text-teal">
                           {property.category}
                         </span>
-                        <h3 className="mt-1 font-display text-lg font-bold tracking-tight text-navy transition-colors duration-500 group-hover:text-teal">
+                        <h3 className="mt-1 font-display text-base font-bold tracking-tight text-navy sm:text-lg transition-colors duration-500 group-hover:text-teal">
                           {property.title}
                         </h3>
                         <p className="mt-1 flex items-center gap-1.5 text-xs text-text-muted">
@@ -577,7 +577,7 @@ function SearchPageContent() {
         ) : (
           /* ═══ Empty State ═══ */
           <ScrollReveal variant="scale">
-            <div className="relative overflow-hidden rounded-3xl bg-navy px-6 py-24 text-center">
+            <div className="relative overflow-hidden rounded-3xl bg-navy px-4 py-12 text-center sm:px-6 sm:py-24">
               {/* Decorative */}
               <div
                 aria-hidden="true"
@@ -585,7 +585,7 @@ function SearchPageContent() {
               />
 
               <div className="relative">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-white/[0.05]">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.05] sm:h-20 sm:w-20 sm:rounded-3xl">
                   <SearchX className="h-10 w-10 text-white/60" />
                 </div>
                 <h2 className="mt-8 font-display text-3xl font-bold uppercase tracking-tighter text-white">

@@ -226,7 +226,7 @@ export default function BillingPage() {
           <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="overflow-hidden rounded-2xl bg-navy">
               <div className="px-6 py-5">
-                <h2 className="font-display text-lg tracking-tighter text-white">
+                <h2 className="font-display text-base tracking-tighter text-white sm:text-lg">
                   Transaction History
                 </h2>
               </div>
@@ -319,7 +319,7 @@ export default function BillingPage() {
           <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="overflow-hidden rounded-2xl bg-navy">
               <div className="px-6 py-5">
-                <h2 className="font-display text-lg tracking-tighter text-white">
+                <h2 className="font-display text-base tracking-tighter text-white sm:text-lg">
                   Agency Fee Reference
                 </h2>
                 <p className="mt-0.5 text-sm text-white/70">

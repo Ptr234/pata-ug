@@ -200,7 +200,7 @@ export default function AdminListingsPage() {
           className="object-cover opacity-15"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/75" />
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-14 sm:px-6 lg:px-8">
           <ScrollReveal>
             <Link
               href="/admin"
@@ -216,7 +216,7 @@ export default function AdminListingsPage() {
               <ArrowLeft className="h-4 w-4" /> Back to Admin
             </Link>
             <p className="section-label text-gold">Moderation</p>
-            <h1 className="mt-3 font-display text-4xl font-bold uppercase tracking-tighter text-white md:text-5xl">
+            <h1 className="mt-3 font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-3xl md:text-5xl">
               Listing <span className="text-gradient-gold">Review</span>
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-white/60">

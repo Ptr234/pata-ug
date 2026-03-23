@@ -216,7 +216,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[9px] font-black uppercase tracking-wider text-white/30">Wallet Balance</p>
-                    <p className="font-display text-lg font-bold tracking-tight text-white">UGX {Number(typeof window !== "undefined" ? localStorage.getItem("pata-wallet") || "0" : "0").toLocaleString("en-UG")}</p>
+                    <p className="font-display text-base font-bold tracking-tight text-white sm:text-lg">UGX {Number(typeof window !== "undefined" ? localStorage.getItem("pata-wallet") || "0" : "0").toLocaleString("en-UG")}</p>
                   </div>
                   <button
                     type="button"
@@ -254,7 +254,7 @@ export default function DashboardPage() {
                         </div>
                       </div>
                       <div>
-                        <p className="font-display text-lg font-bold tracking-tight text-white">
+                        <p className="font-display text-base font-bold tracking-tight text-white sm:text-lg">
                           Day Pass Active
                         </p>
                         <p className="mt-0.5 flex items-center gap-1.5 text-sm text-white/70">
@@ -520,12 +520,12 @@ export default function DashboardPage() {
 
       {/* ═══ DEALS TABLE ═══ */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:py-14 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="mb-8 flex items-end justify-between">
               <div>
                 <p className="section-label text-teal">Transactions</p>
-                <h2 className="mt-2 font-display text-2xl font-bold tracking-tighter text-navy sm:text-3xl">
+                <h2 className="mt-2 font-display text-xl font-bold tracking-tighter text-navy sm:text-2xl md:text-3xl">
                   My Deals
                 </h2>
               </div>

@@ -94,7 +94,7 @@ export default function AboutPage() {
         />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid min-h-[540px] items-center gap-8 py-12 sm:gap-12 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
+          <div className="grid items-center gap-6 sm:gap-8 py-12 sm:gap-12 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
             {/* LEFT — Text */}
             <ScrollReveal variant="left">
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-gold">
@@ -109,7 +109,7 @@ export default function AboutPage() {
                 Making Renting{" "}
                 <span className="text-gradient-gold">Simple</span>
               </h1>
-              <p className="mt-6 max-w-md text-lg leading-relaxed text-white/70">
+              <p className="mt-6 max-w-md text-sm leading-relaxed text-white/70 sm:text-lg">
                 pata.ug is Uganda&apos;s trusted property marketplace — connecting
                 verified tenants with verified landlords through a transparent,
                 mediated process.
@@ -303,7 +303,7 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="text-center">
               <p className="section-label text-gold">What We Stand For</p>
-              <h2 className="mx-auto mt-4 max-w-3xl font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl">
+              <h2 className="mx-auto mt-4 max-w-3xl font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl lg:text-5xl">
                 Our <span className="text-gradient-gold">Values</span>
               </h2>
             </div>
@@ -336,7 +336,7 @@ export default function AboutPage() {
                     >
                       <Icon size={24} style={{ color: v.accent }} />
                     </div>
-                    <h3 className="mt-5 font-display text-lg font-bold tracking-tight text-navy">
+                    <h3 className="mt-4 font-display text-base font-bold tracking-tight text-navy sm:mt-5 sm:text-lg">
                       {v.title}
                     </h3>
                     <p className="mt-3 text-sm leading-relaxed text-text-muted">
@@ -554,7 +554,7 @@ export default function AboutPage() {
             >
               <Users className="h-8 w-8 text-gold" />
             </div>
-            <h2 className="mt-8 font-display text-3xl font-bold uppercase tracking-tighter text-navy sm:text-4xl md:text-5xl">
+            <h2 className="mt-8 font-display text-xl font-bold uppercase tracking-tighter text-navy sm:text-3xl md:text-4xl lg:text-5xl">
               Join <span className="text-gradient-gold">pata.ug</span>
             </h2>
             <p className="mx-auto mt-5 max-w-md leading-relaxed text-text-muted">
