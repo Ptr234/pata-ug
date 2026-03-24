@@ -217,7 +217,7 @@ export default function SignupPage() {
                           key={opt.id}
                           type="button"
                           onClick={() => setRole(opt.id)}
-                          className="group rounded-2xl p-6 text-left"
+                          className="group rounded-2xl p-4 text-left sm:p-6"
                           style={{
                             background: selected
                               ? `${opt.accent}18`
@@ -239,7 +239,7 @@ export default function SignupPage() {
                           }}
                         >
                           <div
-                            className="flex h-12 w-12 items-center justify-center rounded-xl"
+                            className="flex h-10 w-10 items-center justify-center rounded-xl sm:h-12 sm:w-12"
                             style={{ background: `${opt.accent}20` }}
                           >
                             <Icon
@@ -310,7 +310,7 @@ export default function SignupPage() {
                           placeholder="700 000 000"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          className={`${inputCls} pl-[4.5rem] sm:pl-[5.5rem]`}
+                          className={`${inputCls} pl-14 sm:pl-[4.5rem]`}
                         />
                       </div>
                     </div>

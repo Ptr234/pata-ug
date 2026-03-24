@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-navy text-white">
       <div className="mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-6 sm:py-16 md:pb-16">
-        <div className="grid gap-8 sm:grid-cols-2 sm:gap-12 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 lg:gap-12">
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block">
@@ -22,7 +22,7 @@ export default function Footer() {
             <h3 className="text-[10px] font-semibold uppercase tracking-widest text-white/50">
               Quick Links
             </h3>
-            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 sm:mt-5 sm:flex-col sm:gap-y-3">
+            <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-2 sm:mt-5 sm:flex-col sm:gap-x-6 sm:gap-y-3">
               {FOOTER_LINKS.map(({ label, href }) => (
                 <li key={href}>
                   <Link
@@ -41,7 +41,7 @@ export default function Footer() {
             <h3 className="text-[10px] font-semibold uppercase tracking-widest text-white/50">
               Contact
             </h3>
-            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60 sm:mt-5 sm:flex-col sm:gap-y-3">
+            <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-2 text-sm text-white/60 sm:mt-5 sm:flex-col sm:gap-x-6 sm:gap-y-3">
               <li>
                 <a
                   href="mailto:support@pata.ug"

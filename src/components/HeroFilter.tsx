@@ -43,7 +43,7 @@ export default function HeroFilter() {
 
   return (
     <div
-      className="rounded-3xl p-5 sm:p-6"
+      className="rounded-3xl p-3 sm:p-5 md:p-6"
       style={{
         background: "rgba(11, 25, 41, 0.65)",
         backdropFilter: "blur(24px)",

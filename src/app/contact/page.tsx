@@ -80,19 +80,19 @@ export default function ContactPage() {
                 <p className="mt-2 text-sm text-white/60">We typically respond within 24 hours</p>
 
                 <form className="mt-8 space-y-5" onSubmit={(e) => e.preventDefault()}>
-                  <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                     <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Full Name</label>
+                      <label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-white/60">Full Name</label>
                       <input type="text" placeholder="John Doe" className="w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.1] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
                     </div>
                     <div>
-                      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Email</label>
+                      <label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-white/60">Email</label>
                       <input type="email" placeholder="john@email.com" className="w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.1] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
                     </div>
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Subject</label>
+                    <label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-white/60">Subject</label>
                     <select className="w-full appearance-none rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white outline-none focus:bg-white/[0.1] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }}>
                       <option value="">Select a topic</option>
                       <option value="tenant">Tenant Enquiry</option>
@@ -105,7 +105,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.18em] text-white/60">Message</label>
+                    <label className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-white/60">Message</label>
                     <textarea rows={5} placeholder="How can we help you?" className="w-full rounded-xl bg-white/[0.06] px-4 py-3.5 text-sm text-white placeholder:text-white/50 outline-none focus:bg-white/[0.1] focus:ring-2 focus:ring-gold/30" style={{ transition: `all 500ms ${T}` }} />
                   </div>
 

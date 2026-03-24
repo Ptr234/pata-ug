@@ -138,7 +138,7 @@ export default function HowItWorksPage() {
             {TENANT_STEPS.map((step, i) => (
               <ScrollReveal key={step.title} variant="scale" delay={i * 100}>
                 <div
-                  className="group relative overflow-hidden rounded-xl bg-white/[0.05] p-4 backdrop-blur-sm sm:rounded-2xl sm:p-6 lg:rounded-3xl lg:p-7"
+                  className="group relative overflow-hidden rounded-xl bg-white/[0.05] p-3 backdrop-blur-sm sm:rounded-2xl sm:p-4 md:p-6 lg:rounded-3xl lg:p-7"
                   style={{
                     transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
@@ -160,7 +160,7 @@ export default function HowItWorksPage() {
                     {/* Number + icon row */}
                     <div className="flex items-center justify-between">
                       <div
-                        className="flex h-14 w-14 items-center justify-center rounded-2xl text-white"
+                        className="flex h-10 w-10 items-center justify-center rounded-2xl text-white sm:h-14 sm:w-14"
                         style={{
                           background: "linear-gradient(135deg, #0A9396, #077B7E)",
                           boxShadow: "0 4px 16px rgba(10,147,150,0.3)",
@@ -221,7 +221,7 @@ export default function HowItWorksPage() {
             {LANDLORD_STEPS.map((step, i) => (
               <ScrollReveal key={step.title} variant="scale" delay={i * 80}>
                 <div
-                  className="group relative overflow-hidden rounded-xl bg-navy p-4 sm:rounded-2xl sm:p-6 lg:rounded-3xl lg:p-7"
+                  className="group relative overflow-hidden rounded-xl bg-navy p-3 sm:rounded-2xl sm:p-4 md:p-6 lg:rounded-3xl lg:p-7"
                   style={{
                     transition: "all 600ms cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
@@ -240,7 +240,7 @@ export default function HowItWorksPage() {
                   <div className="relative">
                     <div className="flex items-center justify-between">
                       <div
-                        className="flex h-14 w-14 items-center justify-center rounded-2xl text-white"
+                        className="flex h-10 w-10 items-center justify-center rounded-2xl text-white sm:h-14 sm:w-14"
                         style={{
                           background: "linear-gradient(135deg, #D4622A, #B54E1C)",
                           boxShadow: "0 4px 16px rgba(212,98,42,0.25)",
@@ -368,7 +368,7 @@ export default function HowItWorksPage() {
             </div>
 
             {/* Vertical — mobile */}
-            <ol className="mt-12 flex flex-col gap-4 sm:hidden">
+            <ol className="mt-12 flex flex-col gap-3 sm:hidden">
               {DEAL_FLOW.map((item) => (
                 <li
                   key={item.step}

@@ -85,7 +85,7 @@ const labelClasses =
 
 
 const selectClasses =
-  "w-full appearance-none rounded-xl bg-white/[0.12] px-3.5 py-3 pr-9 text-sm font-medium text-white outline-none transition-all duration-500 focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 min-h-[44px] [&>option]:bg-navy [&>option]:text-white [&>option]:py-2";
+  "w-full appearance-none rounded-xl bg-white/[0.12] px-3.5 py-3 pr-9 text-sm font-medium text-white outline-none transition-all duration-500 focus:bg-white/[0.18] focus:ring-2 focus:ring-gold/30 min-h-[48px] [&>option]:bg-navy [&>option]:text-white [&>option]:py-2";
 
 /* ────────────────────────── Toggle ───────────────────────── */
 
@@ -674,7 +674,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
             </div>
 
             {/* Sticky bottom actions */}
-            <div className="shrink-0 safe-bottom px-5 pb-4 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(11, 25, 41, 0.95)" }}>
+            <div className="shrink-0 safe-bottom px-5 pb-20 pt-3 sm:pb-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(11, 25, 41, 0.95)" }}>
               <div className="flex gap-3">
                 {hasActiveFilters && (
                   <button

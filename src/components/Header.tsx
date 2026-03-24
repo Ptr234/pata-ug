@@ -181,7 +181,7 @@ export default function Header() {
             alt="pata.ug"
             width={590}
             height={172}
-            className="h-9 w-auto sm:h-10 lg:h-11"
+            className="h-8 w-auto sm:h-9 lg:h-10"
             priority
           />
         </Link>
@@ -579,7 +579,7 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`touch-press-sm flex items-center gap-3.5 rounded-2xl px-5 py-4 text-sm font-semibold ${
+                    className={`touch-press-sm flex min-h-[48px] items-center gap-3.5 rounded-2xl px-5 py-4 text-sm font-semibold ${
                       isActive
                         ? "bg-gold/10 text-gold"
                         : "text-white/55 active:bg-white/[0.06]"
@@ -633,7 +633,7 @@ export default function Header() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`touch-press-sm flex items-center gap-3.5 rounded-2xl px-5 py-3.5 text-sm font-semibold ${
+                      className={`touch-press-sm flex min-h-[48px] items-center gap-3.5 rounded-2xl px-5 py-3.5 text-sm font-semibold ${
                         isActive ? "bg-gold/10 text-gold" : "text-white/55 active:bg-white/[0.06]"
                       }`}
                       style={{ transition: "background 300ms ease, color 300ms ease" }}
@@ -655,7 +655,7 @@ export default function Header() {
                 {userRole === "landlord" && loggedIn && (
                   <Link
                     href="/landlord/listings/new"
-                    className="touch-press-sm mt-1 flex items-center gap-3.5 rounded-2xl bg-orange/10 px-5 py-3.5 text-sm font-semibold text-orange active:bg-orange/20"
+                    className="touch-press-sm mt-1 flex min-h-[48px] items-center gap-3.5 rounded-2xl bg-orange/10 px-5 py-3.5 text-sm font-semibold text-orange active:bg-orange/20"
                     style={{ transition: "background 300ms ease" }}
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange/15">

@@ -108,7 +108,7 @@ export default function PropertyCard({
       }}
     >
       {/* ── Photo section ── */}
-      <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[4/3]">
+      <div className="relative aspect-video overflow-hidden sm:aspect-[4/3]">
         <Image
           src={photo}
           alt={title}
@@ -221,7 +221,7 @@ export default function PropertyCard({
         </div>
 
         {/* Feature row */}
-        <div className="mt-3 flex flex-wrap items-center gap-2.5">
+        <div className="mt-3 flex flex-wrap items-center gap-1.5 sm:gap-2.5">
           {bedrooms !== undefined && bedrooms > 0 && (
             <span className="inline-flex items-center gap-1 rounded-lg bg-white/[0.06] px-2 py-1 text-[10px] font-medium text-white/60">
               <Bed className="h-3 w-3 text-teal" />

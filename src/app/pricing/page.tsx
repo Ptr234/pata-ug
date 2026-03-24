@@ -143,7 +143,7 @@ export default function PricingPage() {
               </p>
 
               {/* Frosted glass stat cards — role-aware */}
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-10 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
                 {[
                   ...(showClient ? [{ icon: Users, text: "Tenants from UGX 20K", accent: "#0A9396" }] : []),
                   ...(showLandlord ? [{ icon: Building2, text: "Landlords from UGX 30K", accent: "#D4622A" }] : []),
@@ -220,7 +220,7 @@ export default function PricingPage() {
                 </p>
               </ScrollReveal>
 
-              <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="mt-10 grid grid-cols-1 gap-3 sm:gap-4 md:gap-6 md:grid-cols-2">
                 {CLIENT_PLANS.map((plan, i) => (
                   <ScrollReveal key={plan.name} variant="scale" delay={i * 120}>
                     <PlanCard
@@ -382,7 +382,7 @@ export default function PricingPage() {
                 </p>
               </ScrollReveal>
 
-              <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="mt-10 grid grid-cols-1 gap-3 sm:gap-4 md:gap-6 md:grid-cols-2">
                 {LANDLORD_PLANS.map((plan, i) => (
                   <ScrollReveal key={plan.name} variant="scale" delay={i * 120}>
                     <PlanCard
@@ -447,8 +447,9 @@ export default function PricingPage() {
               </ScrollReveal>
 
               <ScrollReveal variant="scale" delay={150}>
+                {/* Desktop table */}
                 <div
-                  className="mt-10 overflow-hidden rounded-3xl"
+                  className="mt-10 hidden overflow-hidden rounded-3xl sm:block"
                   style={{
                     background: "#0B1929",
                     boxShadow: "0 24px 48px -12px rgba(11,25,41,0.25)",
@@ -506,6 +507,45 @@ export default function PricingPage() {
                       </tbody>
                     </table>
                   </div>
+                </div>
+
+                {/* Mobile stacked cards */}
+                <div className="mt-10 flex flex-col gap-3 sm:hidden">
+                  {AGENCY_FEE_TIERS.map((tier) => (
+                    <div
+                      key={tier.rent}
+                      className="rounded-2xl p-4"
+                      style={{
+                        background: "#0B1929",
+                        boxShadow: "0 4px 16px rgba(11,25,41,0.2)",
+                      }}
+                    >
+                      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-gold">
+                        Agreed Monthly Rent
+                      </p>
+                      <p className="mt-1 font-display text-base font-bold text-white">
+                        {formatUGX(tier.rent)}
+                      </p>
+                      <div className="mt-3 flex items-center justify-between">
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-[0.15em] text-white/40">
+                            5% Fee
+                          </p>
+                          <p className="mt-0.5 text-sm font-bold text-orange">
+                            {formatUGX(tier.agencyFee)}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-[10px] font-black uppercase tracking-[0.15em] text-white/40">
+                            You Receive
+                          </p>
+                          <p className="mt-0.5 text-sm font-bold text-green">
+                            {formatUGX(tier.net)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </ScrollReveal>
             </div>
@@ -608,10 +648,10 @@ export default function PricingPage() {
                       }}
                     />
 
-                    <div className="relative flex items-center gap-5 rounded-2xl bg-white/[0.04] px-6 py-6 backdrop-blur-sm">
+                    <div className="relative flex items-center gap-5 rounded-2xl bg-white/[0.04] px-3 py-3 backdrop-blur-sm sm:px-6 sm:py-6">
                       {/* Numbered icon */}
                       <div
-                        className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl"
+                        className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-2xl sm:h-16 sm:w-16"
                         style={{ background: `${item.color}12` }}
                       >
                         <Icon size={20} style={{ color: item.color }} />

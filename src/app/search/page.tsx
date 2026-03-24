@@ -272,7 +272,7 @@ function SearchPageContent() {
           {/* Heading row */}
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h1 className="font-display text-2xl font-bold uppercase tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              <h1 className="font-display text-2xl font-bold uppercase tracking-tight text-white sm:tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
                 {activeCatLabel || "Browse"}{" "}
                 <span className="text-gradient-gold">Properties</span>
               </h1>
@@ -412,7 +412,7 @@ function SearchPageContent() {
 
               {sortOpen && (
                 <div
-                  className="absolute right-0 top-full z-20 mt-2 w-56 overflow-hidden rounded-2xl bg-white py-1.5"
+                  className="absolute right-0 top-full z-20 mt-2 w-56 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl bg-white py-1.5"
                   style={{
                     boxShadow:
                       "0 20px 60px rgba(11, 25, 41, 0.12), 0 0 1px rgba(11, 25, 41, 0.08)",

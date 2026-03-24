@@ -491,6 +491,14 @@ body {
   }
 }
 
+/* Coarse pointer (touch screens) — larger focus outlines for accessibility */
+@media (pointer: coarse) {
+  *:focus-visible {
+    outline-width: 3px;
+    outline-offset: 3px;
+  }
+}
+
 /* Fluid container padding — tighter on mobile, generous on desktop */
 @layer utilities {
   .px-container {
