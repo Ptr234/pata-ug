@@ -487,7 +487,7 @@ export default function AboutPage() {
             <ScrollReveal variant="left">
               <div className="img-zoom relative aspect-[3/4] overflow-hidden rounded-xl sm:rounded-3xl">
                 <Image
-                  src="/Isaac_Etyang-Profile_Photograph.jpg"
+                  src="/Isaac_Pata_AboutUs_Pic.png"
                   alt="Etty Etiang — CEO, pata.ug"
                   fill
                   sizes="50vw"
